@@ -34,8 +34,8 @@ public class Renderer extends JPanel implements Runnable {
         this.width = width;
         this.height = height;
 
-        camX = width/2-unitSize;
-        camY = height/2-unitSize;
+        camX = width/2-unitSize/2;
+        camY = height/2-unitSize/2;
         player = new Player(this, camX, camY);
 
         this.FPS = FPS;
