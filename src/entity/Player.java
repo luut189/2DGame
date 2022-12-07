@@ -39,7 +39,7 @@ public class Player extends Entity {
 
     public void setCurrentPlayerImage(PlayerState state, Direction dir) {
         boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
-        if(spriteCounter > 10) {
+        if(spriteCounter > (isSideWay ? 10 : 12)) {
             isLeftLeg = !isLeftLeg;
             if(isSideWay) {
                 imageIndex = increaseImageIndex(imageIndex, 4);
