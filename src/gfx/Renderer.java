@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import entity.PlayerState;
 import utils.Direction;
+import world.tile.TileManager;
 
 public class Renderer extends JPanel implements Runnable {
 
@@ -22,6 +23,8 @@ public class Renderer extends JPanel implements Runnable {
 
     private int FPS;
 
+    private TileManager tileManager;
+
     private int camX;
     private int camY;
     private Player player;
@@ -31,8 +34,8 @@ public class Renderer extends JPanel implements Runnable {
     public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
         this.keyHandler = keyHandler;
 
-        this.width = width;
-        this.height = height;
+        this.width = width/unitSize*unitSize;
+        this.height = height/unitSize*unitSize;
 
         camX = width/2-unitSize/2;
         camY = height/2-unitSize/2;
@@ -40,24 +43,40 @@ public class Renderer extends JPanel implements Runnable {
 
         this.FPS = FPS;
 
-        this.setPreferredSize(new Dimension(width, height));
+        this.setPreferredSize(new Dimension(this.width, this.height));
         this.setDoubleBuffered(true);
 
+        tileManager = new TileManager(this);
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public int getUnitSize() {
         return unitSize;
     }
 
+    public int getCamX() {
+        return camX;
+    }
+
+    public int getCamY() {
+        return camY;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        tileManager.drawAllTexture(g);
+        g.translate(-camX, -camY);
         player.draw(g);
-        g.translate(camX, camY);
-
-        g.drawRect(10, 10, 100, 100);
     }
 
     public void update() {
