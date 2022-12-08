@@ -4,11 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import gfx.Renderer;
-import utils.TextureLoader;
+import utils.AssetManager;
 
 public class Tile {
 
-    private TextureLoader loader = new TextureLoader();
     private Renderer render;
 
     private String tileName;
@@ -51,7 +50,7 @@ public class Tile {
     }
 
     public void loadImage() {
-        tileImage = loader.loadImage("/tiles/" + tileName + ".png");
+        tileImage = AssetManager.tileMap.get(tileName);
     }
 
     public boolean isSolid() {

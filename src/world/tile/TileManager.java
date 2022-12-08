@@ -17,14 +17,16 @@ public class TileManager {
     public TileManager(Renderer render) {
         this.render = render;
         
-        maxRow = render.getWidth()/render.getUnitSize();
-        maxCol = render.getHeight()/render.getUnitSize();
+        // maxRow = render.getWidth()/render.getUnitSize();
+        // maxCol = render.getHeight()/render.getUnitSize();
+        
+        maxRow = 1000;
+        maxCol = 1000;
 
         numberWorldTile = new int[maxRow][maxCol];
         worldTiles = new Tile[maxRow][maxCol];
         WorldGenerator.randomGenerator(numberWorldTile);
 
-        // worldTiles = new Tile[50][50];
         loadAllTexture();
     }
 
@@ -41,11 +43,17 @@ public class TileManager {
     }
 
     public void drawAllTexture(Graphics g) {
-        g.translate(render.getCamX(), render.getCamY());
+        g.translate(render.getSceneX(), render.getSceneY());
         for(Tile[] i : worldTiles) {
             for(int j = 0; j < i.length; j++) {
                 if(i[j] != null) {
-                    i[j].draw(g);
+                    if
+                    (
+                        i[j].getX()*render.getUnitSize() < render.getWidth() - render.getSceneX() &&
+                        i[j].getY()*render.getUnitSize() < render.getHeight() - render.getSceneY())
+                    {
+                        i[j].draw(g);
+                    }
                 }
             }
         }
