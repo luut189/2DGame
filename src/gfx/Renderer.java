@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 
 import entity.Player;
 import entity.PlayerState;
+
 import utils.Direction;
+
 import world.tile.TileManager;
 
 public class Renderer extends JPanel implements Runnable {
@@ -25,8 +27,8 @@ public class Renderer extends JPanel implements Runnable {
 
     private TileManager tileManager;
 
-    private int camX;
-    private int camY;
+    private int camX, camY;
+    private int sceneX, sceneY;
     private Player player;
 
     private Thread gameThread;
@@ -39,6 +41,10 @@ public class Renderer extends JPanel implements Runnable {
 
         camX = width/2-unitSize/2;
         camY = height/2-unitSize/2;
+
+        sceneX = 0;
+        sceneY = 0;
+
         player = new Player(this, camX, camY);
 
         this.FPS = FPS;
@@ -63,6 +69,14 @@ public class Renderer extends JPanel implements Runnable {
         return unitSize;
     }
 
+    public int getSceneX() {
+        return sceneX;
+    }
+
+    public int getSceneY() {
+        return sceneY;
+    }
+
     public int getCamX() {
         return camX;
     }
@@ -75,7 +89,7 @@ public class Renderer extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         tileManager.drawAllTexture(g);
-        g.translate(-camX, -camY);
+        g.translate(-sceneX, -sceneY);
         player.draw(g);
     }
 
@@ -89,16 +103,16 @@ public class Renderer extends JPanel implements Runnable {
         player.setCurrentPlayerImage(state, dir);
         switch(dir) {
             case UP:
-                camY += player.getSpeed();
+                sceneY += player.getSpeed();
                 break;
             case DOWN:
-                camY -= player.getSpeed();
+                sceneY -= player.getSpeed();
                 break;
             case RIGHT:
-                camX -= player.getSpeed();
+                sceneX -= player.getSpeed();
                 break;
             case LEFT:
-                camX += player.getSpeed();
+                sceneX += player.getSpeed();
                 break;
             default:
                 break;
