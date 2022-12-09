@@ -39,8 +39,10 @@ public class KeyHandler extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        state = PlayerState.WALKING;
         int key = e.getKeyCode();
+        if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
+            state = PlayerState.WALKING;
+        }
 
         switch(key) {
             case KeyEvent.VK_W:
@@ -62,7 +64,10 @@ public class KeyHandler extends KeyAdapter {
 
     public void keyReleased(KeyEvent e) {
         state = PlayerState.STANDING;
-        previousDirection = dir;
-        dir = Direction.NONE;
+        int key = e.getKeyCode();
+        if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
+            previousDirection = dir;
+            dir = Direction.NONE;
+        }
     }
 }
