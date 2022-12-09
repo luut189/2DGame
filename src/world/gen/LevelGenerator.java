@@ -2,7 +2,7 @@ package world.gen;
 
 import java.util.Random;
 
-public class WorldGenerator {
+public class LevelGenerator {
     
     public static void randomGenerator(int[][] worldTiles) {
         for(int i = 0; i < worldTiles.length; i++) {

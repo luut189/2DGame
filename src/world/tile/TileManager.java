@@ -3,7 +3,7 @@ package world.tile;
 import java.awt.Graphics;
 
 import gfx.Renderer;
-import world.gen.WorldGenerator;
+import world.gen.LevelGenerator;
 
 public class TileManager {
 
@@ -25,7 +25,7 @@ public class TileManager {
 
         numberWorldTile = new int[maxRow][maxCol];
         worldTiles = new Tile[maxRow][maxCol];
-        WorldGenerator.randomGenerator(numberWorldTile);
+        LevelGenerator.randomGenerator(numberWorldTile);
 
         loadAllTexture();
     }
