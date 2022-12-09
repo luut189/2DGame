@@ -2,6 +2,8 @@
 
 - [x] Adding more sprites for the player
 
+- [x] Adding collision detection
+
 - [ ] Adding tiles' texture
   
   - [x] Grass

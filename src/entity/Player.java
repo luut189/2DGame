@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import gfx.Renderer;
@@ -23,10 +24,17 @@ public class Player extends Entity {
     private int spriteCounter = 0;
 
     public Player(Renderer render, int x, int y) {
-        setRender(render);
-        setX(x);
-        setY(y);
-        setSpeed(4);
+        this.render = render;
+        this.x = x;
+        this.y = y;
+        this.speed = 4;
+
+        int offsetX = render.getUnitSize()/2;
+        int offsetY = render.getUnitSize()/4;
+        
+        this.solidArea = new Rectangle(offsetX, offsetY, render.getUnitSize()-offsetX*2, render.getUnitSize()-offsetY);
+        // System.out.println(offsetX + " " + offsetY);
+        // System.out.println(solidArea.x + " " + solidArea.y + " " + solidArea.width + " " + solidArea.height);
     }
 
     public int increaseImageIndex(int currentIndex, int maxIndex) {
@@ -79,7 +87,8 @@ public class Player extends Entity {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(playerImage, getX(), getY(), getRender().getUnitSize(), getRender().getUnitSize(), null);
+        g.drawImage(playerImage, x, y, render.getUnitSize(), render.getUnitSize(), null);
+        // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 
 }

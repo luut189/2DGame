@@ -10,7 +10,7 @@ public class TileManager {
     private Renderer render;
 
     private int maxRow, maxCol;
-    
+
     private int[][] numberWorldTile;
     private Tile[][] worldTiles;
 
@@ -28,6 +28,18 @@ public class TileManager {
         WorldGenerator.randomGenerator(numberWorldTile);
 
         loadAllTexture();
+    }
+
+    public Tile[][] getWorldTiles() {
+        return worldTiles;
+    }
+    
+    public int getMaxRow() {
+        return maxRow;
+    }
+
+    public int getMaxCol() {
+        return maxCol;
     }
 
     public void loadAllTexture() {

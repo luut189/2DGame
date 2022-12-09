@@ -26,7 +26,7 @@ public class Tile {
         this.x = x;
         this.y = y;
 
-        loadImage();
+        this.tileImage = AssetManager.tileMap.get(tileName);
     }
 
     public int getX() {
@@ -49,16 +49,8 @@ public class Tile {
         g.drawImage(tileImage, x*render.getUnitSize(), y*render.getUnitSize(), render.getUnitSize(), render.getUnitSize(), null);
     }
 
-    public void loadImage() {
-        tileImage = AssetManager.tileMap.get(tileName);
-    }
-
     public boolean isSolid() {
         return isSolid;
-    }
-
-    public void setSolid(boolean isSolid) {
-        this.isSolid = isSolid;
     }
 
     public String getTileName() {

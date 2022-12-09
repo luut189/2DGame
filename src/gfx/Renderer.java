@@ -57,6 +57,10 @@ public class Renderer extends JPanel implements Runnable {
         gameThread.start();
     }
 
+    public int getUnitScale() {
+        return scale;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -103,15 +107,19 @@ public class Renderer extends JPanel implements Runnable {
         player.setCurrentPlayerImage(state, dir);
         switch(dir) {
             case UP:
+                if(-sceneY+camY < 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
                 sceneY += player.getSpeed();
                 break;
             case DOWN:
+                if(-sceneY+camY >= tileManager.getMaxCol()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
                 sceneY -= player.getSpeed();
                 break;
             case RIGHT:
+                if(-sceneX+camX >= tileManager.getMaxRow()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
                 sceneX -= player.getSpeed();
                 break;
             case LEFT:
+                if(-sceneX+camX <= 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
                 sceneX += player.getSpeed();
                 break;
             default:
