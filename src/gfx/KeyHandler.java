@@ -3,14 +3,14 @@ package gfx;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import entity.PlayerState;
-import utils.Direction;
+import entity.Direction;
+import entity.EntityState;
 
 public class KeyHandler extends KeyAdapter {
 
     private Direction dir = Direction.NONE;
 
-    private PlayerState state = PlayerState.STANDING;
+    private EntityState state = EntityState.STANDING;
     private Direction previousDirection = Direction.NONE;
 
     public Direction getDirection() {
@@ -21,11 +21,11 @@ public class KeyHandler extends KeyAdapter {
         this.dir = dir;
     }
     
-    public PlayerState getState() {
+    public EntityState getState() {
         return state;
     }
 
-    public void setState(PlayerState state) {
+    public void setState(EntityState state) {
         this.state = state;
     }
 
@@ -41,7 +41,7 @@ public class KeyHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
-            state = PlayerState.WALKING;
+            state = EntityState.WALKING;
         }
 
         switch(key) {
@@ -63,7 +63,7 @@ public class KeyHandler extends KeyAdapter {
     }
 
     public void keyReleased(KeyEvent e) {
-        state = PlayerState.STANDING;
+        state = EntityState.STANDING;
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
             previousDirection = dir;

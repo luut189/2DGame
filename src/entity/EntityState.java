@@ -1,6 +1,6 @@
 package entity;
 
-public enum PlayerState {
+public enum EntityState {
     WALKING,
     STANDING;
 }

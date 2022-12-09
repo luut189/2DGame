@@ -5,11 +5,9 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import entity.Direction;
 import entity.Player;
-import entity.PlayerState;
-
-import utils.Direction;
-
+import entity.EntityState;
 import world.tile.TileManager;
 
 public class Renderer extends JPanel implements Runnable {
@@ -99,7 +97,7 @@ public class Renderer extends JPanel implements Runnable {
 
     public void update() {
         Direction dir = keyHandler.getDirection();
-        PlayerState state = keyHandler.getState();
+        EntityState state = keyHandler.getState();
         if(dir == Direction.NONE) {
             player.setCurrentPlayerImage(state, keyHandler.getPreviousDirection());
             return;

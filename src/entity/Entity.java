@@ -3,7 +3,6 @@ package entity;
 import java.awt.Rectangle;
 
 import gfx.Renderer;
-import utils.Direction;
 import world.tile.Tile;
 
 public class Entity {

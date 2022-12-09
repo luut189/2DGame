@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import gfx.Renderer;
-import utils.Direction;
 import utils.TextureLoader;
 
 public class Player extends Entity {
@@ -45,7 +44,7 @@ public class Player extends Entity {
         return 0;
     }
 
-    public void setCurrentPlayerImage(PlayerState state, Direction dir) {
+    public void setCurrentPlayerImage(EntityState state, Direction dir) {
         boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
         if(spriteCounter > (isSideWay ? 10 : 12)) {
             isLeftLeg = !isLeftLeg;
@@ -54,7 +53,7 @@ public class Player extends Entity {
             }
             spriteCounter = 0;
         }
-        if(state == PlayerState.STANDING) {
+        if(state == EntityState.STANDING) {
             imageIndex = 0;
         } else if(!isSideWay) {
             imageIndex = isLeftLeg ? 1 : 2;
