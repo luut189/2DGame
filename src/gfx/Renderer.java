@@ -96,10 +96,10 @@ public class Renderer extends JPanel implements Runnable {
     }
 
     public void update() {
-        Direction dir = keyHandler.getDirection();
-        EntityState state = keyHandler.getState();
+        Direction dir = keyHandler.getPlayerDirection();
+        EntityState state = keyHandler.getPlayerState();
         if(dir == Direction.NONE) {
-            player.setCurrentPlayerImage(state, keyHandler.getPreviousDirection());
+            player.setCurrentPlayerImage(state, keyHandler.getPreviousPlayerDirection());
             return;
         }
         player.setCurrentPlayerImage(state, dir);

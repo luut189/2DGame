@@ -8,54 +8,54 @@ import entity.EntityState;
 
 public class KeyHandler extends KeyAdapter {
 
-    private Direction dir = Direction.NONE;
+    private Direction playerDirection = Direction.NONE;
 
-    private EntityState state = EntityState.STANDING;
-    private Direction previousDirection = Direction.NONE;
+    private EntityState playerState = EntityState.STANDING;
+    private Direction previousPlayerDirection = Direction.NONE;
 
-    public Direction getDirection() {
-        return dir;
+    public Direction getPlayerDirection() {
+        return playerDirection;
     }
     
-    public void setDirection(Direction dir) {
-        this.dir = dir;
+    public void setPlayerDirection(Direction dir) {
+        this.playerDirection = dir;
     }
     
-    public EntityState getState() {
-        return state;
+    public EntityState getPlayerState() {
+        return playerState;
     }
 
-    public void setState(EntityState state) {
-        this.state = state;
+    public void setPlayerState(EntityState state) {
+        this.playerState = state;
     }
 
-    public Direction getPreviousDirection() {
-        return previousDirection;
+    public Direction getPreviousPlayerDirection() {
+        return previousPlayerDirection;
     }
 
-    public void setPreviousDirection(Direction previousDirection) {
-        this.previousDirection = previousDirection;
+    public void setPreviousPlayerDirection(Direction previousDirection) {
+        this.previousPlayerDirection = previousDirection;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
-            state = EntityState.WALKING;
+            playerState = EntityState.WALKING;
         }
 
         switch(key) {
             case KeyEvent.VK_W:
-                dir = Direction.UP;
+                playerDirection = Direction.UP;
                 break;
             case KeyEvent.VK_S:
-                dir = Direction.DOWN;
+                playerDirection = Direction.DOWN;
                 break;
             case KeyEvent.VK_D:
-                dir = Direction.RIGHT;
+                playerDirection = Direction.RIGHT;
                 break;
             case KeyEvent.VK_A:
-                dir = Direction.LEFT;
+                playerDirection = Direction.LEFT;
                 break;
             default:
                 break;
@@ -63,11 +63,11 @@ public class KeyHandler extends KeyAdapter {
     }
 
     public void keyReleased(KeyEvent e) {
-        state = EntityState.STANDING;
+        playerState = EntityState.STANDING;
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
-            previousDirection = dir;
-            dir = Direction.NONE;
+            previousPlayerDirection = playerDirection;
+            playerDirection = Direction.NONE;
         }
     }
 }
