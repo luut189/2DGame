@@ -47,7 +47,7 @@ public class TileManager {
             for(int j = 0; j < worldTiles[i].length; j++) {
                 if(numberWorldTile[i][j] < 10) {
                     worldTiles[i][j] = numberWorldTile[i][j] < 5 ? new Tile(render, i, j, "tree", true) : 
-                                                                        new AnimatedTile(render, i, j, "water", true);
+                                                                        new AnimatedTile(render, i, j, "water", 2, true);
                 } else {
                     worldTiles[i][j] = numberWorldTile[i][j] < 50 ? new Tile(render, i, j, "grass", false) : 
                                                                         new Tile(render, i, j, "sand", false);
