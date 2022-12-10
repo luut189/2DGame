@@ -11,7 +11,9 @@ public class AssetManager {
     private static final String[] tilesName = {
         "grass",
         "sand",
-        "tree"
+        "tree",
+        "water1",
+        "water2"
     };
 
     public static void loadTileImage(TextureLoader loader) {

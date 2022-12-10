@@ -8,14 +8,14 @@ import utils.AssetManager;
 
 public class Tile {
 
-    private Renderer render;
+    protected Renderer render;
 
-    private String tileName;
-    private boolean isSolid;
+    protected String tileName;
+    protected boolean isSolid;
 
-    private int x, y;
+    protected int x, y;
 
-    private BufferedImage tileImage;
+    protected BufferedImage tileImage;
 
     public Tile(Renderer render, int x, int y, String tileName, boolean isSolid) {
         this.render = render;

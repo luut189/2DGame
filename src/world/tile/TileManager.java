@@ -7,12 +7,12 @@ import world.gen.LevelGenerator;
 
 public class TileManager {
 
-    private Renderer render;
+    protected Renderer render;
 
-    private int maxRow, maxCol;
+    protected int maxRow, maxCol;
 
     private int[][] numberWorldTile;
-    private Tile[][] worldTiles;
+    protected Tile[][] worldTiles;
 
     public TileManager(Renderer render) {
         this.render = render;
@@ -20,8 +20,8 @@ public class TileManager {
         // maxRow = render.getWidth()/render.getUnitSize();
         // maxCol = render.getHeight()/render.getUnitSize();
         
-        maxRow = 1000;
-        maxCol = 1000;
+        maxRow = render.getWidth();
+        maxCol = render.getHeight();
 
         numberWorldTile = new int[maxRow][maxCol];
         worldTiles = new Tile[maxRow][maxCol];
@@ -46,9 +46,11 @@ public class TileManager {
         for(int i = 0; i < worldTiles.length; i++) {
             for(int j = 0; j < worldTiles[i].length; j++) {
                 if(numberWorldTile[i][j] < 10) {
-                    worldTiles[i][j] = new Tile(render, i, j, "tree", true);
+                    worldTiles[i][j] = numberWorldTile[i][j] < 5 ? new Tile(render, i, j, "tree", true) : 
+                                                                        new AnimatedTile(render, i, j, "water", true);
                 } else {
-                    worldTiles[i][j] = numberWorldTile[i][j] < 50 ? new Tile(render, i, j, "grass", false) : new Tile(render, i, j, "sand", false);
+                    worldTiles[i][j] = numberWorldTile[i][j] < 50 ? new Tile(render, i, j, "grass", false) : 
+                                                                        new Tile(render, i, j, "sand", false);
                 }
             }
         }
