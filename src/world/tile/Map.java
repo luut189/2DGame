@@ -60,8 +60,8 @@ public class Map {
         g.drawImage(worldMap, x, y, width, height, null);
         
         double scale = (double) (render.getUnitSize() * maxRow)/width;
-        int playerX = (int) ((-render.getSceneX())/scale) + width/2;
-        int playerY = (int) ((-render.getSceneY())/scale) + height/2;
+        int playerX = (int) ((-render.getCamX())/scale) + width/2;
+        int playerY = (int) ((-render.getCamY())/scale) + height/2;
         g.translate(x, y);
         g.drawImage(render.getPlayer().getPlayerImage(), playerX+4, playerY, 10, 10, null);
 

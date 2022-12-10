@@ -101,7 +101,7 @@ public class Renderer extends JPanel implements Runnable {
         tileManager.drawAllTexture(g);
         g.translate(-sceneX, -sceneY);
         player.draw(g);
-        map.drawMinimap(g);
+        if(keyHandler.hasMinimap()) map.drawMinimap(g);
     }
 
     public void update() {

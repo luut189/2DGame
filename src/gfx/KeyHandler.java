@@ -13,6 +13,12 @@ public class KeyHandler extends KeyAdapter {
     private EntityState playerState = EntityState.STANDING;
     private Direction previousPlayerDirection = Direction.NONE;
 
+    private boolean hasMinimap = false;
+
+    public boolean hasMinimap() {
+        return hasMinimap;
+    }
+
     public Direction getPlayerDirection() {
         return playerDirection;
     }
@@ -57,15 +63,17 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_A:
                 playerDirection = Direction.LEFT;
                 break;
+            case KeyEvent.VK_M:
+                hasMinimap = !hasMinimap;
             default:
                 break;
         }
     }
 
     public void keyReleased(KeyEvent e) {
-        playerState = EntityState.STANDING;
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
+            playerState = EntityState.STANDING;
             previousPlayerDirection = playerDirection;
             playerDirection = Direction.NONE;
         }
