@@ -44,6 +44,10 @@ public class Player extends Entity {
         return 0;
     }
 
+    public BufferedImage getPlayerImage() {
+        return playerImage;
+    }
+
     public void setCurrentPlayerImage(EntityState state, Direction dir) {
         boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
         if(spriteCounter > (isSideWay ? 10 : 12)) {

@@ -8,7 +8,9 @@ import javax.swing.JPanel;
 import entity.Direction;
 import entity.Player;
 import entity.EntityState;
+
 import world.tile.TileManager;
+import world.tile.Map;
 
 public class Renderer extends JPanel implements Runnable {
 
@@ -24,6 +26,7 @@ public class Renderer extends JPanel implements Runnable {
     private int FPS;
 
     private TileManager tileManager;
+    private Map map;
 
     private int camX, camY;
     private int sceneX, sceneY;
@@ -51,8 +54,13 @@ public class Renderer extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
 
         tileManager = new TileManager(this);
+        map = new Map(this, tileManager);
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public int getUnitScale() {
@@ -93,6 +101,7 @@ public class Renderer extends JPanel implements Runnable {
         tileManager.drawAllTexture(g);
         g.translate(-sceneX, -sceneY);
         player.draw(g);
+        map.drawMinimap(g);
     }
 
     public void update() {
