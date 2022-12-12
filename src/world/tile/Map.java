@@ -24,8 +24,10 @@ public class Map {
         int worldMapHeight = 10*render.getUnitSize();
         worldMap = new BufferedImage(worldMapWidth, worldMapHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics g = worldMap.createGraphics();
-        int row = 0;
-        int col = 0;
+        int row = (-render.getSceneX())/render.getUnitSize();
+        int col = (-render.getSceneY())/render.getUnitSize();
+        if(row < 0) row = 0;
+        if(col < 0) col = 0;
         while(row < maxRow && col < maxCol) {
             int x = row*render.getUnitSize();
             int y = col*render.getUnitSize();

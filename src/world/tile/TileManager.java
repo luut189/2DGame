@@ -63,6 +63,8 @@ public class TileManager {
                 if(i[j] != null) {
                     if
                     (
+                        i[j].getX()*render.getUnitSize() >= -render.getSceneX()-render.getUnitSize() &&
+                        i[j].getY()*render.getUnitSize() >= -render.getSceneY()-render.getUnitSize() &&
                         i[j].getX()*render.getUnitSize() < render.getWidth() - render.getSceneX() &&
                         i[j].getY()*render.getUnitSize() < render.getHeight() - render.getSceneY())
                     {
