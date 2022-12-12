@@ -28,10 +28,13 @@ public class Player extends Entity {
         this.y = y;
         this.speed = 4;
 
-        int offsetX = render.getUnitSize()/2;
+        int offsetX = render.getUnitSize()/4;
         int offsetY = render.getUnitSize()/4;
+
+        int rectWidth = render.getUnitSize()-offsetX*2;
+        int rectHeight = render.getUnitSize()-offsetY;
         
-        this.solidArea = new Rectangle(offsetX, offsetY, render.getUnitSize()-offsetX*2, render.getUnitSize()-offsetY);
+        this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
         // System.out.println(offsetX + " " + offsetY);
         // System.out.println(solidArea.x + " " + solidArea.y + " " + solidArea.width + " " + solidArea.height);
     }
@@ -91,7 +94,7 @@ public class Player extends Entity {
 
     public void draw(Graphics g) {
         g.drawImage(playerImage, x, y, render.getUnitSize(), render.getUnitSize(), null);
-        // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
+//        g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 
 }
