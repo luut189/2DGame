@@ -62,8 +62,8 @@ public class Entity {
             case LEFT:
                 entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
                 if(entityLeftCol < tileMap.length) {
-                    tile1 = entityTopRow < tileMap[entityLeftCol].length ? tileMap[entityRightCol][entityTopRow] : null;
-                    tile2 = entityBottomRow < tileMap[entityLeftCol].length ? tileMap[entityRightCol][entityBottomRow] : null;
+                    tile1 = entityTopRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityTopRow] : null;
+                    tile2 = entityBottomRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityBottomRow] : null;
                     if(tile1 == null && tile2 == null) {
                         return false;
                     }
