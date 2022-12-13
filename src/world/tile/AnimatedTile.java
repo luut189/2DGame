@@ -1,6 +1,7 @@
 package world.tile;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.Random;
 
 import gfx.Renderer;
