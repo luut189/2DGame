@@ -6,8 +6,11 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import entity.Direction;
-import entity.Player;
 import entity.EntityState;
+import entity.Player;
+
+import utils.AssetManager;
+import utils.TextureLoader;
 
 import world.tile.TileManager;
 import world.tile.Map;
@@ -35,6 +38,7 @@ public class Renderer extends JPanel implements Runnable {
     private Thread gameThread;
 
     public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
+        AssetManager.loadAllRes(new TextureLoader(), unitSize);
         this.keyHandler = keyHandler;
 
         this.width = width/unitSize*unitSize;
@@ -141,29 +145,15 @@ public class Renderer extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
 
-        long timer = 0;
-        long drawCount = 0;
-
         while(gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/interval;
-            timer += (currentTime - lastTime);
             lastTime = currentTime;
             if(delta >= 1) {
                 update();
                 repaint();
                 delta--;
-                drawCount++;
             }
-
-            // print the fps
-            // if(timer >= 1000000000) {
-            //     System.out.println("FPS: " + drawCount);
-            //     drawCount = 0;
-            //     timer = 0;
-            // }
         }
-        
     }
-    
 }

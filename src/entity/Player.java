@@ -5,19 +5,12 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import gfx.Renderer;
-import utils.TextureLoader;
+import utils.AssetManager;
 
 public class Player extends Entity {
 
-    private TextureLoader loader = new TextureLoader();
-
-    private BufferedImage[] downImage = loadPlayerImage("/player/down", 3);
-    private BufferedImage[] upImage = loadPlayerImage("/player/up", 3);
-    private BufferedImage[] rightImage = loadPlayerImage("/player/right", 4);
-    private BufferedImage[] leftImage = loadPlayerImage("/player/left", 4);
-
     private int imageIndex = 0;
-    private BufferedImage playerImage = downImage[imageIndex];
+    private BufferedImage playerImage = AssetManager.downImage[imageIndex];
 
     private boolean isLeftLeg = false;
     private int spriteCounter = 0;
@@ -67,16 +60,16 @@ public class Player extends Entity {
         }
         switch(dir) {
             case UP:
-                playerImage = upImage[imageIndex];
+                playerImage = AssetManager.upImage[imageIndex];
                 break;
             case DOWN:
-                playerImage = downImage[imageIndex];
+                playerImage = AssetManager.downImage[imageIndex];
                 break;
             case RIGHT:
-                playerImage = rightImage[imageIndex];
+                playerImage = AssetManager.rightImage[imageIndex];
                 break;
             case LEFT:
-                playerImage = leftImage[imageIndex];
+                playerImage = AssetManager.leftImage[imageIndex];
                 break;
             default:
                 break;
@@ -84,16 +77,8 @@ public class Player extends Entity {
         spriteCounter++;
     }
 
-    public BufferedImage[] loadPlayerImage(String path, int numOfSprite) {
-        BufferedImage[] bf = new BufferedImage[numOfSprite];
-        for(int i = 0; i < numOfSprite; i++) {
-            bf[i] = loader.loadImage(path + (i+1) + ".png");
-        }
-        return bf;
-    }
-
     public void draw(Graphics g) {
-        g.drawImage(playerImage, x, y, render.getUnitSize(), render.getUnitSize(), null);
+        g.drawImage(playerImage, x, y, null);
 //        g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 

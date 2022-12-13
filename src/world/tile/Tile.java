@@ -46,7 +46,7 @@ public class Tile {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(tileImage, x*render.getUnitSize(), y*render.getUnitSize(), render.getUnitSize(), render.getUnitSize(), null);
+        g.drawImage(tileImage, x*render.getUnitSize(), y*render.getUnitSize(), null);
     }
 
     public boolean isSolid() {
