@@ -12,6 +12,8 @@ public class Map {
 
     BufferedImage worldMap;
 
+    private int mapSize = 20;
+
     public Map(Renderer render, TileManager tileManager) {
         this.render = render;
         this.worldTiles = tileManager.getWorldTiles();
@@ -20,22 +22,23 @@ public class Map {
     }
 
     public void createWorldMap() {
-        int worldMapWidth = 10*render.getUnitSize();
-        int worldMapHeight = 10*render.getUnitSize();
+        int worldMapWidth = mapSize*render.getUnitSize();
+        int worldMapHeight = mapSize*render.getUnitSize();
         worldMap = new BufferedImage(worldMapWidth, worldMapHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics g = worldMap.createGraphics();
-        int row = (-render.getSceneX())/render.getUnitSize();
-        int col = (-render.getSceneY())/render.getUnitSize();
-        if(row < 0) row = 0;
-        if(col < 0) col = 0;
+        int row = 0;
+        int col = 0;
         while(row < maxRow && col < maxCol) {
             int x = row*render.getUnitSize();
             int y = col*render.getUnitSize();
-            int translateX = render.getSceneX()-worldMapWidth/4;
-            int translateY = render.getSceneY()-worldMapHeight/12;
+            int translateX = -render.getCamX()+render.getSceneX()+worldMapWidth/2;
+            int translateY = -render.getCamY()+render.getSceneY()+worldMapHeight/2;
             if(
-                x < worldMapWidth - translateX &&
-                y < worldMapHeight - translateY)
+                x >= -translateX-render.getUnitSize() &&
+                y >= -translateY-render.getUnitSize() &&
+                x < worldMapWidth-translateX &&
+                y < worldMapHeight-translateY
+            )
             {
                 g.translate(translateX, translateY);
                 g.drawImage(worldTiles[row][col].getTileImage(), x, y, render.getUnitSize(), render.getUnitSize(), null);
@@ -52,8 +55,8 @@ public class Map {
 
     public void drawMinimap(Graphics g) {
         createWorldMap();
-        int width = 100;
-        int height = 100;
+        int width = 200;
+        int height = 200;
         int x = render.getWidth() - width - 50;
         int y = 50;
 
@@ -64,8 +67,9 @@ public class Map {
         double scale = (double) (render.getUnitSize() * maxRow)/width;
         int playerX = (int) ((-render.getCamX())/scale) + width/2;
         int playerY = (int) ((-render.getCamY())/scale) + height/2;
+        int playerSize = width/mapSize;
         g.translate(x, y);
-        g.drawImage(render.getPlayer().getPlayerImage(), playerX+4, playerY, 10, 10, null);
+        g.drawImage(render.getPlayer().getPlayerImage(), playerX, playerY, playerSize, playerSize, null);
 
     }
 }
