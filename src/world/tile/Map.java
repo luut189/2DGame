@@ -41,7 +41,12 @@ public class Map {
             )
             {
                 g.translate(translateX, translateY);
-                g.drawImage(worldTiles[row][col].getTileImage(), x, y, render.getUnitSize(), render.getUnitSize(), null);
+                if(!(worldTiles[row][col] instanceof AnimatedTile)) {
+                    g.drawImage(worldTiles[row][col].getTileImage(), x, y, render.getUnitSize(), render.getUnitSize(), null);
+                } else {
+                    g.setColor(((AnimatedTile) worldTiles[row][col]).getTileColor());
+                    g.fillRect(x, y, render.getUnitSize(), render.getUnitSize());
+                }
                 g.translate(-translateX, -translateY);
             }
             col++;
