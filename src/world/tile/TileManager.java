@@ -12,7 +12,7 @@ public class TileManager {
 
     protected int maxRow, maxCol;
 
-    private int[][] numberWorldTile;
+    private double[][] numberWorldTile;
     protected Tile[][] worldTiles;
 
     public TileManager(Renderer render) {
@@ -24,10 +24,9 @@ public class TileManager {
         maxRow = render.getWidth();
         maxCol = render.getHeight();
 
-        numberWorldTile = new int[maxRow][maxCol];
+        numberWorldTile = new double[maxRow][maxCol];
         worldTiles = new Tile[maxRow][maxCol];
-        LevelGenerator.randomGenerator(numberWorldTile);
-
+        LevelGenerator.noiseGenerator(numberWorldTile);
         loadAllTexture();
     }
 
@@ -46,12 +45,18 @@ public class TileManager {
     public void loadAllTexture() {
         for(int i = 0; i < worldTiles.length; i++) {
             for(int j = 0; j < worldTiles[i].length; j++) {
-                if(numberWorldTile[i][j] < 10) {
-                    worldTiles[i][j] = numberWorldTile[i][j] < 5 ? new Tile(render, i, j, "tree", true) : 
-                                                                        new AnimatedTile(render, i, j, "water", 2, true, new Color(0, 128, 255));
-                } else {
-                    worldTiles[i][j] = numberWorldTile[i][j] < 50 ? new Tile(render, i, j, "grass", false) : 
-                                                                        new Tile(render, i, j, "sand", false);
+                double value = numberWorldTile[i][j];
+                if(value < 0.01) {
+                    worldTiles[i][j] = new AnimatedTile(render, i, j, "water", 2, false, new Color(0, 128, 255));
+                }
+                else if(value < 0.1) {
+                    worldTiles[i][j] = new Tile(render, i, j, "sand", false);
+                }
+                else if(value < 0.2 || value < 0.4) {
+                    worldTiles[i][j] = new Tile(render, i, j, "grass", false);
+                }
+                else {
+                    worldTiles[i][j] = new Tile(render, i, j, "tree", true);
                 }
             }
         }

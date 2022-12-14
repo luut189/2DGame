@@ -12,4 +12,13 @@ public class LevelGenerator {
         }
     }
 
+    public static void noiseGenerator(double[][] worldTiles) {
+        double randomZ = Math.random();
+        for(int i = 0; i < worldTiles.length; i++) {
+            for(int j = 0; j < worldTiles[i].length; j++) {
+                worldTiles[i][j] = ImprovedNoise.noise(i*0.1, j*0.1, randomZ);
+            }
+        }
+    }
+
 }
