@@ -18,6 +18,7 @@ public class AssetManager {
         "grass",
         "sand",
         "tree",
+        "water",
         "water1",
         "water2"
     };

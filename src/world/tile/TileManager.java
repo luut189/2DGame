@@ -50,7 +50,7 @@ public class TileManager {
                     boolean isAnimated = Math.random() < 0.2;
                     worldTiles[i][j] = isAnimated ? 
                                         new AnimatedTile(render, i, j, "water", 2, false, new Color(37,142,206)) :
-                                        new Tile(render, i, j, "water1", false);
+                                        new Tile(render, i, j, "water", false);
                 }
                 else if(value < 0.2) {
                     worldTiles[i][j] = new Tile(render, i, j, "sand", false);
