@@ -58,7 +58,10 @@ public class Renderer extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
 
         tileManager = new TileManager(this);
-        map = new Map(this, tileManager);
+        
+        map = new Map(this, tileManager, 10);
+        keyHandler.setZoomDist(map.getMapSize());
+
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -111,6 +114,9 @@ public class Renderer extends JPanel implements Runnable {
     public void update() {
         Direction dir = keyHandler.getPlayerDirection();
         EntityState state = keyHandler.getPlayerState();
+        if(keyHandler.isZooming()) {
+            map.setMapSize(keyHandler.getZoomDist());
+        }
         if(dir == Direction.NONE) {
             player.setCurrentPlayerImage(state, keyHandler.getPreviousPlayerDirection());
             return;

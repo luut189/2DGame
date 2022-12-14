@@ -13,13 +13,22 @@ public class Map {
 
     BufferedImage worldMap;
 
-    private int mapSize = 20;
+    private int mapSize;
 
-    public Map(Renderer render, TileManager tileManager) {
+    public Map(Renderer render, TileManager tileManager, int mapSize) {
         this.render = render;
         this.worldTiles = tileManager.getWorldTiles();
         this.maxRow = tileManager.getMaxRow();
         this.maxCol = tileManager.getMaxCol();
+        this.mapSize = mapSize;
+    }
+
+    public int getMapSize() {
+        return mapSize;
+    }
+
+    public void setMapSize(int mapSize) {
+        this.mapSize = mapSize;
     }
 
     public void createWorldMap() {

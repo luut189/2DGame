@@ -14,9 +14,24 @@ public class KeyHandler extends KeyAdapter {
     private Direction previousPlayerDirection = Direction.NONE;
 
     private boolean hasMinimap = false;
+    
+    private boolean isZooming = false;
+    private int zoomDist;
 
     public boolean hasMinimap() {
         return hasMinimap;
+    }
+
+    public boolean isZooming() {
+        return isZooming;
+    }
+
+    public int getZoomDist() {
+        return zoomDist;
+    }
+
+    public void setZoomDist(int zoomDist) {
+        this.zoomDist = zoomDist;
     }
 
     public Direction getPlayerDirection() {
@@ -46,6 +61,9 @@ public class KeyHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        if(key == KeyEvent.VK_Q || key == KeyEvent.VK_E) {
+            isZooming = true;
+        }
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
             playerState = EntityState.WALKING;
         }
@@ -65,6 +83,14 @@ public class KeyHandler extends KeyAdapter {
                 break;
             case KeyEvent.VK_M:
                 hasMinimap = !hasMinimap;
+            case KeyEvent.VK_E:
+                if(zoomDist > 30) break;
+                zoomDist++;
+                break;
+            case KeyEvent.VK_Q:
+                if(zoomDist == 5) break;
+                zoomDist--;
+                break;
             default:
                 break;
         }
@@ -72,6 +98,9 @@ public class KeyHandler extends KeyAdapter {
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
+        if(key == KeyEvent.VK_Q || key == KeyEvent.VK_E) {
+            isZooming = false;
+        }
         if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
             playerState = EntityState.STANDING;
             previousPlayerDirection = playerDirection;
