@@ -83,6 +83,7 @@ public class KeyHandler extends KeyAdapter {
                 break;
             case KeyEvent.VK_M:
                 hasMinimap = !hasMinimap;
+                break;
             case KeyEvent.VK_E:
                 if(zoomDist > 30) break;
                 zoomDist++;
