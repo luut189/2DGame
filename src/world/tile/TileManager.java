@@ -47,12 +47,15 @@ public class TileManager {
             for(int j = 0; j < worldTiles[i].length; j++) {
                 double value = numberWorldTile[i][j];
                 if(value < 0.01) {
-                    worldTiles[i][j] = new AnimatedTile(render, i, j, "water", 2, false, new Color(0, 128, 255));
+                    boolean isAnimated = Math.random() < 0.2;
+                    worldTiles[i][j] = isAnimated ? 
+                                        new AnimatedTile(render, i, j, "water", 2, false, new Color(0, 128, 255)) :
+                                        new Tile(render, i, j, "water1", false);
                 }
-                else if(value < 0.1) {
+                else if(value < 0.2) {
                     worldTiles[i][j] = new Tile(render, i, j, "sand", false);
                 }
-                else if(value < 0.2 || value < 0.4) {
+                else if(value < 0.3 || value < 0.5) {
                     worldTiles[i][j] = new Tile(render, i, j, "grass", false);
                 }
                 else {
