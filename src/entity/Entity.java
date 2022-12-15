@@ -110,4 +110,8 @@ public class Entity {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public int getSwimmingSpeed() {
+        return speed - speed/3;
+    }
 }

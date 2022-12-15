@@ -121,23 +121,30 @@ public class Renderer extends JPanel implements Runnable {
             player.setCurrentPlayerImage(state, keyHandler.getPreviousPlayerDirection());
             return;
         }
+        
+        int nextTileX = (-sceneX+unitSize/2+camX)/unitSize;
+        int nextTileY = (-sceneY+unitSize+camY)/unitSize;
+        
+        if(tileManager.getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+            state = EntityState.SWIMMING;
+        }
         player.setCurrentPlayerImage(state, dir);
         switch(dir) {
             case UP:
                 if(-sceneY+camY < 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneY += player.getSpeed();
+                sceneY += state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
                 break;
             case DOWN:
                 if(-sceneY+camY >= tileManager.getMaxCol()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneY -= player.getSpeed();
+                sceneY -= state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
                 break;
             case RIGHT:
                 if(-sceneX+camX >= tileManager.getMaxRow()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneX -= player.getSpeed();
+                sceneX -= state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
                 break;
             case LEFT:
                 if(-sceneX+camX <= 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneX += player.getSpeed();
+                sceneX += state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
                 break;
             default:
                 break;

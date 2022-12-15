@@ -45,36 +45,55 @@ public class Player extends Entity {
     }
 
     public void setCurrentPlayerImage(EntityState state, Direction dir) {
-        boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
-        if(spriteCounter > (isSideWay ? 10 : 12)) {
-            isLeftLeg = !isLeftLeg;
-            if(isSideWay) {
-                imageIndex = increaseImageIndex(imageIndex, 4);
+        if(state == EntityState.WALKING) {
+            boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
+            if(spriteCounter > (isSideWay ? 10 : 12)) {
+                isLeftLeg = !isLeftLeg;
+                if(isSideWay) {
+                    imageIndex = increaseImageIndex(imageIndex, 4);
+                }
+                spriteCounter = 0;
             }
-            spriteCounter = 0;
-        }
-        if(state == EntityState.STANDING) {
+            if(!isSideWay) {
+                imageIndex = isLeftLeg ? 1 : 2;
+            }
+            switch(dir) {
+                case UP:
+                    playerImage = AssetManager.upImage[imageIndex];
+                    break;
+                case DOWN:
+                    playerImage = AssetManager.downImage[imageIndex];
+                    break;
+                case RIGHT:
+                    playerImage = AssetManager.rightImage[imageIndex];
+                    break;
+                case LEFT:
+                    playerImage = AssetManager.leftImage[imageIndex];
+                    break;
+                default:
+                    break;
+            }
+            spriteCounter++;
+        } else if(state == EntityState.SWIMMING) {
+            switch(dir) {
+                case UP:
+                    playerImage = AssetManager.upSwimmingImage;
+                    break;
+                case DOWN:
+                    playerImage = AssetManager.downSwimmingImage;
+                    break;
+                case RIGHT:
+                    playerImage = AssetManager.rightSwimmingImage;
+                    break;
+                case LEFT:
+                    playerImage = AssetManager.leftSwimmingImage;
+                    break;
+                default:
+                    break;
+            }
+        } else if(state == EntityState.STANDING) {
             imageIndex = 0;
-        } else if(!isSideWay) {
-            imageIndex = isLeftLeg ? 1 : 2;
         }
-        switch(dir) {
-            case UP:
-                playerImage = AssetManager.upImage[imageIndex];
-                break;
-            case DOWN:
-                playerImage = AssetManager.downImage[imageIndex];
-                break;
-            case RIGHT:
-                playerImage = AssetManager.rightImage[imageIndex];
-                break;
-            case LEFT:
-                playerImage = AssetManager.leftImage[imageIndex];
-                break;
-            default:
-                break;
-        }
-        spriteCounter++;
     }
 
     public void draw(Graphics g) {
