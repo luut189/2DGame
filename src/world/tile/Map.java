@@ -3,6 +3,7 @@ package world.tile;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import gfx.KeyHandler;
 import gfx.Renderer;
 
 public class Map {
@@ -29,6 +30,12 @@ public class Map {
 
     public void setMapSize(int mapSize) {
         this.mapSize = mapSize;
+    }
+
+    public void update(KeyHandler keyHandler) {
+        if(keyHandler.isZooming()) {
+            setMapSize(keyHandler.getZoomDist());
+        }
     }
 
     public void createWorldMap() {

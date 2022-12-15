@@ -5,8 +5,6 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import entity.Direction;
-import entity.EntityState;
 import entity.Player;
 
 import utils.AssetManager;
@@ -29,10 +27,12 @@ public class Renderer extends JPanel implements Runnable {
     private int FPS;
 
     private TileManager tileManager;
+
     private Map map;
 
     private int camX, camY;
     private int sceneX, sceneY;
+
     private Player player;
 
     private Thread gameThread;
@@ -50,8 +50,6 @@ public class Renderer extends JPanel implements Runnable {
         sceneX = 0;
         sceneY = 0;
 
-        player = new Player(this, camX, camY);
-
         this.FPS = FPS;
 
         this.setPreferredSize(new Dimension(this.width, this.height));
@@ -62,6 +60,8 @@ public class Renderer extends JPanel implements Runnable {
         map = new Map(this, tileManager, 10);
         keyHandler.setZoomDist(map.getMapSize());
 
+        player = new Player(this, camX, camY);
+
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -70,8 +70,16 @@ public class Renderer extends JPanel implements Runnable {
         return player;
     }
 
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
     public int getUnitScale() {
         return scale;
+    }
+
+    public int getUnitSize() {
+        return unitSize;
     }
 
     public int getWidth() {
@@ -82,16 +90,20 @@ public class Renderer extends JPanel implements Runnable {
         return height;
     }
 
-    public int getUnitSize() {
-        return unitSize;
-    }
-
     public int getSceneX() {
         return sceneX;
+    }
+    
+    public void setSceneX(int sceneX) {
+        this.sceneX = sceneX;
     }
 
     public int getSceneY() {
         return sceneY;
+    }
+
+    public void setSceneY(int sceneY) {
+        this.sceneY = sceneY;
     }
 
     public int getCamX() {
@@ -112,43 +124,8 @@ public class Renderer extends JPanel implements Runnable {
     }
 
     public void update() {
-        Direction dir = keyHandler.getPlayerDirection();
-        EntityState state = keyHandler.getPlayerState();
-        if(keyHandler.isZooming()) {
-            map.setMapSize(keyHandler.getZoomDist());
-        }
-        if(dir == Direction.NONE) {
-            player.setCurrentPlayerImage(state, keyHandler.getPreviousPlayerDirection());
-            return;
-        }
-        
-        int nextTileX = (-sceneX+unitSize/2+camX)/unitSize;
-        int nextTileY = (-sceneY+unitSize+camY)/unitSize;
-        
-        if(tileManager.getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
-            state = EntityState.SWIMMING;
-        }
-        player.setCurrentPlayerImage(state, dir);
-        switch(dir) {
-            case UP:
-                if(-sceneY+camY < 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneY += state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
-                break;
-            case DOWN:
-                if(-sceneY+camY >= tileManager.getMaxCol()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneY -= state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
-                break;
-            case RIGHT:
-                if(-sceneX+camX >= tileManager.getMaxRow()*unitSize-unitSize || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneX -= state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
-                break;
-            case LEFT:
-                if(-sceneX+camX <= 0 || player.collide(tileManager.getWorldTiles(), dir)) break;
-                sceneX += state != EntityState.SWIMMING ? player.getSpeed() : player.getSwimmingSpeed();
-                break;
-            default:
-                break;
-        }
+        map.update(keyHandler);
+        player.update(this, keyHandler, tileManager);
     }
 
     @Override

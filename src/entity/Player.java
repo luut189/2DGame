@@ -4,13 +4,18 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import gfx.KeyHandler;
 import gfx.Renderer;
 import utils.AssetManager;
+import world.tile.TileManager;
 
 public class Player extends Entity {
 
+    private Direction playerDir;
+    private EntityState playerState;
+    
     private int imageIndex = 0;
-    private BufferedImage playerImage = AssetManager.downImage[imageIndex];
+    private BufferedImage playerImage;
 
     private boolean isLeftLeg = false;
     private int spriteCounter = 0;
@@ -20,6 +25,7 @@ public class Player extends Entity {
         this.x = x;
         this.y = y;
         this.speed = 4;
+        initTexture(render);
 
         int offsetX = render.getUnitSize()/4;
         int offsetY = render.getUnitSize()/4;
@@ -30,6 +36,63 @@ public class Player extends Entity {
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
         // System.out.println(offsetX + " " + offsetY);
         // System.out.println(solidArea.x + " " + solidArea.y + " " + solidArea.width + " " + solidArea.height);
+    }
+
+    public void initTexture(Renderer render) {
+        playerState = EntityState.STANDING;
+        playerDir = Direction.NONE;
+
+        int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
+        int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
+        
+        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+            playerState = EntityState.SWIMMING;
+        }
+        
+        if(playerState == EntityState.STANDING) {
+            playerImage = AssetManager.downImage[imageIndex];
+        } else {
+            playerImage = AssetManager.downSwimmingImage;
+        }
+    }
+
+    public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {
+        playerDir = keyHandler.getPlayerDirection();
+        playerState = keyHandler.getPlayerState();
+
+        if(playerDir == Direction.NONE) {
+            setCurrentPlayerImage(playerState, keyHandler.getPreviousPlayerDirection());
+            return;
+        }
+        
+        int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
+        int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
+        
+        if(tileManager.getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+            playerState = EntityState.SWIMMING;
+        }
+
+        setCurrentPlayerImage(playerState, playerDir);
+        switch(playerDir) {
+            case UP:
+                if(-render.getSceneY()+render.getCamY() < 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
+                render.setSceneY(render.getSceneY() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                break;
+            case DOWN:
+                if(-render.getSceneY()+render.getCamY() >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
+                render.setSceneY(render.getSceneY() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                break;
+            case RIGHT:
+                if(-render.getSceneX()+render.getCamX() >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
+                render.setSceneX(render.getSceneX() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                break;
+            case LEFT:
+                if(-render.getSceneX()+render.getCamX() <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
+                render.setSceneX(render.getSceneX() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                break;
+            default:
+                break;
+        }
     }
 
     public int increaseImageIndex(int currentIndex, int maxIndex) {
@@ -44,9 +107,9 @@ public class Player extends Entity {
         return playerImage;
     }
 
-    public void setCurrentPlayerImage(EntityState state, Direction dir) {
-        if(state == EntityState.WALKING) {
-            boolean isSideWay = dir == Direction.RIGHT || dir == Direction.LEFT;
+    public void setCurrentPlayerImage(EntityState playerState, Direction playerDir) {
+        if(playerState == EntityState.WALKING) {
+            boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
             if(spriteCounter > (isSideWay ? 10 : 12)) {
                 isLeftLeg = !isLeftLeg;
                 if(isSideWay) {
@@ -57,7 +120,7 @@ public class Player extends Entity {
             if(!isSideWay) {
                 imageIndex = isLeftLeg ? 1 : 2;
             }
-            switch(dir) {
+            switch(playerDir) {
                 case UP:
                     playerImage = AssetManager.upImage[imageIndex];
                     break;
@@ -74,8 +137,8 @@ public class Player extends Entity {
                     break;
             }
             spriteCounter++;
-        } else if(state == EntityState.SWIMMING) {
-            switch(dir) {
+        } else if(playerState == EntityState.SWIMMING) {
+            switch(playerDir) {
                 case UP:
                     playerImage = AssetManager.upSwimmingImage;
                     break;
@@ -91,7 +154,7 @@ public class Player extends Entity {
                 default:
                     break;
             }
-        } else if(state == EntityState.STANDING) {
+        } else if(playerState == EntityState.STANDING) {
             imageIndex = 0;
         }
     }
