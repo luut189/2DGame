@@ -17,6 +17,7 @@ public class Player extends Entity {
     private int imageIndex = 0;
     private BufferedImage playerImage;
 
+    private boolean isSwimming = false;
     private boolean isLeftLeg = false;
     private int spriteCounter = 0;
 
@@ -47,6 +48,7 @@ public class Player extends Entity {
         
         if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             playerState = EntityState.SWIMMING;
+            isSwimming = true;
         }
         
         if(playerState == EntityState.STANDING) {
@@ -58,7 +60,7 @@ public class Player extends Entity {
 
     public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {
         playerDir = keyHandler.getPlayerDirection();
-        playerState = keyHandler.getPlayerState();
+        playerState = isSwimming ? EntityState.SWIMMING : keyHandler.getPlayerState();
 
         if(playerDir == Direction.NONE) {
             setCurrentPlayerImage(playerState, keyHandler.getPreviousPlayerDirection());
@@ -70,6 +72,9 @@ public class Player extends Entity {
         
         if(tileManager.getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             playerState = EntityState.SWIMMING;
+            isSwimming = true;
+        } else {
+            isSwimming = false;
         }
 
         setCurrentPlayerImage(playerState, playerDir);
@@ -108,7 +113,25 @@ public class Player extends Entity {
     }
 
     public void setCurrentPlayerImage(EntityState playerState, Direction playerDir) {
-        if(playerState == EntityState.WALKING) {
+        if(playerState == EntityState.STANDING) {
+            imageIndex = 0;
+            switch(playerDir) {
+                case UP:
+                    playerImage = AssetManager.upImage[imageIndex];
+                    break;
+                case DOWN:
+                    playerImage = AssetManager.downImage[imageIndex];
+                    break;
+                case RIGHT:
+                    playerImage = AssetManager.rightImage[imageIndex];
+                    break;
+                case LEFT:
+                    playerImage = AssetManager.leftImage[imageIndex];
+                    break;
+                default:
+                    break;
+            }
+        } else if(playerState == EntityState.WALKING) {
             boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
             if(spriteCounter > (isSideWay ? 10 : 12)) {
                 isLeftLeg = !isLeftLeg;
@@ -154,8 +177,6 @@ public class Player extends Entity {
                 default:
                     break;
             }
-        } else if(playerState == EntityState.STANDING) {
-            imageIndex = 0;
         }
     }
 
