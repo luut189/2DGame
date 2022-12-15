@@ -86,7 +86,7 @@ public class Map {
 
         g.drawImage(worldMap, x, y, width, height, null);
         
-        double scale = (double) (render.getUnitSize() * maxRow)/width;
+        double scale = (double) (render.getUnitSize() * maxRow)/maxRow*render.getUnitSize();
         int playerX = (int) ((-render.getCamX())/scale) + width/2;
         int playerY = (int) ((-render.getCamY())/scale) + height/2;
         int playerSize = width/mapSize;
