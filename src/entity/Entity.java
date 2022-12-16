@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import gfx.Renderer;
 import world.tile.Tile;
 
-public class Entity {
+public abstract class Entity {
 
     protected Renderer render;
 
@@ -13,6 +13,13 @@ public class Entity {
     protected int speed;
 
     protected Rectangle solidArea;
+
+    public Entity(Renderer render, int x, int y, int speed) {
+        this.render = render;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+    }
 
     // Credit: RyiSnow (I changed it so that it fits how my code works)
     public boolean collide(Tile[][] tileMap, Direction dir) {

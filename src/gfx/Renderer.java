@@ -60,7 +60,7 @@ public class Renderer extends JPanel implements Runnable {
         map = new Map(this, tileManager, 10);
         keyHandler.setZoomDist(map.getMapSize());
 
-        player = new Player(this, camX, camY);
+        player = new Player(this, camX, camY, 4);
 
         gameThread = new Thread(this);
         gameThread.start();

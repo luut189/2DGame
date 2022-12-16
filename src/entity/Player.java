@@ -21,11 +21,8 @@ public class Player extends Entity {
     private boolean isLeftLeg = false;
     private int spriteCounter = 0;
 
-    public Player(Renderer render, int x, int y) {
-        this.render = render;
-        this.x = x;
-        this.y = y;
-        this.speed = 4;
+    public Player(Renderer render, int x, int y, int speed) {
+        super(render, x, y, speed);
         initTexture(render);
 
         int offsetX = render.getUnitSize()/4;
