@@ -64,6 +64,7 @@ public class Renderer extends JPanel implements Runnable {
 
         gameThread = new Thread(this);
         gameThread.start();
+        System.out.println("Testing the CLOC!!");
     }
 
     public Player getPlayer() {
