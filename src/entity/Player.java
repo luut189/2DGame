@@ -35,8 +35,6 @@ public class Player extends Entity {
         int rectHeight = render.getUnitSize()-offsetY;
         
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
-        // System.out.println(offsetX + " " + offsetY);
-        // System.out.println(solidArea.x + " " + solidArea.y + " " + solidArea.width + " " + solidArea.height);
     }
 
     public void initTexture(Renderer render) {
