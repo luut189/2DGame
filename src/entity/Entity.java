@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import gfx.Renderer;
+
 import world.tile.Tile;
 
 public abstract class Entity {

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 import gfx.Renderer;
+
 import world.gen.LevelGenerator;
 
 public class TileManager {

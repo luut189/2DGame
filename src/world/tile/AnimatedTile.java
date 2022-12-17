@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import gfx.Renderer;
+
 import utils.AssetManager;
 
 public class AnimatedTile extends Tile {
