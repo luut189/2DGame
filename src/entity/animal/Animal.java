@@ -29,20 +29,14 @@ public class Animal extends Entity {
         int rectHeight = render.getUnitSize()-offsetY;
         
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
+        
+        direction = Direction.NONE;
 
         initTexture(render);
     }
 
     public void initTexture(Renderer render) {
         animalImage = AssetManager.downImage[0];
-    }
-
-    public Direction getAnimalDirection(double num) {
-        if(num < 0.25) return Direction.UP;
-        if(num < 0.5) return Direction.DOWN;
-        if(num < 0.75) return Direction.LEFT;
-        if(num < 1) return Direction.RIGHT;
-        return Direction.NONE;
     }
     
     @Override
@@ -111,8 +105,15 @@ public class Animal extends Entity {
         return false;
     }
 
+    public Direction getAnimalDirection(double num) {
+        if(num <= 0.25) return Direction.UP;
+        if(num <= 0.5) return Direction.DOWN;
+        if(num <= 0.75) return Direction.LEFT;
+        if(num <= 1) return Direction.RIGHT;
+        return Direction.NONE;
+    }
+
     public void move(Direction dir, TileManager tileManager) {
-        System.out.println(x + " " + y);
         switch(dir) {
             case UP:
                 if(y <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
@@ -136,13 +137,13 @@ public class Animal extends Entity {
     }
 
     public void update(TileManager tileManager) {
-        Direction animalDirection = getAnimalDirection(Math.random());
-        if(counter == 10) {
-            animalDirection = getAnimalDirection(Math.random());
-            move(animalDirection, tileManager);
+        counter++;
+        System.out.println(direction);
+        if(counter == 40) {
+            direction = getAnimalDirection(Math.random());
             counter = 0;
         }
-        counter++;
+        move(direction, tileManager);
     }
 
     @Override
