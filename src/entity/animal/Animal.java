@@ -10,6 +10,7 @@ import entity.Entity;
 import gfx.Renderer;
 
 import utils.AssetManager;
+import world.tile.Tile;
 import world.tile.TileManager;
 
 public class Animal extends Entity {
@@ -42,24 +43,90 @@ public class Animal extends Entity {
         if(num < 1) return Direction.RIGHT;
         return Direction.NONE;
     }
+    
+    @Override
+    // Credit: RyiSnow (I changed it so that it fits how my code works)
+    public boolean collide(Tile[][] tileMap, Direction dir) {
+        int entityLeftX = x + solidArea.x;
+        int entityRightX = x + solidArea.x + solidArea.width;
+
+        int entityTopY = y + solidArea.y;
+        int entityBottomY = y + solidArea.y + solidArea.height;
+
+        int entityLeftCol = entityLeftX/render.getUnitSize();
+        int entityRightCol = entityRightX/render.getUnitSize();
+        int entityTopRow = entityTopY/render.getUnitSize();
+        int entityBottomRow = entityBottomY/render.getUnitSize();
+
+        Tile tile1, tile2;
+        switch(dir) {
+            case UP:
+                entityTopRow = (entityTopY-speed)/render.getUnitSize();
+                if(entityBottomRow < tileMap[entityLeftCol].length && entityBottomRow < tileMap[entityRightCol].length) {
+                    tile1 = tileMap[entityLeftCol][entityTopRow];
+                    tile2 = tileMap[entityRightCol][entityTopRow];
+                    return tile1.isSolid() || tile2.isSolid();
+                }
+                break;
+            case DOWN:
+                entityBottomRow = (entityBottomY+speed)/render.getUnitSize();
+                if(entityBottomRow < tileMap[entityLeftCol].length) {
+                    tile1 = tileMap[entityLeftCol][entityBottomRow];
+                    tile2 = tileMap[entityRightCol][entityBottomRow];
+                    return tile1.isSolid() || tile2.isSolid();
+                }
+                break;
+            case RIGHT:
+                entityRightCol = (entityRightX+speed)/render.getUnitSize();
+                if(entityRightCol < tileMap.length) {
+                    tile1 = entityTopRow < tileMap[entityRightCol].length ? tileMap[entityRightCol][entityTopRow] : null;
+                    tile2 = entityBottomRow < tileMap[entityRightCol].length ? tileMap[entityRightCol][entityBottomRow] : null;
+                    if(tile1 == null && tile2 == null) {
+                        return false;
+                    }
+                    if(tile1 == null) return tile2.isSolid();
+                    if(tile2 == null) return tile1.isSolid();
+
+                    return tile1.isSolid() || tile2.isSolid();
+                }
+                break;
+            case LEFT:
+                entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
+                if(entityLeftCol < tileMap.length) {
+                    tile1 = entityTopRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityTopRow] : null;
+                    tile2 = entityBottomRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityBottomRow] : null;
+                    if(tile1 == null && tile2 == null) {
+                        return false;
+                    }
+                    if(tile1 == null) return tile2.isSolid();
+                    if(tile2 == null) return tile1.isSolid();
+
+                    return tile1.isSolid() || tile2.isSolid();
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
 
     public void move(Direction dir, TileManager tileManager) {
         System.out.println(x + " " + y);
         switch(dir) {
             case UP:
-                if(-render.getSceneY()+y < 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                if(y < 0 || collide(tileManager.getWorldTiles(), dir)) break;
                 y -= speed;
                 break;
             case DOWN:
-                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
                 y += speed;
                 break;
             case RIGHT:
-                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
                 x += speed;
                 break;
             case LEFT:
-                if(-render.getSceneX()+x <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                if(x <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
                 x -= speed;
                 break;
             default:
