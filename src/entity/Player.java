@@ -75,19 +75,19 @@ public class Player extends Entity {
         setCurrentPlayerImage(playerState, playerDir);
         switch(playerDir) {
             case UP:
-                if(-render.getSceneY()+render.getCamY() < 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
+                if(-render.getSceneY()+y < 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
                 render.setSceneY(render.getSceneY() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:
-                if(-render.getSceneY()+render.getCamY() >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
+                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
                 render.setSceneY(render.getSceneY() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case RIGHT:
-                if(-render.getSceneX()+render.getCamX() >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
+                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
                 render.setSceneX(render.getSceneX() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case LEFT:
-                if(-render.getSceneX()+render.getCamX() <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
+                if(-render.getSceneX()+x <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
                 render.setSceneX(render.getSceneX() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             default:
@@ -175,6 +175,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics g) {
         g.drawImage(playerImage, x, y, null);
 //        g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);

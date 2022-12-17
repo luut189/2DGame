@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import gfx.Renderer;
@@ -23,11 +24,11 @@ public abstract class Entity {
 
     // Credit: RyiSnow (I changed it so that it fits how my code works)
     public boolean collide(Tile[][] tileMap, Direction dir) {
-        int entityLeftX = -render.getSceneX() + render.getCamX() + solidArea.x;
-        int entityRightX = -render.getSceneX() + render.getCamX() + solidArea.x + solidArea.width;
+        int entityLeftX = -render.getSceneX() + x + solidArea.x;
+        int entityRightX = -render.getSceneX() + x + solidArea.x + solidArea.width;
 
-        int entityTopY = -render.getSceneY() + render.getCamY() + solidArea.y;
-        int entityBottomY = -render.getSceneY() + render.getCamY() + solidArea.y + solidArea.height;
+        int entityTopY = -render.getSceneY() + y + solidArea.y;
+        int entityBottomY = -render.getSceneY() + y + solidArea.y + solidArea.height;
 
         int entityLeftCol = entityLeftX/render.getUnitSize();
         int entityRightCol = entityRightX/render.getUnitSize();
@@ -121,4 +122,6 @@ public abstract class Entity {
     public int getSwimmingSpeed() {
         return speed - speed/3;
     }
+
+    public abstract void draw(Graphics g);
 }
