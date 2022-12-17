@@ -13,9 +13,6 @@ import world.tile.Tile;
 import world.tile.TileManager;
 
 public class Player extends Entity {
-
-    private Direction playerDir;
-    private EntityState playerState;
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
@@ -38,18 +35,18 @@ public class Player extends Entity {
     }
 
     public void initTexture(Renderer render) {
-        playerState = EntityState.STANDING;
-        playerDir = Direction.NONE;
+        state = EntityState.STANDING;
+        direction = Direction.NONE;
 
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
         if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
-            playerState = EntityState.SWIMMING;
+            state = EntityState.SWIMMING;
             isSwimming = true;
         }
         
-        if(playerState == EntityState.STANDING) {
+        if(state == EntityState.STANDING) {
             playerImage = AssetManager.downImage[imageIndex];
         } else {
             playerImage = AssetManager.downSwimmingImage;
@@ -123,11 +120,11 @@ public class Player extends Entity {
     }
 
     public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {
-        playerDir = keyHandler.getPlayerDirection();
-        playerState = isSwimming ? EntityState.SWIMMING : keyHandler.getPlayerState();
+        direction = keyHandler.getPlayerDirection();
+        state = isSwimming ? EntityState.SWIMMING : keyHandler.getPlayerState();
 
-        if(playerDir == Direction.NONE) {
-            setCurrentPlayerImage(playerState, keyHandler.getPreviousPlayerDirection());
+        if(direction == Direction.NONE) {
+            setCurrentPlayerImage(state, keyHandler.getPreviousPlayerDirection());
             return;
         }
         
@@ -135,29 +132,29 @@ public class Player extends Entity {
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
         if(tileManager.getWorldTiles()[nextTileX][nextTileY < tileManager.getMaxCol() ? nextTileY : nextTileY-1].getTileName().equals("water")) {
-            playerState = EntityState.SWIMMING;
+            state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
             isSwimming = false;
         }
 
-        setCurrentPlayerImage(playerState, playerDir);
-        switch(playerDir) {
+        setCurrentPlayerImage(state, direction);
+        switch(direction) {
             case UP:
-                if(-render.getSceneY()+y <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
-                render.setSceneY(render.getSceneY() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-render.getSceneY()+y <= 0 || collide(tileManager.getWorldTiles(), direction)) break;
+                render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:
-                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
-                render.setSceneY(render.getSceneY() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), direction)) break;
+                render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case RIGHT:
-                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), playerDir)) break;
-                render.setSceneX(render.getSceneX() - (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), direction)) break;
+                render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case LEFT:
-                if(-render.getSceneX()+x <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
-                render.setSceneX(render.getSceneX() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-render.getSceneX()+x <= 0 || collide(tileManager.getWorldTiles(), direction)) break;
+                render.setSceneX(render.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             default:
                 break;

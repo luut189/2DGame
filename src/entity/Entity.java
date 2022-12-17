@@ -11,6 +11,9 @@ public abstract class Entity {
 
     protected Renderer render;
 
+    protected Direction direction;
+    protected EntityState state;
+
     protected int x, y;
     protected int speed;
 
