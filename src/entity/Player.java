@@ -144,7 +144,7 @@ public class Player extends Entity {
         setCurrentPlayerImage(playerState, playerDir);
         switch(playerDir) {
             case UP:
-                if(-render.getSceneY()+y < 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
+                if(-render.getSceneY()+y <= 0 || collide(tileManager.getWorldTiles(), playerDir)) break;
                 render.setSceneY(render.getSceneY() + (playerState != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:

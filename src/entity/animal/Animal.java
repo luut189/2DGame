@@ -115,7 +115,7 @@ public class Animal extends Entity {
         System.out.println(x + " " + y);
         switch(dir) {
             case UP:
-                if(y < 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                if(y <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
                 y -= speed;
                 break;
             case DOWN:
