@@ -3,9 +3,11 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import gfx.KeyHandler;
 import gfx.Renderer;
 
 import world.tile.Tile;
+import world.tile.TileManager;
 
 public abstract class Entity {
 
@@ -18,6 +20,7 @@ public abstract class Entity {
     protected int speed;
 
     protected Rectangle solidArea;
+    protected int solidAreaDefaultX, solidAreaDefaultY;
 
     protected int spriteCounter = 0;
 
@@ -26,6 +29,10 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
         this.speed = speed;
+
+        solidArea = new Rectangle(0, 0, render.getUnitSize(), render.getUnitSize());
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     public boolean isInRange(Tile[][] tileMap, int x, int y) {
@@ -34,6 +41,10 @@ public abstract class Entity {
             y >= 0 && y < tileMap[x].length
         );
     }
+
+    public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {}
+
+    public void update(TileManager tileManager) {}
 
     public abstract void initTexture();
 

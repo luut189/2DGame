@@ -21,14 +21,6 @@ public abstract class Animal extends Entity {
 
     public Animal(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
-
-        int offsetX = 0;
-        int offsetY = 0;
-
-        int rectWidth = render.getUnitSize()-offsetX*2;
-        int rectHeight = render.getUnitSize()-offsetY;
-        
-        this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
         
         direction = Direction.NONE;
         state = EntityState.STANDING;
@@ -135,6 +127,7 @@ public abstract class Animal extends Entity {
         }
     }
 
+    @Override
     public void update(TileManager tileManager) {
         counter++;
         if(counter == 40) {

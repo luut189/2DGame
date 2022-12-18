@@ -31,6 +31,8 @@ public class Player extends Entity {
         int rectHeight = render.getUnitSize()-offsetY;
         
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     @Override
@@ -107,6 +109,7 @@ public class Player extends Entity {
         return false;
     }
 
+    @Override
     public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {
         direction = keyHandler.getPlayerDirection();
         state = isSwimming ? EntityState.SWIMMING : keyHandler.getPlayerState();
