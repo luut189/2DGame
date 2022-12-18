@@ -2,10 +2,13 @@ package gfx;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
+import entity.animal.Animal;
 import entity.animal.Slime;
 
 import utils.AssetManager;
@@ -35,7 +38,7 @@ public class Renderer extends JPanel implements Runnable {
     private int sceneX, sceneY;
 
     private Player player;
-    private Slime[] slimes;
+    private ArrayList<Entity> entityList;
 
     private Thread gameThread;
 
@@ -63,8 +66,8 @@ public class Renderer extends JPanel implements Runnable {
         keyHandler.setZoomDist(map.getMapSize());
 
         player = new Player(this, camX, camY, 4);
-        slimes = new Slime[1000];
-        for(int i = 0; i < slimes.length; i++) {
+        entityList = new ArrayList<>();
+        for(int i = 0; i < 1000; i++) {
             int x = (int) (Math.random()*this.width*unitSize)-unitSize;
             int y = (int) (Math.random()*this.height*unitSize)-unitSize;
             while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
@@ -72,7 +75,7 @@ public class Renderer extends JPanel implements Runnable {
                 x = (int) (Math.random()*this.width*unitSize)-unitSize;
                 y = (int) (Math.random()*this.height*unitSize)-unitSize;
             }
-            slimes[i] = new Slime(this, x, y, 1);
+            entityList.add(new Slime(this, x, y, 1));
         }
 
         gameThread = new Thread(this);
@@ -131,10 +134,8 @@ public class Renderer extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         tileManager.drawAllTexture(g);
-        for(int i = 0; i < slimes.length; i++) {
-            if(slimes[i] != null) {
-                slimes[i].draw(g);
-            }
+        for(Entity entity : entityList) {
+            entity.draw(g);
         }
         g.translate(-sceneX, -sceneY);
         player.draw(g);
@@ -144,10 +145,8 @@ public class Renderer extends JPanel implements Runnable {
     public void update() {
         map.update(keyHandler);
         player.update(this, keyHandler, tileManager);
-        for(int i = 0; i < slimes.length; i++) {
-            if(slimes[i] != null) {
-                slimes[i].update(tileManager);
-            }
+        for(Entity entity : entityList) {
+            if(entity instanceof Animal) ((Animal) entity).update(tileManager);
         }
     }
 
