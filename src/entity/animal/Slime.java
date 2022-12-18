@@ -1,5 +1,7 @@
 package entity.animal;
 
+import java.awt.Rectangle;
+
 import entity.EntityState;
 import gfx.Renderer;
 import utils.AssetManager;
@@ -9,6 +11,16 @@ public class Slime extends Animal {
 
     public Slime(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
+
+        int offsetX = 0;
+        int offsetY = render.getUnitSize()/3 - 12;
+
+        int rectWidth = render.getUnitSize();
+        int rectHeight = render.getUnitSize() - render.getUnitSize()/3 + 12;
+        
+        this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     @Override

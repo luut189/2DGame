@@ -1,12 +1,13 @@
 package entity.animal;
 
+// import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import entity.Direction;
 import entity.Entity;
 import entity.EntityState;
+
 import gfx.Renderer;
 
 import world.tile.Tile;
@@ -31,7 +32,7 @@ public abstract class Animal extends Entity {
     
     @Override
     // Credit: RyiSnow (I changed it so that it fits how my code works)
-    public boolean collideWithTile(Tile[][] tileMap, Direction dir) {
+    public boolean collideWithTile(Tile[][] tileMap) {
         int entityLeftX = x + solidArea.x;
         int entityRightX = x + solidArea.x + solidArea.width;
 
@@ -44,7 +45,7 @@ public abstract class Animal extends Entity {
         int entityBottomRow = entityBottomY/render.getUnitSize();
 
         Tile tile1, tile2;
-        switch(dir) {
+        switch(direction) {
             case UP:
                 entityTopRow = (entityTopY-speed)/render.getUnitSize();
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
@@ -99,26 +100,30 @@ public abstract class Animal extends Entity {
         return Direction.NONE;
     }
 
-    public void move(Direction dir, TileManager tileManager) {
+    public void move(TileManager tileManager) {
+        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+            state = EntityState.STANDING;
+            return;
+        }
         state = EntityState.STANDING;
-        switch(dir) {
+        switch(direction) {
             case UP:
-                if(y <= 0 || collideWithTile(tileManager.getWorldTiles(), dir)) break;
+                if(y <= 0) break;
                 state = EntityState.WALKING;
                 y -= speed;
                 break;
             case DOWN:
-                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), dir)) break;
+                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 y += speed;
                 break;
             case RIGHT:
-                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), dir)) break;
+                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 x += speed;
                 break;
             case LEFT:
-                if(x <= 0 || collideWithTile(tileManager.getWorldTiles(), dir)) break;
+                if(x <= 0) break;
                 state = EntityState.WALKING;
                 x -= speed;
                 break;
@@ -134,7 +139,7 @@ public abstract class Animal extends Entity {
             direction = getAnimalDirection(Math.random());
             counter = 0;
         }
-        move(direction, tileManager);
+        move(tileManager);
     }
 
     @Override
@@ -147,6 +152,7 @@ public abstract class Animal extends Entity {
         ) {
             g.drawImage(animalImage, x, y, null);
         }
+        // g.setColor(new Color(2, 3, 4, 50));
         // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
     }
     

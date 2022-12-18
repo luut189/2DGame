@@ -3,6 +3,8 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import java.util.ArrayList;
+
 import gfx.KeyHandler;
 import gfx.Renderer;
 
@@ -48,7 +50,109 @@ public abstract class Entity {
 
     public abstract void initTexture();
 
-    public abstract boolean collideWithTile(Tile[][] tileMap, Direction dir);
+    public abstract boolean collideWithTile(Tile[][] tileMap);
+
+    public boolean collideWithEntity(ArrayList<Entity> targetList) {
+        for(Entity entity : targetList) {
+            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
+                if(this.equals(render.getPlayer())) {
+                    solidArea.x += -render.getSceneX() + x;
+                    solidArea.y += -render.getSceneY() + y;
+                } else {
+                    solidArea.x += x;
+                    solidArea.y += y;
+                }
+                entity.getSolidArea().x += entity.getX();
+                entity.getSolidArea().y += entity.getY();
+
+                switch(direction) {
+                    case UP:
+                        solidArea.y -= speed;
+                        break;
+                    case DOWN:
+                        solidArea.y += speed;
+                        break;
+                    case RIGHT:
+                        solidArea.x += speed;
+                        break;
+                    case LEFT:
+                        solidArea.x -= speed;
+                        break;
+                    default:
+                        break;
+                }
+                if(solidArea.intersects(entity.getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                    entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+                    return true;
+                }
+                solidArea.x = solidAreaDefaultX;
+                solidArea.y = solidAreaDefaultY;
+                entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+            }
+        }
+        return false;
+    }
+
+    public boolean collideWithPlayer() {
+        solidArea.x += x;
+        solidArea.y += y;
+        render.getPlayer().getSolidArea().x += -render.getSceneX() + render.getPlayer().getX();
+        render.getPlayer().getSolidArea().y += -render.getSceneY() + render.getPlayer().getY();
+
+        switch(direction) {
+            case UP:
+                solidArea.y -= speed;
+                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+                    return true;
+                }
+                break;
+            case DOWN:
+                solidArea.y += speed;
+                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+                    return true;
+                }
+                break;
+            case RIGHT:
+                solidArea.x += speed;
+                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+                    return true;
+                }
+                break;
+            case LEFT:
+                solidArea.x -= speed;
+                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+        solidArea.x = solidAreaDefaultX;
+        solidArea.y = solidAreaDefaultY;
+        render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+        render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+        return false;
+    }
 
     public int increaseImageIndex(int currentIndex, int maxIndex) {
         int newIndex = currentIndex + 1;
@@ -80,6 +184,22 @@ public abstract class Entity {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+
+    public int getSolidAreaDefaultX() {
+        return solidAreaDefaultX;
+    }
+
+    public int getSolidAreaDefaultY() {
+        return solidAreaDefaultY;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public int getSpeed() {
