@@ -67,6 +67,7 @@ public class Renderer extends JPanel implements Runnable {
 
         player = new Player(this, camX, camY, 4);
         entityList = new ArrayList<>();
+        entityList.add(player);
         for(int i = 0; i < 1000; i++) {
             int x = (int) (Math.random()*this.width*unitSize)-unitSize;
             int y = (int) (Math.random()*this.height*unitSize)-unitSize;
@@ -135,7 +136,9 @@ public class Renderer extends JPanel implements Runnable {
         super.paintComponent(g);
         tileManager.drawAllTexture(g);
         for(Entity entity : entityList) {
-            entity.draw(g);
+            if(!(entity instanceof Player)) {
+                entity.draw(g);
+            }
         }
         g.translate(-sceneX, -sceneY);
         player.draw(g);
@@ -146,7 +149,9 @@ public class Renderer extends JPanel implements Runnable {
         map.update(keyHandler);
         player.update(this, keyHandler, tileManager);
         for(Entity entity : entityList) {
-            if(entity instanceof Animal) ((Animal) entity).update(tileManager);
+            if(!(entity instanceof Player)) {
+                entity.update(tileManager);
+            }
         }
     }
 
