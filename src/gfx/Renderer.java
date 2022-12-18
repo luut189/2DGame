@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import entity.Player;
-import entity.animal.Animal;
+import entity.animal.Slime;
 
 import utils.AssetManager;
 import utils.TextureLoader;
@@ -35,7 +35,7 @@ public class Renderer extends JPanel implements Runnable {
     private int sceneX, sceneY;
 
     private Player player;
-    private Animal testing;
+    private Slime[] slimes;
 
     private Thread gameThread;
 
@@ -63,7 +63,17 @@ public class Renderer extends JPanel implements Runnable {
         keyHandler.setZoomDist(map.getMapSize());
 
         player = new Player(this, camX, camY, 4);
-        testing = new Animal(this, camX, camX, 3);
+        slimes = new Slime[1000];
+        for(int i = 0; i < slimes.length; i++) {
+            int x = (int) (Math.random()*this.width*unitSize)-unitSize;
+            int y = (int) (Math.random()*this.height*unitSize)-unitSize;
+            while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
+                  tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("tree")) {
+                x = (int) (Math.random()*this.width*unitSize)-unitSize;
+                y = (int) (Math.random()*this.height*unitSize)-unitSize;
+            }
+            slimes[i] = new Slime(this, x, y, 1);
+        }
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -121,7 +131,11 @@ public class Renderer extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         tileManager.drawAllTexture(g);
-        testing.draw(g);
+        for(int i = 0; i < slimes.length; i++) {
+            if(slimes[i] != null) {
+                slimes[i].draw(g);
+            }
+        }
         g.translate(-sceneX, -sceneY);
         player.draw(g);
         if(keyHandler.hasMinimap()) map.drawMinimap(g);
@@ -130,7 +144,11 @@ public class Renderer extends JPanel implements Runnable {
     public void update() {
         map.update(keyHandler);
         player.update(this, keyHandler, tileManager);
-        testing.update(tileManager);
+        for(int i = 0; i < slimes.length; i++) {
+            if(slimes[i] != null) {
+                slimes[i].update(tileManager);
+            }
+        }
     }
 
     @Override
