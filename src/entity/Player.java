@@ -19,11 +19,10 @@ public class Player extends Entity {
 
     private boolean isSwimming = false;
     private boolean isLeftLeg = false;
-    private int spriteCounter = 0;
 
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
-        initTexture(render);
+        initTexture();
 
         int offsetX = render.getUnitSize()/4;
         int offsetY = render.getUnitSize()/4;
@@ -34,7 +33,8 @@ public class Player extends Entity {
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
     }
 
-    public void initTexture(Renderer render) {
+    @Override
+    public void initTexture() {
         state = EntityState.STANDING;
         direction = Direction.NONE;
 
@@ -71,7 +71,7 @@ public class Player extends Entity {
         switch(dir) {
             case UP:
                 entityTopRow = (entityTopY-speed)/render.getUnitSize();
-                if(entityBottomRow < tileMap[entityLeftCol].length && entityBottomRow < tileMap[entityRightCol].length) {
+                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityTopRow];
                     return tile1.isSolid() || tile2.isSolid();
@@ -79,7 +79,7 @@ public class Player extends Entity {
                 break;
             case DOWN:
                 entityBottomRow = (entityBottomY+speed)/render.getUnitSize();
-                if(entityBottomRow < tileMap[entityLeftCol].length) {
+                if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityBottomRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
                     return tile1.isSolid() || tile2.isSolid();
@@ -87,29 +87,17 @@ public class Player extends Entity {
                 break;
             case RIGHT:
                 entityRightCol = (entityRightX+speed)/render.getUnitSize();
-                if(entityRightCol < tileMap.length) {
-                    tile1 = entityTopRow < tileMap[entityRightCol].length ? tileMap[entityRightCol][entityTopRow] : null;
-                    tile2 = entityBottomRow < tileMap[entityRightCol].length ? tileMap[entityRightCol][entityBottomRow] : null;
-                    if(tile1 == null && tile2 == null) {
-                        return false;
-                    }
-                    if(tile1 == null) return tile2.isSolid();
-                    if(tile2 == null) return tile1.isSolid();
-
+                if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
+                    tile1 = tileMap[entityRightCol][entityTopRow];
+                    tile2 = tileMap[entityRightCol][entityBottomRow];
                     return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
             case LEFT:
                 entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
-                if(entityLeftCol < tileMap.length) {
-                    tile1 = entityTopRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityTopRow] : null;
-                    tile2 = entityBottomRow < tileMap[entityLeftCol].length ? tileMap[entityLeftCol][entityBottomRow] : null;
-                    if(tile1 == null && tile2 == null) {
-                        return false;
-                    }
-                    if(tile1 == null) return tile2.isSolid();
-                    if(tile2 == null) return tile1.isSolid();
-
+                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
+                    tile1 = tileMap[entityLeftCol][entityTopRow];
+                    tile2 = tileMap[entityLeftCol][entityBottomRow];
                     return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
@@ -159,14 +147,6 @@ public class Player extends Entity {
             default:
                 break;
         }
-    }
-
-    public int increaseImageIndex(int currentIndex, int maxIndex) {
-        int newIndex = currentIndex + 1;
-        if(newIndex < maxIndex) {
-            return newIndex;
-        }
-        return 0;
     }
 
     public BufferedImage getPlayerImage() {
@@ -244,7 +224,7 @@ public class Player extends Entity {
     @Override
     public void draw(Graphics g) {
         g.drawImage(playerImage, x, y, null);
-//        g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
+        // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 
 }

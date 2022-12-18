@@ -19,6 +19,8 @@ public abstract class Entity {
 
     protected Rectangle solidArea;
 
+    protected int spriteCounter = 0;
+
     public Entity(Renderer render, int x, int y, int speed) {
         this.render = render;
         this.x = x;
@@ -26,7 +28,24 @@ public abstract class Entity {
         this.speed = speed;
     }
 
+    public boolean isInRange(Tile[][] tileMap, int x, int y) {
+        return (
+            x >= 0 && x < tileMap.length &&
+            y >= 0 && y < tileMap[x].length
+        );
+    }
+
+    public abstract void initTexture();
+
     public abstract boolean collide(Tile[][] tileMap, Direction dir);
+
+    public int increaseImageIndex(int currentIndex, int maxIndex) {
+        int newIndex = currentIndex + 1;
+        if(newIndex < maxIndex) {
+            return newIndex;
+        }
+        return 0;
+    }
     
     public Renderer getRender() {
         return render;
