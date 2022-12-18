@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import entity.Direction;
 import entity.Entity;
-
+import entity.EntityState;
 import gfx.Renderer;
 
 import world.tile.Tile;
@@ -31,6 +31,7 @@ public abstract class Animal extends Entity {
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
         
         direction = Direction.NONE;
+        state = EntityState.STANDING;
 
         imageIndex = 0;
         initTexture();
@@ -107,21 +108,26 @@ public abstract class Animal extends Entity {
     }
 
     public void move(Direction dir, TileManager tileManager) {
+        state = EntityState.STANDING;
         switch(dir) {
             case UP:
                 if(y <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                state = EntityState.WALKING;
                 y -= speed;
                 break;
             case DOWN:
                 if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                state = EntityState.WALKING;
                 y += speed;
                 break;
             case RIGHT:
                 if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                state = EntityState.WALKING;
                 x += speed;
                 break;
             case LEFT:
                 if(x <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                state = EntityState.WALKING;
                 x -= speed;
                 break;
             default:

@@ -1,6 +1,6 @@
 package entity.animal;
 
-import entity.Direction;
+import entity.EntityState;
 import gfx.Renderer;
 import utils.AssetManager;
 import world.tile.TileManager;
@@ -23,13 +23,13 @@ public class Slime extends Animal {
     }
 
     public void setCurrentSlimeImage() {
+        if(state == EntityState.STANDING) {
+            animalImage = AssetManager.slimeImage[0];
+            return;
+        }
         if(spriteCounter > 12) {
             imageIndex = increaseImageIndex(imageIndex, 2);
-            if(direction == Direction.NONE) {
-                animalImage = AssetManager.slimeImage[0];
-            } else {
-                animalImage = AssetManager.slimeImage[imageIndex];
-            }
+            animalImage = AssetManager.slimeImage[imageIndex];
             spriteCounter = 0;
         }
         spriteCounter++;
