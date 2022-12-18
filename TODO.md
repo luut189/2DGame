@@ -12,10 +12,16 @@
   
   - [x] Tree
   
-  - [ ] Rock
+  - [ ] Rock (Probably not gonna add it)
 
 - [x] Create a random world
 
-- [ ] Create an actual world
+- [x] Create an actual world
 
-- [ ] Make an actual `READMD.md`
+- [ ] Create some "animals"
+
+  - [x] Slime
+
+  - [ ] Something
+
+- [ ] Make an actual `README.md`
