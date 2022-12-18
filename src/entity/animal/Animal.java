@@ -39,7 +39,7 @@ public abstract class Animal extends Entity {
     
     @Override
     // Credit: RyiSnow (I changed it so that it fits how my code works)
-    public boolean collide(Tile[][] tileMap, Direction dir) {
+    public boolean collideWithTile(Tile[][] tileMap, Direction dir) {
         int entityLeftX = x + solidArea.x;
         int entityRightX = x + solidArea.x + solidArea.width;
 
@@ -111,22 +111,22 @@ public abstract class Animal extends Entity {
         state = EntityState.STANDING;
         switch(dir) {
             case UP:
-                if(y <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                if(y <= 0 || collideWithTile(tileManager.getWorldTiles(), dir)) break;
                 state = EntityState.WALKING;
                 y -= speed;
                 break;
             case DOWN:
-                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), dir)) break;
                 state = EntityState.WALKING;
                 y += speed;
                 break;
             case RIGHT:
-                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), dir)) break;
+                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), dir)) break;
                 state = EntityState.WALKING;
                 x += speed;
                 break;
             case LEFT:
-                if(x <= 0 || collide(tileManager.getWorldTiles(), dir)) break;
+                if(x <= 0 || collideWithTile(tileManager.getWorldTiles(), dir)) break;
                 state = EntityState.WALKING;
                 x -= speed;
                 break;

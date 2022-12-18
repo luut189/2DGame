@@ -55,7 +55,7 @@ public class Player extends Entity {
     
     @Override
     // Credit: RyiSnow (I changed it so that it fits how my code works)
-    public boolean collide(Tile[][] tileMap, Direction dir) {
+    public boolean collideWithTile(Tile[][] tileMap, Direction dir) {
         int entityLeftX = -render.getSceneX() + x + solidArea.x;
         int entityRightX = -render.getSceneX() + x + solidArea.x + solidArea.width;
 
@@ -129,19 +129,19 @@ public class Player extends Entity {
         setCurrentPlayerImage(state, direction);
         switch(direction) {
             case UP:
-                if(-render.getSceneY()+y <= 0 || collide(tileManager.getWorldTiles(), direction)) break;
+                if(-render.getSceneY()+y <= 0 || collideWithTile(tileManager.getWorldTiles(), direction)) break;
                 render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:
-                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), direction)) break;
+                if(-render.getSceneY()+y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), direction)) break;
                 render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case RIGHT:
-                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collide(tileManager.getWorldTiles(), direction)) break;
+                if(-render.getSceneX()+x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize() || collideWithTile(tileManager.getWorldTiles(), direction)) break;
                 render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case LEFT:
-                if(-render.getSceneX()+x <= 0 || collide(tileManager.getWorldTiles(), direction)) break;
+                if(-render.getSceneX()+x <= 0 || collideWithTile(tileManager.getWorldTiles(), direction)) break;
                 render.setSceneX(render.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             default:

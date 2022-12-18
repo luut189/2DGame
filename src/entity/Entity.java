@@ -37,7 +37,7 @@ public abstract class Entity {
 
     public abstract void initTexture();
 
-    public abstract boolean collide(Tile[][] tileMap, Direction dir);
+    public abstract boolean collideWithTile(Tile[][] tileMap, Direction dir);
 
     public int increaseImageIndex(int currentIndex, int maxIndex) {
         int newIndex = currentIndex + 1;
