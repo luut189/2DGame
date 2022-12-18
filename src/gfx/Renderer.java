@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import entity.animal.Animal;
 import entity.animal.Slime;
 
 import utils.AssetManager;
@@ -68,7 +67,7 @@ public class Renderer extends JPanel implements Runnable {
         player = new Player(this, camX, camY, 4);
         entityList = new ArrayList<>();
         entityList.add(player);
-        for(int i = 0; i < 1000; i++) {
+        for(int i = 0; i < 300; i++) {
             int x = (int) (Math.random()*this.width*unitSize)-unitSize;
             int y = (int) (Math.random()*this.height*unitSize)-unitSize;
             while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
@@ -85,6 +84,10 @@ public class Renderer extends JPanel implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public ArrayList<Entity> getEntityList() {
+        return entityList;
     }
 
     public TileManager getTileManager() {
