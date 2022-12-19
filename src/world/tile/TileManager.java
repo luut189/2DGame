@@ -16,7 +16,7 @@ public class TileManager {
     private double[][] numberWorldTile;
     protected Tile[][] worldTiles;
 
-    public TileManager(Renderer render, double seedValue) {
+    public TileManager(Renderer render) {
         this.render = render;
         
         // maxRow = render.getWidth()/render.getUnitSize();
@@ -27,7 +27,7 @@ public class TileManager {
 
         numberWorldTile = new double[maxRow][maxCol];
         worldTiles = new Tile[maxRow][maxCol];
-        LevelGenerator.noiseGenerator(numberWorldTile, seedValue);
+        LevelGenerator.noiseGenerator(numberWorldTile);
         loadAllTexture();
     }
 
