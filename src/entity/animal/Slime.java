@@ -13,10 +13,10 @@ public class Slime extends Animal {
         super(render, x, y, speed);
 
         int offsetX = 0;
-        int offsetY = render.getUnitSize()/3 - 12;
+        int offsetY = render.getUnitSize()/3;
 
         int rectWidth = render.getUnitSize();
-        int rectHeight = render.getUnitSize() - render.getUnitSize()/3 + 12;
+        int rectHeight = render.getUnitSize() - render.getUnitSize()/3;
         
         this.solidArea = new Rectangle(offsetX, offsetY, rectWidth, rectHeight);
         solidAreaDefaultX = solidArea.x;
