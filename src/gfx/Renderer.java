@@ -71,7 +71,7 @@ public class Renderer extends JPanel implements Runnable {
             int x = (int) (Math.random()*this.width*unitSize)-unitSize;
             int y = (int) (Math.random()*this.height*unitSize)-unitSize;
             while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
-                  tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("tree")) {
+                  tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].isSolid()) {
                 x = (int) (Math.random()*this.width*unitSize)-unitSize;
                 y = (int) (Math.random()*this.height*unitSize)-unitSize;
             }
