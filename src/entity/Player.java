@@ -40,73 +40,19 @@ public class Player extends Entity {
         state = EntityState.STANDING;
         direction = Direction.NONE;
 
-        int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
-        int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
-        
-        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+        int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
+        int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
+
+        if (render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         }
-        
-        if(state == EntityState.STANDING) {
+
+        if (state == EntityState.STANDING) {
             playerImage = AssetManager.downImage[imageIndex];
         } else {
             playerImage = AssetManager.downSwimmingImage;
         }
-    }
-    
-    @Override
-    // Credit: RyiSnow (I changed it so that it fits how my code works)
-    public boolean collideWithTile(Tile[][] tileMap) {
-        int entityLeftX = -render.getSceneX() + x + solidArea.x;
-        int entityRightX = -render.getSceneX() + x + solidArea.x + solidArea.width;
-
-        int entityTopY = -render.getSceneY() + y + solidArea.y;
-        int entityBottomY = -render.getSceneY() + y + solidArea.y + solidArea.height;
-
-        int entityLeftCol = entityLeftX/render.getUnitSize();
-        int entityRightCol = entityRightX/render.getUnitSize();
-        int entityTopRow = entityTopY/render.getUnitSize();
-        int entityBottomRow = entityBottomY/render.getUnitSize();
-
-        Tile tile1, tile2;
-        switch(direction) {
-            case UP:
-                entityTopRow = (entityTopY-speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
-                    tile1 = tileMap[entityLeftCol][entityTopRow];
-                    tile2 = tileMap[entityRightCol][entityTopRow];
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case DOWN:
-                entityBottomRow = (entityBottomY+speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
-                    tile1 = tileMap[entityLeftCol][entityBottomRow];
-                    tile2 = tileMap[entityRightCol][entityBottomRow];
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case RIGHT:
-                entityRightCol = (entityRightX+speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
-                    tile1 = tileMap[entityRightCol][entityTopRow];
-                    tile2 = tileMap[entityRightCol][entityBottomRow];
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case LEFT:
-                entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
-                    tile1 = tileMap[entityLeftCol][entityTopRow];
-                    tile2 = tileMap[entityLeftCol][entityBottomRow];
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            default:
-                break;
-        }
-        return false;
     }
 
     @Override

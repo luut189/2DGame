@@ -31,68 +31,6 @@ public abstract class Animal extends Entity {
         actionCounter = (int) (Math.random()*maxActionCount);
         initTexture();
     }
-    
-    @Override
-    // Credit: RyiSnow (I changed it so that it fits how my code works)
-    public boolean collideWithTile(Tile[][] tileMap) {
-        int entityLeftX = x + solidArea.x;
-        int entityRightX = x + solidArea.x + solidArea.width;
-
-        int entityTopY = y + solidArea.y;
-        int entityBottomY = y + solidArea.y + solidArea.height;
-
-        int entityLeftCol = entityLeftX/render.getUnitSize();
-        int entityRightCol = entityRightX/render.getUnitSize();
-        int entityTopRow = entityTopY/render.getUnitSize();
-        int entityBottomRow = entityBottomY/render.getUnitSize();
-
-        Tile tile1, tile2;
-        switch(direction) {
-            case UP:
-                entityTopRow = (entityTopY-speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
-                    tile1 = tileMap[entityLeftCol][entityTopRow];
-                    tile2 = tileMap[entityRightCol][entityTopRow];
-                    if(tile1.getTileName().equals("water")) return true;
-                    if(tile2.getTileName().equals("water")) return true;
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case DOWN:
-                entityBottomRow = (entityBottomY+speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
-                    tile1 = tileMap[entityLeftCol][entityBottomRow];
-                    tile2 = tileMap[entityRightCol][entityBottomRow];
-                    if(tile1.getTileName().equals("water")) return true;
-                    if(tile2.getTileName().equals("water")) return true;
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case RIGHT:
-                entityRightCol = (entityRightX+speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
-                    tile1 = tileMap[entityRightCol][entityTopRow];
-                    tile2 = tileMap[entityRightCol][entityBottomRow];
-                    if(tile1.getTileName().equals("water")) return true;
-                    if(tile2.getTileName().equals("water")) return true;
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            case LEFT:
-                entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
-                if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
-                    tile1 = tileMap[entityLeftCol][entityTopRow];
-                    tile2 = tileMap[entityLeftCol][entityBottomRow];
-                    if(tile1.getTileName().equals("water")) return true;
-                    if(tile2.getTileName().equals("water")) return true;
-                    return tile1.isSolid() || tile2.isSolid();
-                }
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
 
     public Direction getAnimalDirection(double num) {
         if(num < 0.25) return Direction.UP;
