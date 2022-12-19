@@ -41,7 +41,7 @@ public class Renderer extends JPanel implements Runnable {
 
     private Thread gameThread;
 
-    public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
+    public Renderer(KeyHandler keyHandler, int width, int height, int FPS, double seedValue) {
         AssetManager.loadAllRes(new TextureLoader(), unitSize);
         this.keyHandler = keyHandler;
 
@@ -59,7 +59,7 @@ public class Renderer extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(this.width, this.height));
         this.setDoubleBuffered(true);
 
-        tileManager = new TileManager(this);
+        tileManager = new TileManager(this, seedValue);
         
         map = new Map(this, tileManager, 10);
         keyHandler.setZoomDist(map.getMapSize());
