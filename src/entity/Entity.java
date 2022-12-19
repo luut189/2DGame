@@ -71,18 +71,14 @@ public abstract class Entity {
         int entityTopRow = entityTopY/render.getUnitSize();
         int entityBottomRow = entityBottomY/render.getUnitSize();
 
-        Tile tile1, tile2;
+        Tile tile1 = null;
+        Tile tile2 = null;
         switch(direction) {
             case UP:
                 entityTopRow = (entityTopY-speed)/render.getUnitSize();
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityTopRow];
-                    if(this instanceof Animal) {
-                        if(tile1.getTileName().equals("water")) return true;
-                        if(tile2.getTileName().equals("water")) return true;
-                    }
-                    return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
             case DOWN:
@@ -90,11 +86,6 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityBottomRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
-                    if(this instanceof Animal) {
-                        if(tile1.getTileName().equals("water")) return true;
-                        if(tile2.getTileName().equals("water")) return true;
-                    }
-                    return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
             case RIGHT:
@@ -102,11 +93,6 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityRightCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
-                    if(this instanceof Animal) {
-                        if(tile1.getTileName().equals("water")) return true;
-                        if(tile2.getTileName().equals("water")) return true;
-                    }
-                    return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
             case LEFT:
@@ -114,17 +100,17 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityLeftCol][entityBottomRow];
-                    if(this instanceof Animal) {
-                        if(tile1.getTileName().equals("water")) return true;
-                        if(tile2.getTileName().equals("water")) return true;
-                    }
-                    return tile1.isSolid() || tile2.isSolid();
                 }
                 break;
             default:
-                break;
+                return false;
         }
-        return false;
+        
+        if(this instanceof Animal) {
+            if(tile1.getTileName().equals("water")) return true;
+            if(tile2.getTileName().equals("water")) return true;
+        }
+        return tile1.isSolid() || tile2.isSolid();
     }
 
     public boolean collideWithEntity(ArrayList<Entity> targetList) {
