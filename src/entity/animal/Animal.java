@@ -10,7 +10,6 @@ import entity.EntityState;
 
 import gfx.Renderer;
 
-import world.tile.Tile;
 import world.tile.TileManager;
 
 public abstract class Animal extends Entity {
