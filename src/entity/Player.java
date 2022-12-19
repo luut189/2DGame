@@ -42,12 +42,12 @@ public class Player extends Entity {
         int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
         int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
 
-        if (render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         }
 
-        if (state == EntityState.STANDING) {
+        if(state == EntityState.STANDING) {
             playerImage = AssetManager.downImage[imageIndex];
         } else {
             playerImage = AssetManager.downSwimmingImage;
