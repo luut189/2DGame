@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class LevelGenerator {
 
-    public static double seedValue = Math.random()*10;
+    public static double seedValue = (Math.random()*100)*0.1;
     
     public static void randomGenerator(int[][] worldTiles) {
         for(int i = 0; i < worldTiles.length; i++) {

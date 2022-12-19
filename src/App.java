@@ -7,8 +7,10 @@ public class App {
         /**
          * use the method below to set the seed for world generation
          * if not set by user, a random value will be used
+         * decimal value works better
+         * value in the same range (eg. 0.2 - 0.8) will generate almost identical world
          */
-        LevelGenerator.setSeedValue(12);
+        LevelGenerator.setSeedValue(3.6);
         
         new GUI(800, 600, 60);
     }
