@@ -18,7 +18,8 @@ public abstract class Animal extends Entity {
     protected BufferedImage animalImage;
     protected int imageIndex;
 
-    private int counter;
+    private int actionCounter;
+    private int maxActionCount = 120;
 
     public Animal(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
@@ -27,6 +28,7 @@ public abstract class Animal extends Entity {
         state = EntityState.STANDING;
 
         imageIndex = 0;
+        actionCounter = (int) (Math.random()*maxActionCount);
         initTexture();
     }
     
@@ -134,10 +136,10 @@ public abstract class Animal extends Entity {
 
     @Override
     public void update(TileManager tileManager) {
-        counter++;
-        if(counter == 40) {
+        actionCounter++;
+        if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
-            counter = 0;
+            actionCounter = 0;
         }
         move(tileManager);
     }
