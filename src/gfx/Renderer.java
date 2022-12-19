@@ -163,6 +163,7 @@ public class Renderer extends JPanel implements Runnable {
                 entity.draw(g);
             }
         }
+        g.translate(-sceneX, -sceneY);
         if(keyHandler.hasMinimap()) map.drawMinimap(g);
     }
 
