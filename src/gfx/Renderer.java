@@ -139,20 +139,23 @@ public class Renderer extends JPanel implements Runnable {
         super.paintComponent(g);
         tileManager.drawAllTexture(g);
         for(Entity entity : entityList) {
-            if(!(entity instanceof Player)) {
+            if(entity instanceof Player) {
+                g.translate(-sceneX, -sceneY);
+                entity.draw(g);
+                g.translate(sceneX, sceneY);
+            } else {
                 entity.draw(g);
             }
         }
-        g.translate(-sceneX, -sceneY);
-        player.draw(g);
         if(keyHandler.hasMinimap()) map.drawMinimap(g);
     }
 
     public void update() {
         map.update(keyHandler);
-        player.update(this, keyHandler, tileManager);
         for(Entity entity : entityList) {
-            if(!(entity instanceof Player)) {
+            if(entity instanceof Player) {
+                player.update(this, keyHandler, tileManager);
+            } else {
                 if(
                     entity.getX() >= -sceneX-unitSize &&
                     entity.getY() >= -sceneY-unitSize &&
