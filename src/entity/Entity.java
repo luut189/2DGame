@@ -106,46 +106,25 @@ public abstract class Entity {
         switch(direction) {
             case UP:
                 solidArea.y -= speed;
-                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
-                    return true;
-                }
                 break;
             case DOWN:
                 solidArea.y += speed;
-                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
-                    return true;
-                }
                 break;
             case RIGHT:
                 solidArea.x += speed;
-                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
-                    return true;
-                }
                 break;
             case LEFT:
                 solidArea.x -= speed;
-                if(solidArea.intersects(render.getPlayer().getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-                    render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
-                    return true;
-                }
                 break;
             default:
                 break;
+        }
+        if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+            solidArea.x = solidAreaDefaultX;
+            solidArea.y = solidAreaDefaultY;
+            render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
+            render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+            return true;
         }
         solidArea.x = solidAreaDefaultX;
         solidArea.y = solidAreaDefaultY;
