@@ -154,14 +154,13 @@ public class Renderer extends JPanel implements Runnable {
         for(Entity entity : entityList) {
             if(!(entity instanceof Player)) {
                 if(
-                    !(entity.getX() >= -sceneX-unitSize &&
+                    entity.getX() >= -sceneX-unitSize &&
                     entity.getY() >= -sceneY-unitSize &&
                     entity.getX() < width - sceneX &&
-                    entity.getY() < height - sceneY)
+                    entity.getY() < height - sceneY
                 ) {
-                    continue;
+                    entity.update(tileManager);
                 }
-                entity.update(tileManager);
             }
         }
     }
