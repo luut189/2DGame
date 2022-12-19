@@ -67,7 +67,7 @@ public class Renderer extends JPanel implements Runnable {
         player = new Player(this, camX, camY, 4);
         entityList = new ArrayList<>();
         entityList.add(player);
-        for(int i = 0; i < 300; i++) {
+        for(int i = 0; i < 10000; i++) {
             int x = (int) (Math.random()*this.width*unitSize)-unitSize;
             int y = (int) (Math.random()*this.height*unitSize)-unitSize;
             while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
@@ -153,6 +153,14 @@ public class Renderer extends JPanel implements Runnable {
         player.update(this, keyHandler, tileManager);
         for(Entity entity : entityList) {
             if(!(entity instanceof Player)) {
+                if(
+                    !(entity.getX() >= -sceneX-unitSize &&
+                    entity.getY() >= -sceneY-unitSize &&
+                    entity.getX() < width - sceneX &&
+                    entity.getY() < height - sceneY)
+                ) {
+                    continue;
+                }
                 entity.update(tileManager);
             }
         }
