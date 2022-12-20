@@ -53,8 +53,8 @@ public class Renderer extends JPanel implements Runnable {
         this.width = width/unitSize*unitSize;
         this.height = height/unitSize*unitSize;
 
-        camX = width/2-unitSize/2;
-        camY = height/2-unitSize/2;
+        camX = this.width/2-unitSize/2;
+        camY = this.height/2-unitSize/2;
 
         sceneX = 0;
         sceneY = 0;

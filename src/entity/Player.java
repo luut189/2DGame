@@ -81,11 +81,11 @@ public class Player extends Entity {
                 render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:
-                if(-render.getSceneY()+y > render.getTileManager().getMaxCol()*render.getUnitSize()-render.getUnitSize()*2) break;
+                if(-render.getSceneY()+y > render.getTileManager().getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
                 render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case RIGHT:
-                if(-render.getSceneX()+x > render.getTileManager().getMaxRow()*render.getUnitSize()-render.getUnitSize()*2) break;
+                if(-render.getSceneX()+x > render.getTileManager().getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
                 render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case LEFT:
