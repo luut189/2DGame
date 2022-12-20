@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import entity.animal.Slime;
 
 import utils.AssetManager;
+import utils.EntityLoader;
 import utils.TextureLoader;
 
 import world.tile.TileManager;
@@ -70,16 +70,7 @@ public class Renderer extends JPanel implements Runnable {
         player = new Player(this, camX, camY, 4);
         entityList = new ArrayList<>();
         entityList.add(player);
-        for(int i = 0; i < 10000; i++) {
-            int x = (int) (Math.random()*this.width*unitSize)-unitSize;
-            int y = (int) (Math.random()*this.height*unitSize)-unitSize;
-            while(tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].getTileName().equals("water") ||
-                  tileManager.getWorldTiles()[(x+unitSize/2)/unitSize][(y+unitSize)/unitSize].isSolid()) {
-                x = (int) (Math.random()*this.width*unitSize)-unitSize;
-                y = (int) (Math.random()*this.height*unitSize)-unitSize;
-            }
-            entityList.add(new Slime(this, x, y, 1));
-        }
+        EntityLoader.loadEntity(entityList, this, tileManager);
 
         gameThread = new Thread(this);
         gameThread.start();
