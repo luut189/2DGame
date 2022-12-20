@@ -1,5 +1,6 @@
 package world.tile;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -82,6 +83,7 @@ public class Map {
         int x = render.getWidth() - width - 50;
         int y = 50;
 
+        g.setColor(Color.DARK_GRAY);
         g.fillRect(x-5, y-5, width+10, height+10);
 
         g.drawImage(worldMap, x, y, width, height, null);
