@@ -2,6 +2,7 @@ package gfx;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +47,9 @@ public class Renderer extends JPanel implements Runnable {
 
     private Thread gameThread;
 
+    private BufferedImage gameImage;
+    private Graphics gameImageGraphics;
+
     public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
         AssetManager.loadAllRes(new TextureLoader(), unitSize);
         this.keyHandler = keyHandler;
@@ -66,6 +70,8 @@ public class Renderer extends JPanel implements Runnable {
 
         this.setPreferredSize(new Dimension(this.width, this.height));
         this.setDoubleBuffered(true);
+
+        gameImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 
         tileManager = new TileManager(this);
         
@@ -153,8 +159,8 @@ public class Renderer extends JPanel implements Runnable {
         return camY;
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
+    public void drawToTempScreen() {
+        gameImageGraphics = gameImage.getGraphics();
         ArrayList<Entity> drawingList = new ArrayList<>(entityList);
         Collections.sort(drawingList, new Comparator<Entity>() {
 
@@ -168,19 +174,25 @@ public class Renderer extends JPanel implements Runnable {
             }
             
         });
-        super.paintComponent(g);
-        tileManager.drawAllTexture(g);
+        tileManager.drawAllTexture(gameImageGraphics);
         for(Entity entity : drawingList) {
             if(entity instanceof Player) {
-                g.translate(-sceneX, -sceneY);
-                entity.draw(g);
-                g.translate(sceneX, sceneY);
+                gameImageGraphics.translate(-sceneX, -sceneY);
+                entity.draw(gameImageGraphics);
+                gameImageGraphics.translate(sceneX, sceneY);
             } else {
-                entity.draw(g);
+                entity.draw(gameImageGraphics);
             }
         }
-        g.translate(-playerSceneX, -playerSceneY);
-        if(keyHandler.hasMinimap()) map.drawMinimap(g);
+        gameImageGraphics.translate(-playerSceneX, -playerSceneY);
+        if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
+        gameImageGraphics.dispose();
+    }
+
+    public void drawToScreen() {
+        Graphics g = getGraphics();
+        g.drawImage(gameImage, 0, 0, null);
+        g.dispose();
     }
 
     public void update() {
@@ -203,7 +215,8 @@ public class Renderer extends JPanel implements Runnable {
             lastTime = currentTime;
             if(delta >= 1) {
                 update();
-                repaint();
+                drawToTempScreen();
+                drawToScreen();
                 delta--;
             }
         }
