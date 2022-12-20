@@ -64,7 +64,7 @@ public class Player extends Entity {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
-        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY < render.getTileManager().getMaxCol() ? nextTileY : nextTileY-1].getTileName().equals("water")) {
+        if(render.getTileManager().getWorldTiles()[nextTileX < render.getTileManager().getMaxRow() ? nextTileX : nextTileX-1][nextTileY < render.getTileManager().getMaxCol() ? nextTileY : nextTileY-1].getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
@@ -81,11 +81,11 @@ public class Player extends Entity {
                 render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case DOWN:
-                if(-render.getSceneY()+y >= render.getTileManager().getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
+                if(-render.getSceneY()+y > render.getTileManager().getMaxCol()*render.getUnitSize()-render.getUnitSize()*2) break;
                 render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case RIGHT:
-                if(-render.getSceneX()+x >= render.getTileManager().getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
+                if(-render.getSceneX()+x > render.getTileManager().getMaxRow()*render.getUnitSize()-render.getUnitSize()*2) break;
                 render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
                 break;
             case LEFT:

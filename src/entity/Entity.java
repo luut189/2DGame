@@ -75,6 +75,8 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityTopRow];
+                } else {
+                    return false;
                 }
                 break;
             case DOWN:
@@ -82,6 +84,8 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityBottomRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
+                } else {
+                    return false;
                 }
                 break;
             case RIGHT:
@@ -89,6 +93,8 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityRightCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
+                } else {
+                    return false;
                 }
                 break;
             case LEFT:
@@ -96,6 +102,8 @@ public abstract class Entity {
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityLeftCol][entityBottomRow];
+                } else {
+                    return false;
                 }
                 break;
             default:
