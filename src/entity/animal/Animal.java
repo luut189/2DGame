@@ -73,21 +73,28 @@ public abstract class Animal extends Entity {
 
     @Override
     public void update() {
-        actionCounter++;
-        if(actionCounter >= maxActionCount) {
-            direction = getAnimalDirection(Math.random());
-            actionCounter = 0;
+        if(
+            x >= -render.getPlayerSceneX()-render.getUnitSize() &&
+            y >= -render.getPlayerSceneY()-render.getUnitSize() &&
+            x < render.getWidth() - render.getPlayerSceneX() &&
+            y < render.getHeight() - render.getPlayerSceneY()
+        ) {
+            actionCounter++;
+            if(actionCounter >= maxActionCount) {
+                direction = getAnimalDirection(Math.random());
+                actionCounter = 0;
+            }
+            move(render.getTileManager());
         }
-        move(render.getTileManager());
     }
 
     @Override
     public void draw(Graphics g) {
         if(
-            x >= -render.getSceneX()-render.getUnitSize() &&
-            y >= -render.getSceneY()-render.getUnitSize() &&
-            x < render.getWidth() - render.getSceneX() &&
-            y < render.getHeight() - render.getSceneY()
+            x >= -render.getPlayerSceneX()-render.getUnitSize() &&
+            y >= -render.getPlayerSceneY()-render.getUnitSize() &&
+            x < render.getWidth() - render.getPlayerSceneX() &&
+            y < render.getHeight() - render.getPlayerSceneY()
         ) {
             g.drawImage(animalImage, x, y, null);
         }

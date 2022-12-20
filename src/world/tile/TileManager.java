@@ -67,18 +67,37 @@ public class TileManager {
     }
 
     public void drawAllTexture(Graphics g) {
-        g.translate(render.getSceneX(), render.getSceneY());
-        for(Tile[] i : worldTiles) {
-            for(int j = 0; j < i.length; j++) {
-                if(i[j] != null) {
+
+        int xOffset = maxRow*render.getUnitSize() - render.getCamX()*2 - render.getUnitSize();
+        int yOffset = maxCol*render.getUnitSize() - render.getCamY()*2 - render.getUnitSize();
+
+        if(-render.getSceneX() >= xOffset) {
+            render.setPlayerSceneX(-xOffset);
+            g.translate(-xOffset, 0);
+        } else if(render.getSceneX() < 0) {
+            render.setPlayerSceneX(render.getSceneX());
+            g.translate(render.getSceneX(), 0);
+        }
+        
+        if(-render.getSceneY() >= yOffset) {
+            render.setPlayerSceneY(-yOffset);
+            g.translate(0, -yOffset);
+        } else if(render.getSceneY() < 0) {
+            render.setPlayerSceneY(render.getSceneY());
+            g.translate(0, render.getSceneY());
+        }
+
+        for(Tile[] tiles : worldTiles) {
+            for(int j = 0; j < tiles.length; j++) {
+                if(tiles[j] != null) {
                     if
                     (
-                        i[j].getX()*render.getUnitSize() >= -render.getSceneX()-render.getUnitSize() &&
-                        i[j].getY()*render.getUnitSize() >= -render.getSceneY()-render.getUnitSize() &&
-                        i[j].getX()*render.getUnitSize() < render.getWidth() - render.getSceneX() &&
-                        i[j].getY()*render.getUnitSize() < render.getHeight() - render.getSceneY())
+                        tiles[j].getX()*render.getUnitSize() >= -render.getPlayerSceneX() - render.getUnitSize() &&
+                        tiles[j].getY()*render.getUnitSize() >= -render.getPlayerSceneY() - render.getUnitSize() &&
+                        tiles[j].getX()*render.getUnitSize() < render.getWidth() - render.getPlayerSceneX() &&
+                        tiles[j].getY()*render.getUnitSize() < render.getHeight() - render.getPlayerSceneY())
                     {
-                        i[j].draw(g);
+                        tiles[j].draw(g);
                     }
                 }
             }

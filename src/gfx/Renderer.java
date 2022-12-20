@@ -39,6 +39,8 @@ public class Renderer extends JPanel implements Runnable {
     private int camX, camY;
     private int sceneX, sceneY;
 
+    private int playerSceneX, playerSceneY;
+
     private Player player;
     private ArrayList<Entity> entityList;
 
@@ -56,6 +58,9 @@ public class Renderer extends JPanel implements Runnable {
 
         sceneX = 0;
         sceneY = 0;
+
+        playerSceneX = sceneX;
+        playerSceneY = sceneY;
 
         this.FPS = FPS;
 
@@ -108,6 +113,22 @@ public class Renderer extends JPanel implements Runnable {
         return height;
     }
 
+    public int getPlayerSceneX() {
+        return playerSceneX;
+    }
+
+    public void setPlayerSceneX(int playerSceneX) {
+        this.playerSceneX = playerSceneX;
+    }
+
+    public int getPlayerSceneY() {
+        return playerSceneY;
+    }
+
+    public void setPlayerSceneY(int playerSceneY) {
+        this.playerSceneY = playerSceneY;
+    }
+
     public int getSceneX() {
         return sceneX;
     }
@@ -158,25 +179,14 @@ public class Renderer extends JPanel implements Runnable {
                 entity.draw(g);
             }
         }
-        g.translate(-sceneX, -sceneY);
+        g.translate(-playerSceneX, -playerSceneY);
         if(keyHandler.hasMinimap()) map.drawMinimap(g);
     }
 
     public void update() {
         map.update(keyHandler);
         for(Entity entity : entityList) {
-            if(entity instanceof Player) {
-                entity.update();
-            } else {
-                if(
-                    entity.getX() >= -sceneX-unitSize &&
-                    entity.getY() >= -sceneY-unitSize &&
-                    entity.getX() < width - sceneX &&
-                    entity.getY() < height - sceneY
-                ) {
-                    entity.update();
-                }
-            }
+            entity.update();
         }
     }
 
