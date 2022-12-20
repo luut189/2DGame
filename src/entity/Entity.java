@@ -6,11 +6,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import entity.animal.Animal;
-import gfx.KeyHandler;
 import gfx.Renderer;
 
 import world.tile.Tile;
-import world.tile.TileManager;
 
 public abstract class Entity {
 
@@ -45,9 +43,7 @@ public abstract class Entity {
         );
     }
 
-    public void update(Renderer render, KeyHandler keyHandler, TileManager tileManager) {}
-
-    public void update(TileManager tileManager) {}
+    public abstract void update();
 
     public abstract void initTexture();
 

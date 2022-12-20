@@ -72,13 +72,13 @@ public abstract class Animal extends Entity {
     }
 
     @Override
-    public void update(TileManager tileManager) {
+    public void update() {
         actionCounter++;
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
             actionCounter = 0;
         }
-        move(tileManager);
+        move(render.getTileManager());
     }
 
     @Override

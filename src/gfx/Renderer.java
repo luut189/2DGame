@@ -88,6 +88,10 @@ public class Renderer extends JPanel implements Runnable {
         return tileManager;
     }
 
+    public KeyHandler getKeyHandler() {
+        return keyHandler;
+    }
+
     public int getUnitScale() {
         return scale;
     }
@@ -162,7 +166,7 @@ public class Renderer extends JPanel implements Runnable {
         map.update(keyHandler);
         for(Entity entity : entityList) {
             if(entity instanceof Player) {
-                player.update(this, keyHandler, tileManager);
+                entity.update();
             } else {
                 if(
                     entity.getX() >= -sceneX-unitSize &&
@@ -170,7 +174,7 @@ public class Renderer extends JPanel implements Runnable {
                     entity.getX() < width - sceneX &&
                     entity.getY() < height - sceneY
                 ) {
-                    entity.update(tileManager);
+                    entity.update();
                 }
             }
         }

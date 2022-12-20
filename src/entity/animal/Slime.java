@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import entity.EntityState;
 import gfx.Renderer;
 import utils.AssetManager;
-import world.tile.TileManager;
 
 public class Slime extends Animal {
 
@@ -29,8 +28,8 @@ public class Slime extends Animal {
     }
 
     @Override
-    public void update(TileManager tileManager) {
-        super.update(tileManager);
+    public void update() {
+        super.update();
         setCurrentSlimeImage();
     }
 
