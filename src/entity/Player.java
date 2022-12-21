@@ -63,8 +63,11 @@ public class Player extends Entity {
         
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
+
+        nextTileX -= nextTileX < render.getTileManager().getMaxRow() ? 0 : 1;
+        nextTileY -= nextTileY < render.getTileManager().getMaxCol() ? 0 : 1;
         
-        if(render.getTileManager().getWorldTiles()[nextTileX < render.getTileManager().getMaxRow() ? nextTileX : nextTileX-1][nextTileY < render.getTileManager().getMaxCol() ? nextTileY : nextTileY-1].getTileName().equals("water")) {
+        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
