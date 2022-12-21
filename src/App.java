@@ -12,6 +12,6 @@ public class App {
          */
         LevelGenerator.setSeedValue(3.6);
         
-        new GUI(800, 600, 60);
+        new GUI(1280, 720, 60);
     }
 }
