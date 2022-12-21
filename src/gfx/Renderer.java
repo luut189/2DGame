@@ -212,6 +212,10 @@ public class Renderer extends JPanel implements Runnable {
 
     public void drawToScreen() {
         Graphics g = getGraphics();
+        if(g == null) {
+            System.err.println("No Graphics found, retrying...");
+            return;
+        }
         g.drawImage(gameImage, 0, 0, screenWidth, screenHeight, null);
         g.dispose();
     }
