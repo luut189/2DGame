@@ -25,6 +25,8 @@ public class Renderer extends JPanel implements Runnable {
     private KeyHandler keyHandler;
 
     private int width, height;
+    
+    private int screenWidth, screenHeight;
 
     private int originalUnitSize = 16;
     private int scale = 3;
@@ -56,6 +58,9 @@ public class Renderer extends JPanel implements Runnable {
 
         this.width = width/unitSize*unitSize;
         this.height = height/unitSize*unitSize;
+        
+        screenWidth = this.width;
+        screenHeight = this.height;
 
         camX = this.width/2-unitSize/2;
         camY = this.height/2-unitSize/2;
@@ -117,6 +122,22 @@ public class Renderer extends JPanel implements Runnable {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public void setScreenWidth(int screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public void setScreenHeight(int screenHeight) {
+        this.screenHeight = screenHeight;
     }
 
     public int getPlayerSceneX() {
@@ -191,7 +212,7 @@ public class Renderer extends JPanel implements Runnable {
 
     public void drawToScreen() {
         Graphics g = getGraphics();
-        g.drawImage(gameImage, 0, 0, null);
+        g.drawImage(gameImage, 0, 0, screenWidth, screenHeight, null);
         g.dispose();
     }
 

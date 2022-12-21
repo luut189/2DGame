@@ -18,6 +18,12 @@ public class KeyHandler extends KeyAdapter {
     private boolean isZooming = false;
     private int zoomDist;
 
+    private GUI window;
+
+    public KeyHandler(GUI window) {
+        this.window = window;
+    }
+
     public boolean hasMinimap() {
         return hasMinimap;
     }
@@ -92,6 +98,8 @@ public class KeyHandler extends KeyAdapter {
                 if(zoomDist == 5) break;
                 zoomDist--;
                 break;
+            case KeyEvent.VK_F:
+                window.setFullscreen();
             default:
                 break;
         }
