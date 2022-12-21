@@ -25,27 +25,15 @@ public class GUI extends JFrame {
         this.setResizable(false);
         this.setVisible(true);
     }
-    
-    public KeyHandler getKeyHandler() {
-        return keyHandler;
-    }
-
-    public Renderer getRender() {
-        return render;
-    }
 
     public void setFullscreen() {
         if(gd.getFullScreenWindow() == null) {
             gd.setFullScreenWindow(this);
-    
-            render.setScreenWidth(getWidth());
-            render.setScreenHeight(getHeight());
         } else {
             gd.setFullScreenWindow(null);
-
-            render.setScreenWidth(getWidth());
-            render.setScreenHeight(getHeight());
         }
+        render.setScreenWidth(getWidth());
+        render.setScreenHeight(getHeight());
     }
     
 }
