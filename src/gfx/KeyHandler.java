@@ -98,9 +98,9 @@ public class KeyHandler extends KeyAdapter {
                 if(zoomDist == 5) break;
                 zoomDist--;
                 break;
-            // case KeyEvent.VK_F:
-            //     window.setFullscreen();
-            //     break;
+            case KeyEvent.VK_F:
+                window.setFullscreen();
+                break;
             default:
                 break;
         }

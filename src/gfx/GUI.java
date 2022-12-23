@@ -32,8 +32,7 @@ public class GUI extends JFrame {
         } else {
             gd.setFullScreenWindow(null);
         }
-        render.setScreenWidth(getWidth());
-        render.setScreenHeight(getHeight());
+        render.setFullscreenAttribute(getWidth(), getHeight());
     }
     
 }

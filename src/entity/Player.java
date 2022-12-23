@@ -53,19 +53,8 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        direction = render.getKeyHandler().getPlayerDirection();
-        state = isSwimming ? EntityState.SWIMMING : render.getKeyHandler().getPlayerState();
-
-        if(direction == Direction.NONE) {
-            setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
-            return;
-        }
-        
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
-
-        nextTileX -= nextTileX < render.getTileManager().getMaxRow() ? 0 : 1;
-        nextTileY -= nextTileY < render.getTileManager().getMaxCol() ? 0 : 1;
         
         if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
             state = EntityState.SWIMMING;
@@ -73,6 +62,17 @@ public class Player extends Entity {
         } else {
             isSwimming = false;
         }
+        
+        direction = render.getKeyHandler().getPlayerDirection();
+        state = isSwimming ? EntityState.SWIMMING : render.getKeyHandler().getPlayerState();
+
+        if(direction == Direction.NONE) {
+            setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
+            return;
+        }
+
+        nextTileX -= nextTileX < render.getTileManager().getMaxRow() ? 0 : 1;
+        nextTileY -= nextTileY < render.getTileManager().getMaxCol() ? 0 : 1;
 
         setCurrentPlayerImage(direction);
         if(collideWithTile(render.getTileManager().getWorldTiles()) || collideWithEntity(render.getEntityList())) {
