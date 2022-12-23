@@ -220,9 +220,7 @@ public class Renderer extends JPanel implements Runnable {
         g.dispose();
     }
 
-    boolean isLoadingFullscreen = false;
     public void setFullscreenAttribute(int width, int height) {
-        isLoadingFullscreen = true;
         this.width = width;
         this.height = height;
 
@@ -232,6 +230,7 @@ public class Renderer extends JPanel implements Runnable {
         gameImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         
         tileManager = new TileManager(this);
+        map = new Map(this, tileManager, keyHandler.getZoomDist());
 
         camX = this.width/2-unitSize/2;
         camY = this.height/2-unitSize/2;
@@ -242,17 +241,11 @@ public class Renderer extends JPanel implements Runnable {
             entity.setX(entity.getX() + camX - player.getX());
             entity.setY(entity.getY() + camY - player.getY());
         }
-
-        playerSceneX = sceneX;
-        playerSceneY = sceneY;
-
         player.setX(camX);
         player.setY(camY);
-        isLoadingFullscreen = false;
     }
 
     public void update() {
-        if(isLoadingFullscreen) return;
         map.update(keyHandler);
         for(Entity entity : entityList) {
             entity.update();
