@@ -228,9 +228,6 @@ public class Renderer extends JPanel implements Runnable {
         screenHeight = this.height;
 
         gameImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        
-        tileManager = new TileManager(this);
-        map = new Map(this, tileManager, keyHandler.getZoomDist());
 
         camX = this.width/2-unitSize/2;
         camY = this.height/2-unitSize/2;
