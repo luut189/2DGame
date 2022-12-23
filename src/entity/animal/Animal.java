@@ -52,12 +52,12 @@ public abstract class Animal extends Entity {
                 y -= speed;
                 break;
             case DOWN:
-                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize()*2) break;
+                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 y += speed;
                 break;
             case RIGHT:
-                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize()*2) break;
+                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 x += speed;
                 break;
