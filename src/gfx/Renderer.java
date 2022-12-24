@@ -237,10 +237,6 @@ public class Renderer extends JPanel implements Runnable {
         if(sceneX > 0) playerSceneX = 0;
         if(sceneY > 0) playerSceneY = 0;
         
-        for(Entity entity : entityList) {
-            entity.setX(entity.getX() + camX - player.getX());
-            entity.setY(entity.getY() + camY - player.getY());
-        }
         player.setX(camX);
         player.setY(camY);
     }
