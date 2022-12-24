@@ -22,6 +22,18 @@
 
   - [x] Slime
 
-  - [ ] Something
+  - [ ] Zombie
+
+  - [ ] Skeleton
+
+- [x] Fullscreen Mode
+  
+- [ ] Fighting mechanics
+
+  - [ ] Punching/Melee
+
+  - [ ] Animals attacking player
+
+  - [ ] Spells/Magic system
 
 - [ ] Make an actual `README.md`
