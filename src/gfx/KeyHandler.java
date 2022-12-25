@@ -18,6 +18,8 @@ public class KeyHandler extends KeyAdapter {
     private boolean isZooming = false;
     private int zoomDist;
 
+    private int keyPressing = 0;
+
     private GUI window;
 
     public KeyHandler(GUI window) {
@@ -76,15 +78,19 @@ public class KeyHandler extends KeyAdapter {
 
         switch(key) {
             case KeyEvent.VK_W:
+                keyPressing = key;
                 playerDirection = Direction.UP;
                 break;
             case KeyEvent.VK_S:
+                keyPressing = key;
                 playerDirection = Direction.DOWN;
                 break;
             case KeyEvent.VK_D:
+                keyPressing = key;
                 playerDirection = Direction.RIGHT;
                 break;
             case KeyEvent.VK_A:
+                keyPressing = key;
                 playerDirection = Direction.LEFT;
                 break;
             case KeyEvent.VK_M:
@@ -111,7 +117,7 @@ public class KeyHandler extends KeyAdapter {
         if(key == KeyEvent.VK_Q || key == KeyEvent.VK_E) {
             isZooming = false;
         }
-        if(key == KeyEvent.VK_W || key == KeyEvent.VK_S || key == KeyEvent.VK_D || key == KeyEvent.VK_A) {
+        if(key == keyPressing) {
             playerState = EntityState.STANDING;
             previousPlayerDirection = playerDirection;
             playerDirection = Direction.NONE;
