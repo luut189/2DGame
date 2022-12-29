@@ -18,6 +18,8 @@ public abstract class Entity {
     protected EntityState state;
 
     protected int x, y;
+
+    protected int attackValue;
     protected int speed;
 
     protected Rectangle solidArea;

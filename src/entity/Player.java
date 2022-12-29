@@ -8,7 +8,7 @@ import gfx.Renderer;
 
 import utils.AssetManager;
 
-public class Player extends Entity {
+public class Player extends Entity implements IPunchable {
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
@@ -18,6 +18,7 @@ public class Player extends Entity {
 
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
+        setAttackValue(1);
         initTexture();
 
         int offsetX = render.getUnitSize()/4;
@@ -52,6 +53,16 @@ public class Player extends Entity {
     }
 
     @Override
+    public void setAttackValue(int value) {
+        attackValue = value;
+    }
+
+    @Override
+    public int getAttackValue() {
+        return attackValue;
+    }
+
+    @Override
     public void update() {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
@@ -68,6 +79,11 @@ public class Player extends Entity {
         
         direction = render.getKeyHandler().getPlayerDirection();
         state = isSwimming ? EntityState.SWIMMING : render.getKeyHandler().getPlayerState();
+
+        if(state == EntityState.ATTACKING) {
+            setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
+            // TODO - What will happen when player attack?
+        }
 
         if(direction == Direction.NONE) {
             setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
@@ -169,6 +185,8 @@ public class Player extends Entity {
                 default:
                     break;
             }
+        } else if(state == EntityState.ATTACKING) {
+            // TODO - Will be used if I added attacking sprite for the player
         }
     }
 

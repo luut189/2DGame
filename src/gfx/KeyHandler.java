@@ -110,6 +110,11 @@ public class KeyHandler extends KeyAdapter {
             default:
                 break;
         }
+
+        if(key == KeyEvent.VK_ENTER) {
+            playerState = EntityState.ATTACKING;
+            keyPressing = key;
+        }
     }
 
     public void keyReleased(KeyEvent e) {
