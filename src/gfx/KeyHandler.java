@@ -111,7 +111,7 @@ public class KeyHandler extends KeyAdapter {
                 break;
         }
 
-        if(key == KeyEvent.VK_ENTER) {
+        if(key == KeyEvent.VK_SPACE) {
             playerState = EntityState.ATTACKING;
             keyPressing = key;
         }
