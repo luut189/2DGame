@@ -8,7 +8,7 @@ import gfx.Renderer;
 
 import utils.AssetManager;
 
-public class Player extends Entity implements IPunchable {
+public class Player extends Entity implements IAttackable {
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
@@ -18,7 +18,11 @@ public class Player extends Entity implements IPunchable {
 
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
+        
+        maxHealthValue = 10;
+        setHealthValue(3);
         setAttackValue(1);
+
         initTexture();
 
         int offsetX = render.getUnitSize()/4;
@@ -60,6 +64,22 @@ public class Player extends Entity implements IPunchable {
     @Override
     public int getAttackValue() {
         return attackValue;
+    }
+
+    @Override
+    public void setHealthValue(int value) {
+        if(value > maxHealthValue) {
+            System.err.println("Invaid value");
+            currentHealthValue = 0;
+            return;
+        }
+
+        currentHealthValue = value;
+    }
+
+    @Override
+    public int getHealthValue() {
+        return currentHealthValue;
     }
 
     @Override
@@ -187,7 +207,35 @@ public class Player extends Entity implements IPunchable {
             }
         } else if(state == EntityState.ATTACKING) {
             // TODO - Will be used if I added attacking sprite for the player
+
+            // TESTING!!
+            setHealthValue(getHealthValue()+1);
         }
+    }
+
+    public void drawHealthBar(Graphics g) {
+        int i = maxHealthValue;
+        int currentHeart = 0;
+        g.translate(20, 0);
+        while(i > 0) {
+            g.drawImage(AssetManager.emptyHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+            i -= 2;
+            currentHeart++;
+        }
+
+        int tempCurrentHealth = currentHealthValue;
+        currentHeart = 0;
+        while(tempCurrentHealth > 0) {
+            if(tempCurrentHealth >= 2) {
+                g.drawImage(AssetManager.fullHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+                tempCurrentHealth -= 2;
+            } else {
+                g.drawImage(AssetManager.halfHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+                tempCurrentHealth--;
+            }
+            currentHeart++;
+        }
+        g.translate(-20, 0);
     }
 
     @Override

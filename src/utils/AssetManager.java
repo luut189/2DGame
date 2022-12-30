@@ -21,6 +21,10 @@ public class AssetManager {
 
     public static BufferedImage[] slimeImage;
 
+    public static BufferedImage emptyHeartImage;
+    public static BufferedImage fullHeartImage;
+    public static BufferedImage halfHeartImage;
+
     private static final String[] tilesName = {
         "grass",
         "sand",
@@ -31,11 +35,19 @@ public class AssetManager {
     };
 
     public static void loadAllRes(TextureLoader loader, int unitSize) {
+        loadHeartImage(loader, unitSize);
+
         loadPlayerImage(loader, unitSize);
 
         slimeImage = loadEntityResource(loader, "/animal/slime", 2, unitSize);
 
         loadTileImage(loader, unitSize);
+    }
+
+    private static void loadHeartImage(TextureLoader loader, int unitSize) {
+        emptyHeartImage = loadEntityResource(loader, "/hud/heart/empty_heart", unitSize);
+        fullHeartImage = loadEntityResource(loader, "/hud/heart/full_heart", unitSize);
+        halfHeartImage = loadEntityResource(loader, "/hud/heart/half_heart", unitSize);
     }
 
     private static void loadPlayerImage(TextureLoader loader, int unitSize) {

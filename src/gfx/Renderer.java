@@ -206,6 +206,9 @@ public class Renderer extends JPanel implements Runnable {
             }
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
+
+        if(true) player.drawHealthBar(gameImageGraphics);
+
         if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
         gameImageGraphics.dispose();
     }

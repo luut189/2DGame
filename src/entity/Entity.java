@@ -19,7 +19,11 @@ public abstract class Entity {
 
     protected int x, y;
 
+    protected int maxHealthValue;
+    protected int currentHealthValue;
+    
     protected int attackValue;
+    
     protected int speed;
 
     protected Rectangle solidArea;
