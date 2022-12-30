@@ -1,6 +1,6 @@
 package entity.animal;
 
-// import java.awt.Color;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -73,33 +73,19 @@ public abstract class Animal extends Entity {
 
     @Override
     public void update() {
-        if(
-            x >= -render.getPlayerSceneX()-render.getUnitSize() &&
-            y >= -render.getPlayerSceneY()-render.getUnitSize() &&
-            x < render.getWidth() - render.getPlayerSceneX() &&
-            y < render.getHeight() - render.getPlayerSceneY()
-        ) {
-            actionCounter++;
-            if(actionCounter >= maxActionCount) {
-                direction = getAnimalDirection(Math.random());
-                actionCounter = 0;
-            }
-            move(render.getTileManager());
+        actionCounter++;
+        if(actionCounter >= maxActionCount) {
+            direction = getAnimalDirection(Math.random());
+            actionCounter = 0;
         }
+        move(render.getTileManager());
     }
 
     @Override
     public void draw(Graphics g) {
-        if(
-            x >= -render.getPlayerSceneX()-render.getUnitSize() &&
-            y >= -render.getPlayerSceneY()-render.getUnitSize() &&
-            x < render.getWidth() - render.getPlayerSceneX() &&
-            y < render.getHeight() - render.getPlayerSceneY()
-        ) {
-            g.drawImage(animalImage, x, y, null);
-        }
-        // g.setColor(new Color(2, 3, 4, 50));
-        // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
+        g.drawImage(animalImage, x, y, null);
+        g.setColor(new Color(255, 32, 43, 50));
+        g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
     }
     
 }

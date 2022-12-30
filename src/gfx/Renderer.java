@@ -202,7 +202,14 @@ public class Renderer extends JPanel implements Runnable {
                 entity.draw(gameImageGraphics);
                 gameImageGraphics.translate(sceneX, sceneY);
             } else {
-                entity.draw(gameImageGraphics);
+                if(
+                    entity.getX() >= -playerSceneX-unitSize &&
+                    entity.getY() >= -playerSceneY-unitSize &&
+                    entity.getX() < width - playerSceneX &&
+                    entity.getY() < height - playerSceneY
+                ) {
+                    entity.draw(gameImageGraphics);
+                }
             }
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
@@ -247,7 +254,15 @@ public class Renderer extends JPanel implements Runnable {
     public void update() {
         map.update(keyHandler);
         for(Entity entity : entityList) {
-            entity.update();
+            if(entity instanceof Player) entity.update();
+            else if(
+                entity.getX() >= -playerSceneX-unitSize &&
+                entity.getY() >= -playerSceneY-unitSize &&
+                entity.getX() < width - playerSceneX &&
+                entity.getY() < height - playerSceneY
+            ) {
+                entity.update();
+            }
         }
     }
 
