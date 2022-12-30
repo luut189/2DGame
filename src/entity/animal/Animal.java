@@ -1,6 +1,6 @@
 package entity.animal;
 
-import java.awt.Color;
+// import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -84,8 +84,8 @@ public abstract class Animal extends Entity {
     @Override
     public void draw(Graphics g) {
         g.drawImage(animalImage, x, y, null);
-        g.setColor(new Color(255, 32, 43, 50));
-        g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
+        // g.setColor(new Color(255, 32, 43, 50));
+        // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
     }
     
 }
