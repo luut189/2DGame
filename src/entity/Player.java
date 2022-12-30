@@ -1,6 +1,9 @@
 package entity;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -214,11 +217,25 @@ public class Player extends Entity implements IAttackable {
     }
 
     public void drawHealthBar(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         int i = maxHealthValue;
         int currentHeart = 0;
-        g.translate(20, 0);
+        
+        g2d.translate(20, 20);
+        
+        int maxHeart = maxHealthValue / 2;
+        
+        int healthBarBorderWidth = maxHeart*(render.getUnitSize()+10);
+        int healthBarY = render.getHeight() - render.getUnitSize()*2;
+
+        g2d.setColor(Color.black);
+        g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2d.drawRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize());
+        g2d.setColor(new Color(0, 0, 0, 127));
+        g2d.fillRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize());
+
         while(i > 0) {
-            g.drawImage(AssetManager.emptyHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+            g2d.drawImage(AssetManager.emptyHeartImage, currentHeart*(render.getUnitSize()+10), healthBarY, null);
             i -= 2;
             currentHeart++;
         }
@@ -227,15 +244,15 @@ public class Player extends Entity implements IAttackable {
         currentHeart = 0;
         while(tempCurrentHealth > 0) {
             if(tempCurrentHealth >= 2) {
-                g.drawImage(AssetManager.fullHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+                g2d.drawImage(AssetManager.fullHeartImage, currentHeart*(render.getUnitSize()+10), healthBarY, null);
                 tempCurrentHealth -= 2;
             } else {
-                g.drawImage(AssetManager.halfHeartImage, currentHeart*(render.getUnitSize()+10), render.getUnitSize(), null);
+                g2d.drawImage(AssetManager.halfHeartImage, currentHeart*(render.getUnitSize()+10), healthBarY, null);
                 tempCurrentHealth--;
             }
             currentHeart++;
         }
-        g.translate(-20, 0);
+        g2d.translate(-20, -20);
     }
 
     @Override
