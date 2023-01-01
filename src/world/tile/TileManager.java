@@ -43,6 +43,14 @@ public class TileManager {
         return maxCol;
     }
 
+    public Tile getTile(int x, int y) {
+        if(
+            x >= maxRow || x < 0 ||
+            y >= maxCol || y < 0) return null;
+            
+        return worldTiles[x][y];
+    }
+
     public void loadAllTexture() {
         for(int i = 0; i < worldTiles.length; i++) {
             for(int j = 0; j < worldTiles[i].length; j++) {

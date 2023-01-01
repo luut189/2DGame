@@ -47,7 +47,7 @@ public class Player extends Entity implements IAttackable {
         int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
         int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
 
-        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         }
@@ -89,11 +89,8 @@ public class Player extends Entity implements IAttackable {
     public void update() {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
-
-        nextTileX -= nextTileX < render.getTileManager().getMaxRow() ? 0 : 1;
-        nextTileY -= nextTileY < render.getTileManager().getMaxCol() ? 0 : 1;
         
-        if(render.getTileManager().getWorldTiles()[nextTileX][nextTileY].getTileName().equals("water")) {
+        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
