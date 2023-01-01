@@ -2,7 +2,6 @@ package world.tile;
 
 import java.awt.Graphics;
 import java.awt.Color;
-import java.util.Random;
 
 import gfx.Renderer;
 
@@ -14,6 +13,7 @@ public class AnimatedTile extends Tile {
     private int maxTileIndex;
 
     private int spriteCounter;
+    private int maxSpriteCounter = 60;
 
     private Color tileColor;
 
@@ -21,7 +21,7 @@ public class AnimatedTile extends Tile {
         super(render, x, y, tileName, isSolid);
         this.tileIndex = 1;
         this.maxTileIndex = maxTileIndex;
-        this.spriteCounter = new Random().nextInt(60);
+        this.spriteCounter = (int) (Math.random() * maxSpriteCounter);
         this.tileColor = tileColor;
     }
 
@@ -35,7 +35,7 @@ public class AnimatedTile extends Tile {
 
     public void updateTileImage() {
         this.tileImage = AssetManager.tileMap.get(tileName + tileIndex);
-        if(spriteCounter > 60) {
+        if(spriteCounter > maxSpriteCounter) {
             tileIndex = increaseTileIndex(tileIndex, maxTileIndex);
             spriteCounter = 0;
         }
