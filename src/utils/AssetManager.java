@@ -39,7 +39,7 @@ public class AssetManager {
 
         loadPlayerImage(loader, unitSize);
 
-        slimeImage = loadResource(loader, "/animal/slime", 2, unitSize);
+        slimeImage = loadResource(loader, "/animal/slime", unitSize, 2);
 
         loadTileImage(loader, unitSize);
     }
