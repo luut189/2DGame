@@ -72,7 +72,7 @@ public class Player extends Entity implements IAttackable {
     @Override
     public void setHealthValue(int value) {
         if(value > maxHealthValue) {
-            System.err.println("Invaid value");
+            System.err.println("Invalid value");
             currentHealthValue = 0;
             return;
         }
