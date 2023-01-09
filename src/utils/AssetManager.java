@@ -39,27 +39,27 @@ public class AssetManager {
 
         loadPlayerImage(loader, unitSize);
 
-        slimeImage = loadEntityResource(loader, "/animal/slime", 2, unitSize);
+        slimeImage = loadResource(loader, "/animal/slime", 2, unitSize);
 
         loadTileImage(loader, unitSize);
     }
 
     private static void loadHeartImage(TextureLoader loader, int unitSize) {
-        emptyHeartImage = loadEntityResource(loader, "/hud/heart/empty_heart", unitSize);
-        fullHeartImage = loadEntityResource(loader, "/hud/heart/full_heart", unitSize);
-        halfHeartImage = loadEntityResource(loader, "/hud/heart/half_heart", unitSize);
+        emptyHeartImage = loadResource(loader, "/hud/heart/empty_heart", unitSize);
+        fullHeartImage = loadResource(loader, "/hud/heart/full_heart", unitSize);
+        halfHeartImage = loadResource(loader, "/hud/heart/half_heart", unitSize);
     }
 
     private static void loadPlayerImage(TextureLoader loader, int unitSize) {
-        downImage = loadEntityResource(loader, "/player/walking/down", 3, unitSize);
-        upImage = loadEntityResource(loader, "/player/walking/up", 3, unitSize);
-        rightImage = loadEntityResource(loader, "/player/walking/right", 4, unitSize);
-        leftImage = loadEntityResource(loader, "/player/walking/left", 4, unitSize);
+        downImage = loadResource(loader, "/player/walking/down", unitSize, 3);
+        upImage = loadResource(loader, "/player/walking/up", unitSize, 3);
+        rightImage = loadResource(loader, "/player/walking/right", unitSize, 4);
+        leftImage = loadResource(loader, "/player/walking/left", unitSize, 4);
 
-        downSwimmingImage = loadEntityResource(loader, "/player/swim/swim_down", unitSize);
-        upSwimmingImage = loadEntityResource(loader, "/player/swim/swim_up", unitSize);
-        rightSwimmingImage = loadEntityResource(loader, "/player/swim/swim_right", unitSize);
-        leftSwimmingImage = loadEntityResource(loader, "/player/swim/swim_left", unitSize);
+        downSwimmingImage = loadResource(loader, "/player/swim/swim_down", unitSize);
+        upSwimmingImage = loadResource(loader, "/player/swim/swim_up", unitSize);
+        rightSwimmingImage = loadResource(loader, "/player/swim/swim_right", unitSize);
+        leftSwimmingImage = loadResource(loader, "/player/swim/swim_left", unitSize);
     }
 
     private static void loadTileImage(TextureLoader loader, int unitSize) {
@@ -69,7 +69,7 @@ public class AssetManager {
         }
     }
 
-    private static BufferedImage[] loadEntityResource(TextureLoader loader, String path, int numOfSprite, int unitSize) {
+    private static BufferedImage[] loadResource(TextureLoader loader, String path, int unitSize, int numOfSprite) {
         BufferedImage[] bf = new BufferedImage[numOfSprite];
         for(int i = 0; i < numOfSprite; i++) {
             bf[i] = loader.loadImage(path + (i+1) + ".png");
@@ -78,7 +78,7 @@ public class AssetManager {
         return bf;
     }
 
-    private static BufferedImage loadEntityResource(TextureLoader loader, String path, int unitSize) {
+    private static BufferedImage loadResource(TextureLoader loader, String path, int unitSize) {
         BufferedImage bf = loader.loadImage(path + ".png");
         bf = scaleImage(bf, unitSize);
         return bf;
