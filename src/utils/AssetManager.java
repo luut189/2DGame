@@ -20,6 +20,7 @@ public class AssetManager {
     public static BufferedImage leftSwimmingImage;
 
     public static BufferedImage[] slimeImage;
+    public static BufferedImage[] ghostImage;
 
     public static BufferedImage emptyHeartImage;
     public static BufferedImage fullHeartImage;
@@ -40,6 +41,7 @@ public class AssetManager {
         loadPlayerImage(loader, unitSize);
 
         slimeImage = loadResource(loader, "/animal/slime", unitSize, 2);
+        ghostImage = loadResource(loader, "/animal/ghost", unitSize, 2);
 
         loadTileImage(loader, unitSize);
     }

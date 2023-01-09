@@ -3,6 +3,7 @@ package utils;
 import java.util.ArrayList;
 
 import entity.Entity;
+import entity.animal.Ghost;
 import entity.animal.Slime;
 
 import gfx.Renderer;
@@ -14,6 +15,7 @@ public class EntityLoader {
 
     public static void loadEntity(ArrayList<Entity> entityList, Renderer render, TileManager tileManager) {
         loadSlime(10000, entityList, render, tileManager);
+        loadGhost(1000, entityList, render, tileManager);
     }
 
     private static void loadSlime(int num, ArrayList<Entity> entityList, Renderer render, TileManager tileManager) {
@@ -33,5 +35,13 @@ public class EntityLoader {
             entityList.add(new Slime(render, x, y, 1));
         }
     }
-    
+
+    private static void loadGhost(int num, ArrayList<Entity> entityList, Renderer render, TileManager tileManager) {
+        for(int i = 0; i < num; i++) {
+
+            int x = (int) (Math.random() * tileManager.getMaxRow() * render.getUnitSize());
+            int y = (int) (Math.random() * tileManager.getMaxCol() * render.getUnitSize());
+            entityList.add(new Ghost(render, x, y, 2));
+        }
+    }
 }
