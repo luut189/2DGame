@@ -1,7 +1,7 @@
 package entity.animal;
 
 // import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import entity.Direction;
@@ -85,7 +85,10 @@ public abstract class Animal extends Entity {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(animalImage, x, y, null);
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this instanceof Ghost ? 0.5f : 1f));
+        g2d.drawImage(animalImage, x, y, null);
         // g.setColor(new Color(255, 32, 43, 50));
         // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
     }
