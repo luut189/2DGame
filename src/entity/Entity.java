@@ -10,7 +10,7 @@ import gfx.Renderer;
 
 import world.tile.Tile;
 
-public abstract class Entity {
+public abstract class Entity implements IAttackable {
 
     protected Renderer render;
 
@@ -250,6 +250,32 @@ public abstract class Entity {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void setAttackValue(int value) {
+        attackValue = value;
+    }
+
+    @Override
+    public int getAttackValue() {
+        return attackValue;
+    }
+
+    @Override
+    public void setHealthValue(int value) {
+        if(value > maxHealthValue) {
+            System.err.println("Invalid value");
+            currentHealthValue = 0;
+            return;
+        }
+
+        currentHealthValue = value;
+    }
+
+    @Override
+    public int getHealthValue() {
+        return currentHealthValue;
     }
 
     public int getSpeed() {

@@ -11,7 +11,7 @@ import gfx.Renderer;
 
 import utils.AssetManager;
 
-public class Player extends Entity implements IAttackable {
+public class Player extends Entity {
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
@@ -57,32 +57,6 @@ public class Player extends Entity implements IAttackable {
         } else {
             playerImage = AssetManager.downSwimmingImage;
         }
-    }
-
-    @Override
-    public void setAttackValue(int value) {
-        attackValue = value;
-    }
-
-    @Override
-    public int getAttackValue() {
-        return attackValue;
-    }
-
-    @Override
-    public void setHealthValue(int value) {
-        if(value > maxHealthValue) {
-            System.err.println("Invalid value");
-            currentHealthValue = 0;
-            return;
-        }
-
-        currentHealthValue = value;
-    }
-
-    @Override
-    public int getHealthValue() {
-        return currentHealthValue;
     }
 
     @Override
