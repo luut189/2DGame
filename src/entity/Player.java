@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import gfx.Renderer;
 
 import utils.AssetManager;
+import world.tile.Tile;
 
 public class Player extends Entity {
     
@@ -47,7 +48,8 @@ public class Player extends Entity {
         int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
         int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
 
-        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
+        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         }
@@ -64,7 +66,8 @@ public class Player extends Entity {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
-        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
+        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
