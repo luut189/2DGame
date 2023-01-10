@@ -21,10 +21,6 @@ public class Ghost extends Animal {
     }
 
     public void setCurrentGhostImage() {
-        if(state == EntityState.STANDING) {
-            animalImage = AssetManager.ghostImage[0];
-            return;
-        }
         if(spriteCounter > 12) {
             imageIndex = increaseImageIndex(imageIndex, 2);
             animalImage = AssetManager.ghostImage[imageIndex];

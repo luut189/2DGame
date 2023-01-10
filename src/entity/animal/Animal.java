@@ -40,9 +40,11 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(!(this instanceof Ghost) && (collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer())) {
-            state = EntityState.STANDING;
-            return;
+        if(!(this instanceof Ghost)) {
+            if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+                state = EntityState.STANDING;
+                return;
+            }
         }
         state = EntityState.STANDING;
         switch(direction) {
