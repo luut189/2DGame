@@ -23,7 +23,7 @@ public class Player extends Entity {
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
         
-        maxHealthValue = 10;
+        setMaxHealthValue(10);
         setHealthValue(3);
         setAttackValue(1);
 
@@ -190,6 +190,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void drawHealthBar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int i = maxHealthValue;

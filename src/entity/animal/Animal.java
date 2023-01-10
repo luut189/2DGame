@@ -1,7 +1,7 @@
 package entity.animal;
 
 import java.awt.AlphaComposite;
-// import java.awt.Color;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -81,6 +81,20 @@ public abstract class Animal extends Entity {
             actionCounter = 0;
         }
         move(render.getTileManager());
+    }
+
+    @Override
+    public void drawHealthBar(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        
+        double scale = render.getUnitSize()/maxHealthValue;
+        double healthBarValue = scale * currentHealthValue;
+
+        g2d.setColor(new Color(35, 35, 35));
+        g2d.fillRect(x, y-render.getUnitSize()/2, render.getUnitSize(), 6);
+
+        g2d.setColor(new Color(255, 0, 30));
+        g2d.fillRect(x, y-render.getUnitSize()/2, (int) healthBarValue, 4);
     }
 
     @Override

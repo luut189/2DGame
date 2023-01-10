@@ -278,6 +278,16 @@ public abstract class Entity implements IAttackable {
         return currentHealthValue;
     }
 
+    @Override
+    public void setMaxHealthValue(int value) {
+        maxHealthValue = value;
+    }
+
+    @Override
+    public int getMaxHealthValue() {
+        return maxHealthValue;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -289,6 +299,8 @@ public abstract class Entity implements IAttackable {
     public int getSwimmingSpeed() {
         return speed - speed/3;
     }
+
+    public abstract void drawHealthBar(Graphics g);
 
     public abstract void draw(Graphics g);
 }

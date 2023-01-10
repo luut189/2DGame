@@ -8,6 +8,9 @@ public interface IAttackable {
     void setHealthValue(int value);
     int getHealthValue();
 
+    void setMaxHealthValue(int value);
+    int getMaxHealthValue();
+
     // TODO - Add an attack method
 
 }
