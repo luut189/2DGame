@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import entity.animal.Animal;
+import entity.animal.Ghost;
 import gfx.Renderer;
 
 import world.tile.Tile;
@@ -54,6 +55,8 @@ public abstract class Entity implements IAttackable {
     public abstract void initTexture();
 
     public boolean collideWithTile(Tile[][] tileMap) {
+        if(this instanceof Ghost) return false;
+        
         int entityLeftX = x + solidArea.x;
         int entityRightX = x + solidArea.x + solidArea.width;
 
