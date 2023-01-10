@@ -7,7 +7,7 @@ public enum Direction {
     RIGHT,
     LEFT;
 
-    public Direction getOppositeDirection(Direction dir) {
+    public static Direction getOppositeDirection(Direction dir) {
         switch(dir) {
             case UP: return DOWN;
             case DOWN: return UP;
