@@ -60,32 +60,6 @@ public class Player extends Entity implements IAttackable {
     }
 
     @Override
-    public void setAttackValue(int value) {
-        attackValue = value;
-    }
-
-    @Override
-    public int getAttackValue() {
-        return attackValue;
-    }
-
-    @Override
-    public void setHealthValue(int value) {
-        if(value > maxHealthValue) {
-            System.err.println("Invalid value");
-            currentHealthValue = 0;
-            return;
-        }
-
-        currentHealthValue = value;
-    }
-
-    @Override
-    public int getHealthValue() {
-        return currentHealthValue;
-    }
-
-    @Override
     public void update() {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();

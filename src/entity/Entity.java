@@ -10,7 +10,7 @@ import gfx.Renderer;
 
 import world.tile.Tile;
 
-public abstract class Entity {
+public abstract class Entity implements IAttackable {
 
     protected Renderer render;
 
@@ -168,6 +168,52 @@ public abstract class Entity {
         return false;
     }
 
+    public int getAttackedEntity(ArrayList<Entity> targetList) {
+        for(int i = 0; i < targetList.size(); i++) {
+            Entity entity = targetList.get(i);
+            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
+                if(this.equals(render.getPlayer())) {
+                    solidArea.x += -render.getSceneX() + x;
+                    solidArea.y += -render.getSceneY() + y;
+                } else {
+                    solidArea.x += x;
+                    solidArea.y += y;
+                }
+                entity.getSolidArea().x += entity.getX();
+                entity.getSolidArea().y += entity.getY();
+
+                switch(direction) {
+                    case UP:
+                        solidArea.y -= speed;
+                        break;
+                    case DOWN:
+                        solidArea.y += speed;
+                        break;
+                    case RIGHT:
+                        solidArea.x += speed;
+                        break;
+                    case LEFT:
+                        solidArea.x -= speed;
+                        break;
+                    default:
+                        break;
+                }
+                if(solidArea.intersects(entity.getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                    entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+                    return i;
+                }
+                solidArea.x = solidAreaDefaultX;
+                solidArea.y = solidAreaDefaultY;
+                entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+            }
+        }
+        return -1;
+    }
+
     public boolean collideWithPlayer() {
         solidArea.x += x;
         solidArea.y += y;
@@ -250,6 +296,32 @@ public abstract class Entity {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void setAttackValue(int value) {
+        attackValue = value;
+    }
+
+    @Override
+    public int getAttackValue() {
+        return attackValue;
+    }
+
+    @Override
+    public void setHealthValue(int value) {
+        if(value > maxHealthValue) {
+            System.err.println("Invalid value");
+            currentHealthValue = 0;
+            return;
+        }
+
+        currentHealthValue = value;
+    }
+
+    @Override
+    public int getHealthValue() {
+        return currentHealthValue;
     }
 
     public int getSpeed() {
