@@ -10,8 +10,9 @@ import java.awt.image.BufferedImage;
 import gfx.Renderer;
 
 import utils.AssetManager;
+import world.tile.Tile;
 
-public class Player extends Entity implements IAttackable {
+public class Player extends Entity {
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
@@ -22,7 +23,7 @@ public class Player extends Entity implements IAttackable {
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
         
-        maxHealthValue = 10;
+        setMaxHealthValue(10);
         setHealthValue(3);
         setAttackValue(1);
 
@@ -47,7 +48,8 @@ public class Player extends Entity implements IAttackable {
         int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
         int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
 
-        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
+        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         }
@@ -64,7 +66,8 @@ public class Player extends Entity implements IAttackable {
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
-        if(render.getTileManager().getTile(nextTileX, nextTileY).getTileName().equals("water")) {
+        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
         } else {
@@ -187,6 +190,7 @@ public class Player extends Entity implements IAttackable {
         }
     }
 
+    @Override
     public void drawHealthBar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int i = maxHealthValue;

@@ -22,6 +22,8 @@
 
   - [x] Slime
 
+  - [x] Ghost
+
   - [ ] Zombie
 
   - [ ] Skeleton
@@ -29,6 +31,8 @@
 - [x] Fullscreen Mode
   
 - [ ] Fighting mechanics
+
+  - [x] Health bar
 
   - [ ] Punching/Melee
 

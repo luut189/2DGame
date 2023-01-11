@@ -209,12 +209,13 @@ public class Renderer extends JPanel implements Runnable {
                     entity.getY() < height - playerSceneY
                 ) {
                     entity.draw(gameImageGraphics);
+                    if(keyHandler.hasHUD()) entity.drawHealthBar(gameImageGraphics);
                 }
             }
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
 
-        if(true) player.drawHealthBar(gameImageGraphics);
+        if(keyHandler.hasHUD()) player.drawHealthBar(gameImageGraphics);
 
         if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
         gameImageGraphics.dispose();

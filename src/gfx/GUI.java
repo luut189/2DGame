@@ -5,6 +5,8 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
+import utils.AssetManager;
+
 public class GUI extends JFrame {
 
     private KeyHandler keyHandler;
@@ -12,11 +14,14 @@ public class GUI extends JFrame {
 
     private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-    public GUI(int width, int height, int FPS) {
+    private static GUI window;
+
+    private GUI(int width, int height, int FPS) {
         keyHandler = new KeyHandler(this);
         render = new Renderer(keyHandler, width, height, FPS);
 
-        this.setTitle("2D Game");
+        this.setTitle("Stew the Wanderer");
+        this.setIconImage(AssetManager.downImage[0]);
         this.add(render);
         this.pack();
         this.addKeyListener(keyHandler);
@@ -26,13 +31,21 @@ public class GUI extends JFrame {
         this.setVisible(true);
     }
 
+    public static GUI init(int width, int height, int FPS) {
+        if(window == null) {
+            window = new GUI(width, height, FPS);
+        }
+        return window;
+    }
+
     public void setFullscreen() {
         if(gd.getFullScreenWindow() == null) {
             gd.setFullScreenWindow(this);
+            render.setFullscreenAttribute(getWidth(), getHeight());
         } else {
             gd.setFullScreenWindow(null);
+            render.setFullscreenAttribute(getWidth(), getHeight()-32);
         }
-        render.setFullscreenAttribute(getWidth(), getHeight());
     }
     
 }

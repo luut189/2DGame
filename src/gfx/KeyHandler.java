@@ -13,6 +13,8 @@ public class KeyHandler extends KeyAdapter {
     private EntityState playerState = EntityState.STANDING;
     private Direction previousPlayerDirection = Direction.NONE;
 
+    private boolean hasHUD = false;
+
     private boolean hasMinimap = false;
     
     private boolean isZooming = false;
@@ -24,6 +26,10 @@ public class KeyHandler extends KeyAdapter {
 
     public KeyHandler(GUI window) {
         this.window = window;
+    }
+
+    public boolean hasHUD() {
+        return hasHUD;
     }
 
     public boolean hasMinimap() {
@@ -103,6 +109,9 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_Q:
                 if(zoomDist == 5) break;
                 zoomDist--;
+                break;
+            case KeyEvent.VK_H:
+                hasHUD = !hasHUD;
                 break;
             case KeyEvent.VK_F:
                 window.setFullscreen();

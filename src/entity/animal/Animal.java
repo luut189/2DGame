@@ -1,7 +1,9 @@
 package entity.animal;
 
-// import java.awt.Color;
-import java.awt.*;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Direction;
@@ -40,11 +42,9 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(!(this instanceof Ghost)) {
-            if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
-                state = EntityState.STANDING;
-                return;
-            }
+        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+            state = EntityState.STANDING;
+            return;
         }
         state = EntityState.STANDING;
         switch(direction) {
@@ -84,11 +84,26 @@ public abstract class Animal extends Entity {
     }
 
     @Override
+    public void drawHealthBar(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        
+        double scale = render.getUnitSize()/maxHealthValue;
+        double healthBarValue = scale * currentHealthValue;
+
+        g2d.setColor(new Color(35, 35, 35));
+        g2d.fillRect(x, y-render.getUnitSize()/2, render.getUnitSize(), 6);
+
+        g2d.setColor(new Color(255, 0, 30));
+        g2d.fillRect(x, y-render.getUnitSize()/2, (int) healthBarValue, 4);
+    }
+
+    @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this instanceof Ghost ? 0.5f : 1f));
-        g2d.drawImage(animalImage, x, y, null);
+        g.drawImage(animalImage, x, y, null);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         // g.setColor(new Color(255, 32, 43, 50));
         // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
     }

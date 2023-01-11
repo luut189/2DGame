@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import entity.animal.Animal;
+import entity.animal.Ghost;
 import gfx.Renderer;
 
 import world.tile.Tile;
@@ -54,6 +55,8 @@ public abstract class Entity implements IAttackable {
     public abstract void initTexture();
 
     public boolean collideWithTile(Tile[][] tileMap) {
+        if(this instanceof Ghost) return false;
+        
         int entityLeftX = x + solidArea.x;
         int entityRightX = x + solidArea.x + solidArea.width;
 
@@ -168,52 +171,6 @@ public abstract class Entity implements IAttackable {
         return false;
     }
 
-    public int getAttackedEntity(ArrayList<Entity> targetList) {
-        for(int i = 0; i < targetList.size(); i++) {
-            Entity entity = targetList.get(i);
-            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
-                if(this.equals(render.getPlayer())) {
-                    solidArea.x += -render.getSceneX() + x;
-                    solidArea.y += -render.getSceneY() + y;
-                } else {
-                    solidArea.x += x;
-                    solidArea.y += y;
-                }
-                entity.getSolidArea().x += entity.getX();
-                entity.getSolidArea().y += entity.getY();
-
-                switch(direction) {
-                    case UP:
-                        solidArea.y -= speed;
-                        break;
-                    case DOWN:
-                        solidArea.y += speed;
-                        break;
-                    case RIGHT:
-                        solidArea.x += speed;
-                        break;
-                    case LEFT:
-                        solidArea.x -= speed;
-                        break;
-                    default:
-                        break;
-                }
-                if(solidArea.intersects(entity.getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    entity.getSolidArea().x = entity.getSolidAreaDefaultX();
-                    entity.getSolidArea().y = entity.getSolidAreaDefaultY();
-                    return i;
-                }
-                solidArea.x = solidAreaDefaultX;
-                solidArea.y = solidAreaDefaultY;
-                entity.getSolidArea().x = entity.getSolidAreaDefaultX();
-                entity.getSolidArea().y = entity.getSolidAreaDefaultY();
-            }
-        }
-        return -1;
-    }
-
     public boolean collideWithPlayer() {
         solidArea.x += x;
         solidArea.y += y;
@@ -324,6 +281,16 @@ public abstract class Entity implements IAttackable {
         return currentHealthValue;
     }
 
+    @Override
+    public void setMaxHealthValue(int value) {
+        maxHealthValue = value;
+    }
+
+    @Override
+    public int getMaxHealthValue() {
+        return maxHealthValue;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -335,6 +302,8 @@ public abstract class Entity implements IAttackable {
     public int getSwimmingSpeed() {
         return speed - speed/3;
     }
+
+    public abstract void drawHealthBar(Graphics g);
 
     public abstract void draw(Graphics g);
 }
