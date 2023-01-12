@@ -122,7 +122,6 @@ public class KeyHandler extends KeyAdapter {
 
         if(key == KeyEvent.VK_SPACE) {
             playerState = EntityState.ATTACKING;
-            keyPressing = key;
         }
     }
 
@@ -130,6 +129,9 @@ public class KeyHandler extends KeyAdapter {
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_Q || key == KeyEvent.VK_E) {
             isZooming = false;
+        }
+        if(key == KeyEvent.VK_SPACE) {
+            playerState = EntityState.STANDING;
         }
         if(key == keyPressing) {
             playerState = EntityState.STANDING;
