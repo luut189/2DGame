@@ -10,6 +10,7 @@ public class Slime extends Animal {
 
     public Slime(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
+        hostileProb = 0.01;
         maxHealthValue = 3;
         currentHealthValue = maxHealthValue;
         attackValue = 1;
