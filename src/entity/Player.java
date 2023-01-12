@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.BasicStroke;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,7 +26,7 @@ public class Player extends Entity {
         super(render, x, y, speed);
 
         maxHealthValue = 10;
-        currentHealthValue = maxHealthValue;
+        currentHealthValue = 2;
         attackValue = 1;
 
         initTexture();
@@ -213,7 +214,11 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(playerImage, x, y, null);
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, invincibleCounter < maxInvincibleCounter ? 0.5f : 1f));
+        g2d.drawImage(playerImage, x, y, null);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 

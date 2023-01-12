@@ -42,11 +42,22 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList())) {
             state = EntityState.STANDING;
             return;
         }
         state = EntityState.STANDING;
+        if(collideWithPlayer()) {
+            state = EntityState.ATTACKING;
+            Entity target = render.getPlayer();
+            int x = target.getX()-render.getPlayerSceneX();
+            int y = target.getY()-render.getPlayerSceneY();
+            inflictAttack(target);
+            if(target.getHealthValue() <= 0) {
+                render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
+            }
+            return;
+        }
         switch(direction) {
             case UP -> {
                 if(y <= 0) break;
