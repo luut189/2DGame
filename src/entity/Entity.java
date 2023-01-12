@@ -76,47 +76,48 @@ public abstract class Entity implements IAttackable {
         int entityTopRow = entityTopY/render.getUnitSize();
         int entityBottomRow = entityBottomY/render.getUnitSize();
 
-        Tile tile1 = null;
-        Tile tile2 = null;
+        Tile tile1;
+        Tile tile2;
         switch(direction) {
-            case UP:
-                entityTopRow = (entityTopY-speed)/render.getUnitSize();
+            case UP -> {
+                entityTopRow = (entityTopY - speed) / render.getUnitSize();
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityTopRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityTopRow];
                 } else {
                     return false;
                 }
-                break;
-            case DOWN:
-                entityBottomRow = (entityBottomY+speed)/render.getUnitSize();
+            }
+            case DOWN -> {
+                entityBottomRow = (entityBottomY + speed) / render.getUnitSize();
                 if(isInRange(tileMap, entityLeftCol, entityBottomRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityBottomRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
                 } else {
                     return false;
                 }
-                break;
-            case RIGHT:
-                entityRightCol = (entityRightX+speed)/render.getUnitSize();
+            }
+            case RIGHT -> {
+                entityRightCol = (entityRightX + speed) / render.getUnitSize();
                 if(isInRange(tileMap, entityRightCol, entityTopRow) && isInRange(tileMap, entityRightCol, entityBottomRow)) {
                     tile1 = tileMap[entityRightCol][entityTopRow];
                     tile2 = tileMap[entityRightCol][entityBottomRow];
                 } else {
                     return false;
                 }
-                break;
-            case LEFT:
-                entityLeftCol = (entityLeftX-speed)/render.getUnitSize();
+            }
+            case LEFT -> {
+                entityLeftCol = (entityLeftX - speed) / render.getUnitSize();
                 if(isInRange(tileMap, entityLeftCol, entityTopRow) && isInRange(tileMap, entityLeftCol, entityBottomRow)) {
                     tile1 = tileMap[entityLeftCol][entityTopRow];
                     tile2 = tileMap[entityLeftCol][entityBottomRow];
                 } else {
                     return false;
                 }
-                break;
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
         
         if(this instanceof Animal) {
@@ -140,20 +141,11 @@ public abstract class Entity implements IAttackable {
                 entity.getSolidArea().y += entity.getY();
 
                 switch(direction) {
-                    case UP:
-                        solidArea.y -= speed;
-                        break;
-                    case DOWN:
-                        solidArea.y += speed;
-                        break;
-                    case RIGHT:
-                        solidArea.x += speed;
-                        break;
-                    case LEFT:
-                        solidArea.x -= speed;
-                        break;
-                    default:
-                        break;
+                    case UP -> solidArea.y -= speed;
+                    case DOWN -> solidArea.y += speed;
+                    case RIGHT -> solidArea.x += speed;
+                    case LEFT -> solidArea.x -= speed;
+                    default -> {}
                 }
                 if(solidArea.intersects(entity.getSolidArea())) {
                     solidArea.x = solidAreaDefaultX;
@@ -178,20 +170,11 @@ public abstract class Entity implements IAttackable {
         render.getPlayer().getSolidArea().y += -render.getSceneY() + render.getPlayer().getY();
 
         switch(direction) {
-            case UP:
-                solidArea.y -= speed;
-                break;
-            case DOWN:
-                solidArea.y += speed;
-                break;
-            case RIGHT:
-                solidArea.x += speed;
-                break;
-            case LEFT:
-                solidArea.x -= speed;
-                break;
-            default:
-                break;
+            case UP -> solidArea.y -= speed;
+            case DOWN -> solidArea.y += speed;
+            case RIGHT -> solidArea.x += speed;
+            case LEFT -> solidArea.x -= speed;
+            default -> {}
         }
         if(solidArea.intersects(render.getPlayer().getSolidArea())) {
             solidArea.x = solidAreaDefaultX;

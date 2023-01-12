@@ -8,12 +8,12 @@ public enum Direction {
     LEFT;
 
     public static Direction getOppositeDirection(Direction dir) {
-        switch(dir) {
-            case UP: return DOWN;
-            case DOWN: return UP;
-            case RIGHT: return LEFT;
-            case LEFT: return RIGHT;
-            default: return NONE;
-        }
+        return switch(dir) {
+            case UP -> DOWN;
+            case DOWN -> UP;
+            case RIGHT -> LEFT;
+            case LEFT -> RIGHT;
+            default -> NONE;
+        };
     }
 }

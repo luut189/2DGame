@@ -20,7 +20,7 @@ public abstract class Animal extends Entity {
     protected int imageIndex;
 
     private int actionCounter;
-    private int maxActionCount = 120;
+    private final int maxActionCount = 120;
 
     public Animal(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
@@ -48,28 +48,27 @@ public abstract class Animal extends Entity {
         }
         state = EntityState.STANDING;
         switch(direction) {
-            case UP:
+            case UP -> {
                 if(y <= 0) break;
                 state = EntityState.WALKING;
                 y -= speed;
-                break;
-            case DOWN:
-                if(y >= tileManager.getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
+            }
+            case DOWN -> {
+                if(y >= tileManager.getMaxCol() * render.getUnitSize() - render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 y += speed;
-                break;
-            case RIGHT:
-                if(x >= tileManager.getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
+            }
+            case RIGHT -> {
+                if(x >= tileManager.getMaxRow() * render.getUnitSize() - render.getUnitSize()) break;
                 state = EntityState.WALKING;
                 x += speed;
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 if(x <= 0) break;
                 state = EntityState.WALKING;
                 x -= speed;
-                break;
-            default:
-                break;
+            }
+            default -> {}
         }
     }
 
@@ -87,7 +86,7 @@ public abstract class Animal extends Entity {
     public void drawHealthBar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         
-        double scale = render.getUnitSize()/maxHealthValue;
+        double scale = (double) render.getUnitSize()/maxHealthValue;
         double healthBarValue = scale * currentHealthValue;
 
         g2d.setColor(new Color(35, 35, 35));

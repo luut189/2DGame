@@ -92,24 +92,25 @@ public class Player extends Entity {
             return;
         }
         switch(direction) {
-            case UP:
-                if(-render.getSceneY()+y <= 0) break;
+            case UP -> {
+                if(-render.getSceneY() + y <= 0) break;
                 render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
-                break;
-            case DOWN:
-                if(-render.getSceneY()+y > render.getTileManager().getMaxCol()*render.getUnitSize()-render.getUnitSize()) break;
+            }
+            case DOWN -> {
+                if(-render.getSceneY() + y > render.getTileManager().getMaxCol() * render.getUnitSize() - render.getUnitSize())
+                    break;
                 render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
-                break;
-            case RIGHT:
-                if(-render.getSceneX()+x > render.getTileManager().getMaxRow()*render.getUnitSize()-render.getUnitSize()) break;
+            }
+            case RIGHT -> {
+                if(-render.getSceneX() + x > render.getTileManager().getMaxRow() * render.getUnitSize() - render.getUnitSize())
+                    break;
                 render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
-                break;
-            case LEFT:
-                if(-render.getSceneX()+x <= 0) break;
+            }
+            case LEFT -> {
+                if(-render.getSceneX() + x <= 0) break;
                 render.setSceneX(render.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
-                break;
-            default:
-                break;
+            }
+            default -> {}
         }
     }
 
@@ -121,20 +122,11 @@ public class Player extends Entity {
         if(state == EntityState.STANDING) {
             imageIndex = 0;
             switch(playerDir) {
-                case UP:
-                    playerImage = AssetManager.upImage[imageIndex];
-                    break;
-                case DOWN:
-                    playerImage = AssetManager.downImage[imageIndex];
-                    break;
-                case RIGHT:
-                    playerImage = AssetManager.rightImage[imageIndex];
-                    break;
-                case LEFT:
-                    playerImage = AssetManager.leftImage[imageIndex];
-                    break;
-                default:
-                    break;
+                case UP -> playerImage = AssetManager.upImage[imageIndex];
+                case DOWN -> playerImage = AssetManager.downImage[imageIndex];
+                case RIGHT -> playerImage = AssetManager.rightImage[imageIndex];
+                case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
+                default -> {}
             }
         } else if(state == EntityState.WALKING) {
             boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
@@ -149,38 +141,20 @@ public class Player extends Entity {
                 imageIndex = isLeftLeg ? 1 : 2;
             }
             switch(playerDir) {
-                case UP:
-                    playerImage = AssetManager.upImage[imageIndex];
-                    break;
-                case DOWN:
-                    playerImage = AssetManager.downImage[imageIndex];
-                    break;
-                case RIGHT:
-                    playerImage = AssetManager.rightImage[imageIndex];
-                    break;
-                case LEFT:
-                    playerImage = AssetManager.leftImage[imageIndex];
-                    break;
-                default:
-                    break;
+                case UP -> playerImage = AssetManager.upImage[imageIndex];
+                case DOWN -> playerImage = AssetManager.downImage[imageIndex];
+                case RIGHT -> playerImage = AssetManager.rightImage[imageIndex];
+                case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
+                default -> {}
             }
             spriteCounter++;
         } else if(state == EntityState.SWIMMING) {
             switch(playerDir) {
-                case UP:
-                    playerImage = AssetManager.upSwimmingImage;
-                    break;
-                case DOWN:
-                    playerImage = AssetManager.downSwimmingImage;
-                    break;
-                case RIGHT:
-                    playerImage = AssetManager.rightSwimmingImage;
-                    break;
-                case LEFT:
-                    playerImage = AssetManager.leftSwimmingImage;
-                    break;
-                default:
-                    break;
+                case UP -> playerImage = AssetManager.upSwimmingImage;
+                case DOWN -> playerImage = AssetManager.downSwimmingImage;
+                case RIGHT -> playerImage = AssetManager.rightSwimmingImage;
+                case LEFT -> playerImage = AssetManager.leftSwimmingImage;
+                default -> {}
             }
         } else if(state == EntityState.ATTACKING) {
             // TODO - Will be used if I added attacking sprite for the player
