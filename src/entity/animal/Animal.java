@@ -75,6 +75,7 @@ public abstract class Animal extends Entity {
     @Override
     public void update() {
         actionCounter++;
+        invincibleCounter++;
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
             actionCounter = 0;
@@ -100,7 +101,7 @@ public abstract class Animal extends Entity {
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this instanceof Ghost ? 0.5f : 1f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (this instanceof Ghost || invincibleCounter < maxInvincibleCounter) ? 0.5f : 1f));
         g.drawImage(animalImage, x, y, null);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         // g.setColor(new Color(255, 32, 43, 50));

@@ -32,6 +32,9 @@ public abstract class Entity implements IAttackable {
 
     protected int spriteCounter = 0;
 
+    protected final int maxInvincibleCounter = 20;
+    protected int invincibleCounter = maxInvincibleCounter;
+
     public Entity(Renderer render, int x, int y, int speed) {
         this.render = render;
         this.x = x;
@@ -53,6 +56,14 @@ public abstract class Entity implements IAttackable {
     public abstract void update();
 
     public abstract void initTexture();
+
+    public void inflictAttack(Entity target) {
+        if(invincibleCounter < maxInvincibleCounter) return;
+        if(target.getHealthValue() > 0) {
+            target.setHealthValue(target.getHealthValue() - attackValue);
+            target.setInvincibleCounter(0);
+        }
+    }
 
     public boolean collideWithTile(Tile[][] tileMap) {
         if(this instanceof Ghost) return false;
@@ -292,7 +303,11 @@ public abstract class Entity implements IAttackable {
             currentHealthValue = 0;
             return;
         }
+        if(invincibleCounter < maxInvincibleCounter) {
+            return;
+        }
 
+        invincibleCounter = 0;
         currentHealthValue = value;
     }
 
@@ -321,6 +336,14 @@ public abstract class Entity implements IAttackable {
 
     public int getSwimmingSpeed() {
         return speed - speed/3;
+    }
+
+    public int getInvincibleCounter() {
+        return invincibleCounter;
+    }
+
+    public void setInvincibleCounter(int counter) {
+        invincibleCounter = counter;
     }
 
     public abstract void drawHealthBar(Graphics g);

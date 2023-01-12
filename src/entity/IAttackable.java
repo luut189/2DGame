@@ -1,6 +1,8 @@
 package entity;
 
 public interface IAttackable {
+
+    void inflictAttack(Entity target);
     
     void setAttackValue(int value);
     int getAttackValue();

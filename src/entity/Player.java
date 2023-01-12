@@ -63,6 +63,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+        invincibleCounter++;
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
@@ -83,9 +84,7 @@ public class Player extends Entity {
             int targetIndex = getAttackedEntity(render.getEntityList());
             if(targetIndex != -1) {
                 Entity target = render.getEntityList().get(targetIndex);
-                if(target.getHealthValue() > 0) {
-                    target.setHealthValue(target.getHealthValue() - attackValue);
-                }
+                inflictAttack(target);
             }
         }
 
