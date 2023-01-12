@@ -3,7 +3,6 @@ package utils;
 import java.util.ArrayList;
 
 import entity.Entity;
-import entity.animal.Ghost;
 import entity.animal.Slime;
 
 import gfx.Renderer;
