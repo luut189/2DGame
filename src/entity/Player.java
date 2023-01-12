@@ -84,7 +84,10 @@ public class Player extends Entity {
             int targetIndex = getAttackedEntity(render.getEntityList());
             if(targetIndex != -1) {
                 Entity target = render.getEntityList().get(targetIndex);
-                inflictAttack(target);
+                boolean isSuccess = inflictAttack(target);
+                if(!isSuccess) {
+//                    render.getEntityList().remove(targetIndex);
+                }
             }
         }
 

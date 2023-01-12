@@ -57,12 +57,13 @@ public abstract class Entity implements IAttackable {
 
     public abstract void initTexture();
 
-    public void inflictAttack(Entity target) {
-        if(invincibleCounter < maxInvincibleCounter) return;
+    public boolean inflictAttack(Entity target) {
+        if(invincibleCounter < maxInvincibleCounter) return true;
         if(target.getHealthValue() > 0) {
             target.setHealthValue(target.getHealthValue() - attackValue);
             target.setInvincibleCounter(0);
-        }
+            return true;
+        } else return false;
     }
 
     public boolean collideWithTile(Tile[][] tileMap) {

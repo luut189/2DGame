@@ -2,7 +2,7 @@ package entity;
 
 public interface IAttackable {
 
-    void inflictAttack(Entity target);
+    boolean inflictAttack(Entity target);
     
     void setAttackValue(int value);
     int getAttackValue();
