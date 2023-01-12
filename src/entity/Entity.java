@@ -32,7 +32,7 @@ public abstract class Entity implements IAttackable {
 
     protected int spriteCounter = 0;
 
-    protected final int maxInvincibleCounter = 20;
+    protected final int maxInvincibleCounter = 10;
     protected int invincibleCounter = maxInvincibleCounter;
 
     public Entity(Renderer render, int x, int y, int speed) {
@@ -57,13 +57,14 @@ public abstract class Entity implements IAttackable {
 
     public abstract void initTexture();
 
-    public boolean inflictAttack(Entity target) {
-        if(invincibleCounter < maxInvincibleCounter) return true;
-        if(target.getHealthValue() > 0) {
-            target.setHealthValue(target.getHealthValue() - attackValue);
-            target.setInvincibleCounter(0);
-            return true;
-        } else return false;
+    public void inflictAttack(Entity target) {
+        if(invincibleCounter < maxInvincibleCounter) return;
+        target.setHealthValue(target.getHealthValue() - attackValue);
+        target.setInvincibleCounter(0);
+    }
+
+    public boolean isAlive() {
+        return currentHealthValue > 0;
     }
 
     public boolean collideWithTile(Tile[][] tileMap) {
@@ -141,6 +142,7 @@ public abstract class Entity implements IAttackable {
 
     public boolean collideWithEntity(ArrayList<Entity> targetList) {
         for(Entity entity : targetList) {
+            if(!entity.isAlive()) continue;
             if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
                 if(this.equals(render.getPlayer())) {
                     solidArea.x += -render.getSceneX() + x;
@@ -176,6 +178,7 @@ public abstract class Entity implements IAttackable {
     }
 
     public boolean collideWithPlayer() {
+        if(!render.getPlayer().isAlive()) return false;
         solidArea.x += x;
         solidArea.y += y;
         render.getPlayer().getSolidArea().x += -render.getSceneX() + render.getPlayer().getX();
