@@ -1,7 +1,6 @@
 package entity;
 
 import java.awt.BasicStroke;
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,7 +25,7 @@ public class Player extends Entity {
         super(render, x, y, speed);
 
         maxHealthValue = 10;
-        currentHealthValue = 2;
+        currentHealthValue = maxHealthValue;
         attackValue = 1;
 
         initTexture();
@@ -66,6 +65,7 @@ public class Player extends Entity {
     @Override
     public void update() {
         invincibleCounter++;
+        spriteCounter++;
         int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
         int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
         
@@ -86,8 +86,8 @@ public class Player extends Entity {
             int targetIndex = getAttackedEntity(render.getEntityList());
             if(targetIndex != -1) {
                 Entity target = render.getEntityList().get(targetIndex);
-                boolean isSuccess = inflictAttack(target);
-                if(!isSuccess) {
+                inflictAttack(target);
+                if(target.getHealthValue() <= 0) {
                     render.getEntityList().set(targetIndex, new Ghost(target.getRender(), target.getX(), target.getY(), 2));
                 }
             }
@@ -139,7 +139,7 @@ public class Player extends Entity {
                 case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
                 default -> {}
             }
-        } else if(state == EntityState.WALKING) {
+        } else if(state == EntityState.WALKING || state == EntityState.ATTACKING) {
             boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
             if(spriteCounter > (isSideWay ? 10 : 12)) {
                 isLeftLeg = !isLeftLeg;
@@ -158,7 +158,6 @@ public class Player extends Entity {
                 case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
                 default -> {}
             }
-            spriteCounter++;
         } else if(state == EntityState.SWIMMING) {
             switch(playerDir) {
                 case UP -> playerImage = AssetManager.upSwimmingImage;
@@ -167,8 +166,6 @@ public class Player extends Entity {
                 case LEFT -> playerImage = AssetManager.leftSwimmingImage;
                 default -> {}
             }
-        } else if(state == EntityState.ATTACKING) {
-            // TODO - Will be used if I added attacking sprite for the player
         }
     }
 
@@ -214,11 +211,12 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, invincibleCounter < maxInvincibleCounter ? 0.5f : 1f));
-        g2d.drawImage(playerImage, x, y, null);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        g.drawImage(playerImage, x, y, null);
+        if(invincibleCounter < maxInvincibleCounter) {
+            g.setXORMode(Color.red);
+            g.drawImage(playerImage, x, y, null);
+            g.setPaintMode();
+        }
         // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
     }
 

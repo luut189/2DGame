@@ -19,6 +19,8 @@ public abstract class Animal extends Entity {
     protected BufferedImage animalImage;
     protected int imageIndex;
 
+    protected double hostileProb;
+
     private int actionCounter;
     private final int maxActionCount = 120;
 
@@ -42,20 +44,19 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList())) {
-            state = EntityState.STANDING;
-            return;
-        }
-        state = EntityState.STANDING;
-        if(collideWithPlayer()) {
-            state = EntityState.ATTACKING;
-            Entity target = render.getPlayer();
-            int x = target.getX()-render.getSceneX();
-            int y = target.getY()-render.getSceneY();
-            inflictAttack(target);
-            if(target.getHealthValue() <= 0) {
-                render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
+        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+            if(collideWithPlayer()) {
+                Entity target = render.getPlayer();
+                if(state == EntityState.STANDING) return;
+                int x = target.getX()-render.getSceneX();
+                int y = target.getY()-render.getSceneY();
+                inflictAttack(target);
+                if(target.getHealthValue() <= 0) {
+                    render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
+                }
+                return;
             }
+            state = EntityState.STANDING;
             return;
         }
         switch(direction) {
@@ -89,6 +90,7 @@ public abstract class Animal extends Entity {
         invincibleCounter++;
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
+            state = Math.random() < hostileProb ? EntityState.ATTACKING : EntityState.STANDING;
             actionCounter = 0;
         }
         move(render.getTileManager());
@@ -96,24 +98,27 @@ public abstract class Animal extends Entity {
 
     @Override
     public void drawHealthBar(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        
         double scale = (double) render.getUnitSize()/maxHealthValue;
         double healthBarValue = scale * currentHealthValue;
 
-        g2d.setColor(new Color(35, 35, 35));
-        g2d.fillRect(x, y-render.getUnitSize()/2, render.getUnitSize(), 6);
+        g.setColor(new Color(35, 35, 35));
+        g.fillRect(x, y-render.getUnitSize()/2, render.getUnitSize(), 6);
 
-        g2d.setColor(new Color(255, 0, 30));
-        g2d.fillRect(x, y-render.getUnitSize()/2, (int) healthBarValue, 4);
+        g.setColor(new Color(255, 0, 30));
+        g.fillRect(x, y-render.getUnitSize()/2, (int) healthBarValue, 4);
     }
 
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (this instanceof Ghost || invincibleCounter < maxInvincibleCounter) ? 0.5f : 1f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (this instanceof Ghost) ? 0.5f : 1f));
         g.drawImage(animalImage, x, y, null);
+        if(invincibleCounter < maxInvincibleCounter) {
+            g.setXORMode(Color.red);
+            g.drawImage(animalImage, x, y, null);
+            g.setPaintMode();
+        }
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         // g.setColor(new Color(255, 32, 43, 50));
         // g.fillRect(solidArea.x+x, solidArea.y+y, solidArea.width, solidArea.height);
