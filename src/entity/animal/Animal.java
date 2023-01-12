@@ -50,8 +50,8 @@ public abstract class Animal extends Entity {
         if(collideWithPlayer()) {
             state = EntityState.ATTACKING;
             Entity target = render.getPlayer();
-            int x = target.getX()-render.getPlayerSceneX();
-            int y = target.getY()-render.getPlayerSceneY();
+            int x = target.getX()-render.getSceneX();
+            int y = target.getY()-render.getSceneY();
             inflictAttack(target);
             if(target.getHealthValue() <= 0) {
                 render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
