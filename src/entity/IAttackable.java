@@ -2,7 +2,7 @@ package entity;
 
 public interface IAttackable {
 
-    boolean inflictAttack(Entity target);
+    void inflictAttack(Entity target);
     
     void setAttackValue(int value);
     int getAttackValue();
@@ -12,7 +12,5 @@ public interface IAttackable {
 
     void setMaxHealthValue(int value);
     int getMaxHealthValue();
-
-    // TODO - Add an attack method
 
 }
