@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -183,17 +181,12 @@ public class Renderer extends JPanel implements Runnable {
     public void drawToTempScreen() {
         gameImageGraphics = gameImage.getGraphics();
         ArrayList<Entity> drawingList = new ArrayList<>(entityList);
-        Collections.sort(drawingList, new Comparator<Entity>() {
-
-            @Override
-            public int compare(Entity e1, Entity e2) {
-                int y1 = e1.getY();
-                int y2 = e2.getY();
-                if(e1.equals(player)) y1 -= sceneY;
-                if(e2.equals(player)) y2 -= sceneY;
-                return Integer.compare(y1, y2);
-            }
-            
+        drawingList.sort((e1, e2) -> {
+            int y1 = e1.getY();
+            int y2 = e2.getY();
+            if(e1.equals(player)) y1 -= sceneY;
+            if(e2.equals(player)) y2 -= sceneY;
+            return Integer.compare(y1, y2);
         });
         tileManager.drawAllTexture(gameImageGraphics);
         for(Entity entity : drawingList) {

@@ -4,5 +4,5 @@ public enum EntityState {
     WALKING,
     SWIMMING,
     ATTACKING,
-    STANDING;
+    STANDING
 }

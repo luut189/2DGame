@@ -64,7 +64,7 @@ public class TileManager {
                 else if(value < 0.2) {
                     worldTiles[i][j] = new Tile(render, i, j, "sand", false);
                 }
-                else if(value < 0.3 || value < 0.5) {
+                else if(value < 0.5) {
                     worldTiles[i][j] = new Tile(render, i, j, "grass", false);
                 }
                 else {
@@ -95,17 +95,17 @@ public class TileManager {
             g.translate(0, render.getSceneY());
         }
 
-        for(Tile[] tiles : worldTiles) {
-            for(int j = 0; j < tiles.length; j++) {
-                if(tiles[j] != null) {
+        for(Tile[] tilesList : worldTiles) {
+            for(Tile tile : tilesList) {
+                if(tile != null) {
                     if
                     (
-                        tiles[j].getX()*render.getUnitSize() >= -render.getPlayerSceneX() - render.getUnitSize() &&
-                        tiles[j].getY()*render.getUnitSize() >= -render.getPlayerSceneY() - render.getUnitSize() &&
-                        tiles[j].getX()*render.getUnitSize() < render.getWidth() - render.getPlayerSceneX() &&
-                        tiles[j].getY()*render.getUnitSize() < render.getHeight() - render.getPlayerSceneY())
-                    {
-                        tiles[j].draw(g);
+                        tile.getX() * render.getUnitSize() >= -render.getPlayerSceneX() - render.getUnitSize() &&
+                        tile.getY() * render.getUnitSize() >= -render.getPlayerSceneY() - render.getUnitSize() &&
+                        tile.getX() * render.getUnitSize() < render.getWidth() - render.getPlayerSceneX() &&
+                        tile.getY() * render.getUnitSize() < render.getHeight() - render.getPlayerSceneY()
+                    ) {
+                        tile.draw(g);
                     }
                 }
             }
