@@ -65,9 +65,9 @@ public class AssetManager {
     }
 
     private static void loadTileImage(TextureLoader loader, int unitSize) {
-        for(int i = 0; i < tilesName.length; i++) {
-            BufferedImage image = scaleImage(loader.loadImage("/tiles/" + tilesName[i] + ".png"), unitSize);
-            tileMap.put(tilesName[i], image);
+        for(String name : tilesName) {
+            BufferedImage image = scaleImage(loader.loadImage("/tiles/" + name + ".png"), unitSize);
+            tileMap.put(name, image);
         }
     }
 
