@@ -190,6 +190,43 @@ public abstract class Entity implements IAttackable {
         return false;
     }
 
+    public int getAttackedEntity(ArrayList<Entity> targetList) {
+        for(int i = 0; i < targetList.size(); i++) {
+            Entity entity = targetList.get(i);
+            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
+                if(this.equals(render.getPlayer())) {
+                    solidArea.x += -render.getSceneX() + x;
+                    solidArea.y += -render.getSceneY() + y;
+                } else {
+                    solidArea.x += x;
+                    solidArea.y += y;
+                }
+                entity.getSolidArea().x += entity.getX();
+                entity.getSolidArea().y += entity.getY();
+
+                switch(direction) {
+                    case UP -> solidArea.y -= speed;
+                    case DOWN -> solidArea.y += speed;
+                    case RIGHT -> solidArea.x += speed;
+                    case LEFT -> solidArea.x -= speed;
+                    default -> {}
+                }
+                if(solidArea.intersects(entity.getSolidArea())) {
+                    solidArea.x = solidAreaDefaultX;
+                    solidArea.y = solidAreaDefaultY;
+                    entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                    entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+                    return i;
+                }
+                solidArea.x = solidAreaDefaultX;
+                solidArea.y = solidAreaDefaultY;
+                entity.getSolidArea().x = entity.getSolidAreaDefaultX();
+                entity.getSolidArea().y = entity.getSolidAreaDefaultY();
+            }
+        }
+        return -1;
+    }
+
     public int increaseImageIndex(int currentIndex, int maxIndex) {
         int newIndex = currentIndex + 1;
         if(newIndex < maxIndex) {

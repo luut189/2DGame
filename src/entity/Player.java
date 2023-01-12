@@ -80,6 +80,13 @@ public class Player extends Entity {
         if(state == EntityState.ATTACKING) {
             setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
             // TODO - What will happen when player attack?
+            int targetIndex = getAttackedEntity(render.getEntityList());
+            if(targetIndex != -1) {
+                Entity target = render.getEntityList().get(targetIndex);
+                if(target.getHealthValue() > 0) {
+                    target.setHealthValue(target.getHealthValue() - attackValue);
+                }
+            }
         }
 
         if(direction == Direction.NONE) {
@@ -158,9 +165,6 @@ public class Player extends Entity {
             }
         } else if(state == EntityState.ATTACKING) {
             // TODO - Will be used if I added attacking sprite for the player
-
-            // TESTING!!
-            setHealthValue(getHealthValue()+1);
         }
     }
 
