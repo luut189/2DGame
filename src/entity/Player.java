@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import entity.animal.Ghost;
 import gfx.Renderer;
 
 import utils.AssetManager;
@@ -22,10 +23,10 @@ public class Player extends Entity {
 
     public Player(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
-        
-        setMaxHealthValue(10);
-        setHealthValue(3);
-        setAttackValue(1);
+
+        maxHealthValue = 10;
+        currentHealthValue = maxHealthValue;
+        attackValue = 1;
 
         initTexture();
 
@@ -86,7 +87,7 @@ public class Player extends Entity {
                 Entity target = render.getEntityList().get(targetIndex);
                 boolean isSuccess = inflictAttack(target);
                 if(!isSuccess) {
-//                    render.getEntityList().remove(targetIndex);
+                    render.getEntityList().set(targetIndex, new Ghost(target.getRender(), target.getX(), target.getY(), 2));
                 }
             }
         }

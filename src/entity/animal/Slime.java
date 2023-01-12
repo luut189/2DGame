@@ -10,9 +10,9 @@ public class Slime extends Animal {
 
     public Slime(Renderer render, int x, int y, int speed) {
         super(render, x, y, speed);
-        setMaxHealthValue(10);
-        setHealthValue((int) (Math.random() * 10));
-        setAttackValue(1);
+        maxHealthValue = 3;
+        currentHealthValue = maxHealthValue;
+        attackValue = 1;
 
         int offsetX = 0;
         int offsetY = render.getUnitSize()/3;
