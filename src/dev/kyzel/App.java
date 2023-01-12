@@ -1,5 +1,7 @@
-import gfx.GUI;
-import world.gen.LevelGenerator;
+package dev.kyzel;
+
+import dev.kyzel.gfx.GUI;
+import dev.kyzel.world.gen.LevelGenerator;
 
 public class App {
     public static void main(String[] args) throws Exception {

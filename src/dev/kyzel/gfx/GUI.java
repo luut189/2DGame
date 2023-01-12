@@ -1,11 +1,11 @@
-package gfx;
+package dev.kyzel.gfx;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
-import utils.AssetManager;
+import dev.kyzel.utils.AssetManager;
 
 public class GUI extends JFrame {
 

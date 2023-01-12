@@ -1,14 +1,12 @@
-package utils;
+package dev.kyzel.utils;
 
 import java.util.ArrayList;
 
-import entity.Entity;
-import entity.animal.Slime;
-
-import gfx.Renderer;
-
-import world.tile.Tile;
-import world.tile.TileManager;
+import dev.kyzel.entity.Entity;
+import dev.kyzel.entity.animal.Slime;
+import dev.kyzel.gfx.Renderer;
+import dev.kyzel.world.tile.Tile;
+import dev.kyzel.world.tile.TileManager;
 
 public class EntityLoader {
 

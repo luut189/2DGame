@@ -1,9 +1,9 @@
-package entity.animal;
+package dev.kyzel.entity.animal;
 
 import java.awt.Rectangle;
 
-import gfx.Renderer;
-import utils.AssetManager;
+import dev.kyzel.gfx.Renderer;
+import dev.kyzel.utils.AssetManager;
 
 public class Ghost extends Animal {
 

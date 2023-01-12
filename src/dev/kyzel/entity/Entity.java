@@ -1,15 +1,14 @@
-package entity;
+package dev.kyzel.entity;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import java.util.ArrayList;
 
-import entity.animal.Animal;
-import entity.animal.Ghost;
-import gfx.Renderer;
-
-import world.tile.Tile;
+import dev.kyzel.entity.animal.Animal;
+import dev.kyzel.entity.animal.Ghost;
+import dev.kyzel.gfx.Renderer;
+import dev.kyzel.world.tile.Tile;
 
 public abstract class Entity implements IAttackable {
 

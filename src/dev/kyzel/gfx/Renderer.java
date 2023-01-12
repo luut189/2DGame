@@ -1,4 +1,4 @@
-package gfx;
+package dev.kyzel.gfx;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,15 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import entity.Entity;
-import entity.Player;
-
-import utils.AssetManager;
-import utils.EntityLoader;
-import utils.TextureLoader;
-
-import world.tile.TileManager;
-import world.tile.Map;
+import dev.kyzel.entity.Entity;
+import dev.kyzel.entity.Player;
+import dev.kyzel.utils.AssetManager;
+import dev.kyzel.utils.EntityLoader;
+import dev.kyzel.utils.TextureLoader;
+import dev.kyzel.world.tile.Map;
+import dev.kyzel.world.tile.TileManager;
 
 public class Renderer extends JPanel implements Runnable {
 

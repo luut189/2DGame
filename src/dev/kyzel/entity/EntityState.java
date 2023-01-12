@@ -1,4 +1,4 @@
-package entity;
+package dev.kyzel.entity;
 
 public enum EntityState {
     WALKING,

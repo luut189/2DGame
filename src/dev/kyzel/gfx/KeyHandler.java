@@ -1,10 +1,10 @@
-package gfx;
+package dev.kyzel.gfx;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import entity.Direction;
-import entity.EntityState;
+import dev.kyzel.entity.Direction;
+import dev.kyzel.entity.EntityState;
 
 public class KeyHandler extends KeyAdapter {
 

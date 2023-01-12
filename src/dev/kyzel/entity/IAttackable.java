@@ -1,4 +1,4 @@
-package entity;
+package dev.kyzel.entity;
 
 public interface IAttackable {
 

@@ -1,4 +1,4 @@
-package world.gen;
+package dev.kyzel.world.gen;
 
 // JAVA REFERENCE IMPLEMENTATION OF IMPROVED NOISE - COPYRIGHT 2002 KEN PERLIN.
 

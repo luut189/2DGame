@@ -1,4 +1,4 @@
-package world.gen;
+package dev.kyzel.world.gen;
 
 import java.util.Random;
 

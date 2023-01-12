@@ -1,11 +1,11 @@
-package world.tile;
+package dev.kyzel.world.tile;
 
 import java.awt.Graphics;
+
+import dev.kyzel.gfx.Renderer;
+import dev.kyzel.utils.AssetManager;
+
 import java.awt.Color;
-
-import gfx.Renderer;
-
-import utils.AssetManager;
 
 public class AnimatedTile extends Tile {
 

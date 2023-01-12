@@ -1,10 +1,10 @@
-package entity.animal;
+package dev.kyzel.entity.animal;
 
 import java.awt.Rectangle;
 
-import entity.EntityState;
-import gfx.Renderer;
-import utils.AssetManager;
+import dev.kyzel.entity.EntityState;
+import dev.kyzel.gfx.Renderer;
+import dev.kyzel.utils.AssetManager;
 
 public class Slime extends Animal {
 

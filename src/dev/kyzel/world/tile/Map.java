@@ -1,11 +1,11 @@
-package world.tile;
+package dev.kyzel.world.tile;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import gfx.KeyHandler;
-import gfx.Renderer;
+import dev.kyzel.gfx.KeyHandler;
+import dev.kyzel.gfx.Renderer;
 
 public class Map {
 

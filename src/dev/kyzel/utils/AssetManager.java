@@ -1,4 +1,4 @@
-package utils;
+package dev.kyzel.utils;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
