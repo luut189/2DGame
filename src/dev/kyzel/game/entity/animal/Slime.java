@@ -1,8 +1,8 @@
-package dev.kyzel.entity.animal;
+package dev.kyzel.game.entity.animal;
 
 import java.awt.Rectangle;
 
-import dev.kyzel.entity.EntityState;
+import dev.kyzel.game.entity.EntityState;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 

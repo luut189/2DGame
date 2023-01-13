@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import dev.kyzel.entity.Entity;
-import dev.kyzel.entity.Player;
+import dev.kyzel.game.entity.Entity;
+import dev.kyzel.game.entity.Player;
 import dev.kyzel.utils.AssetManager;
 import dev.kyzel.utils.EntityLoader;
 import dev.kyzel.utils.TextureLoader;
-import dev.kyzel.world.tile.Map;
-import dev.kyzel.world.tile.TileManager;
+import dev.kyzel.game.world.tile.Map;
+import dev.kyzel.game.world.tile.TileManager;
 
 public class Renderer extends JPanel implements Runnable {
 

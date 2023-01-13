@@ -2,11 +2,11 @@ package dev.kyzel.utils;
 
 import java.util.ArrayList;
 
-import dev.kyzel.entity.Entity;
-import dev.kyzel.entity.animal.Slime;
+import dev.kyzel.game.entity.Entity;
+import dev.kyzel.game.entity.animal.Slime;
 import dev.kyzel.gfx.Renderer;
-import dev.kyzel.world.tile.Tile;
-import dev.kyzel.world.tile.TileManager;
+import dev.kyzel.game.world.tile.Tile;
+import dev.kyzel.game.world.tile.TileManager;
 
 public class EntityLoader {
 

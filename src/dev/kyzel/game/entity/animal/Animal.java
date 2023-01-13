@@ -1,4 +1,4 @@
-package dev.kyzel.entity.animal;
+package dev.kyzel.game.entity.animal;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import dev.kyzel.entity.Direction;
-import dev.kyzel.entity.Entity;
-import dev.kyzel.entity.EntityState;
+import dev.kyzel.game.entity.Direction;
+import dev.kyzel.game.entity.Entity;
+import dev.kyzel.game.entity.EntityState;
 import dev.kyzel.gfx.Renderer;
-import dev.kyzel.world.tile.TileManager;
+import dev.kyzel.game.world.tile.TileManager;
 
 public abstract class Animal extends Entity {
 

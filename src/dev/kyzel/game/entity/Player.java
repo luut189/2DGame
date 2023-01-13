@@ -1,4 +1,4 @@
-package dev.kyzel.entity;
+package dev.kyzel.game.entity;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,10 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import dev.kyzel.entity.animal.Ghost;
+import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
-import dev.kyzel.world.tile.Tile;
+import dev.kyzel.game.world.tile.Tile;
 
 public class Player extends Entity {
     

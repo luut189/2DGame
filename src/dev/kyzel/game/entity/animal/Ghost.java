@@ -1,4 +1,4 @@
-package dev.kyzel.entity.animal;
+package dev.kyzel.game.entity.animal;
 
 import java.awt.Rectangle;
 

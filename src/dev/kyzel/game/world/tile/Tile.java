@@ -1,4 +1,4 @@
-package dev.kyzel.world.tile;
+package dev.kyzel.game.world.tile;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

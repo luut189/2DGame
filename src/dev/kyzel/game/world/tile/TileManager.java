@@ -1,9 +1,9 @@
-package dev.kyzel.world.tile;
+package dev.kyzel.game.world.tile;
 
 import java.awt.Graphics;
 
 import dev.kyzel.gfx.Renderer;
-import dev.kyzel.world.gen.LevelGenerator;
+import dev.kyzel.game.world.gen.LevelGenerator;
 
 import java.awt.Color;
 

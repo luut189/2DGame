@@ -1,7 +1,7 @@
 package dev.kyzel;
 
 import dev.kyzel.gfx.Window;
-import dev.kyzel.world.gen.LevelGenerator;
+import dev.kyzel.game.world.gen.LevelGenerator;
 
 public class App {
     public static void main(String[] args) throws Exception {

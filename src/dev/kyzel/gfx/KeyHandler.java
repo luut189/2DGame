@@ -3,8 +3,8 @@ package dev.kyzel.gfx;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import dev.kyzel.entity.Direction;
-import dev.kyzel.entity.EntityState;
+import dev.kyzel.game.entity.Direction;
+import dev.kyzel.game.entity.EntityState;
 
 public class KeyHandler extends KeyAdapter {
 
