@@ -52,6 +52,7 @@ public abstract class Animal extends Entity {
                 if(target.getHealthValue() <= 0) {
                     render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
                 }
+                direction = Direction.getOppositeDirection(direction);
                 return;
             }
             state = EntityState.STANDING;
