@@ -17,18 +17,18 @@ public class EntityLoader {
     private static void loadSlime(int num, ArrayList<Entity> entityList, Renderer render, TileManager tileManager) {
         for(int i = 0; i < num; i++) {
 
-            int x = (int) (Math.random() * tileManager.getMaxRow() * render.getUnitSize());
-            int y = (int) (Math.random() * tileManager.getMaxCol() * render.getUnitSize());
-            Tile currentTile = tileManager.getWorldTiles()[x/render.getUnitSize()][y/render.getUnitSize()];
+            int x = (int) (Math.random() * tileManager.getMaxRow());
+            int y = (int) (Math.random() * tileManager.getMaxCol());
+            Tile currentTile = tileManager.getWorldTiles()[x][y];
 
             while(currentTile.getTileName().equals("water") ||
                   currentTile.isSolid()) {
 
-                x = (int) (Math.random() * tileManager.getMaxRow() * render.getUnitSize());
-                y = (int) (Math.random() * tileManager.getMaxCol() * render.getUnitSize());
-                currentTile = tileManager.getWorldTiles()[x/render.getUnitSize()][y/render.getUnitSize()];
+                x = (int) (Math.random() * tileManager.getMaxRow());
+                y = (int) (Math.random() * tileManager.getMaxCol());
+                currentTile = tileManager.getWorldTiles()[x][y];
             }
-            entityList.add(new Slime(render, x, y, 1));
+            entityList.add(new Slime(render, x*render.getUnitSize(), y*render.getUnitSize(), 1));
         }
     }
 }
