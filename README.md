@@ -45,7 +45,7 @@ The workspace contains:
 
 - `res`: Resources (*sprites*, *textures*,...)
 
-- `src`: Sources
+- `src/dev/kyzel`: Sources
 
   - `entity`: Entity-related components
 

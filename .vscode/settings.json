@@ -18,6 +18,6 @@
     "java.project.exportJar.targetPath": "${workspaceFolder}/build/${workspaceFolderBasename}.jar",
 
     "code-runner.executorMap": {
-        "java": "cd \"$workspaceRoot\" && cd src && run App"
+        "java": "cd \"$workspaceRoot\" && cd src && javac -cp . -d ../bin dev/kyzel/App.java && java -classpath ../bin dev.kyzel.App"
     }
 }
