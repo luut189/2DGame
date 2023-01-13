@@ -7,16 +7,16 @@ import javax.swing.JFrame;
 
 import dev.kyzel.utils.AssetManager;
 
-public class GUI extends JFrame {
+public class Window extends JFrame {
 
     private KeyHandler keyHandler;
     private Renderer render;
 
     private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
-    private static GUI window;
+    private static Window window;
 
-    private GUI(int width, int height, int FPS) {
+    private Window(int width, int height, int FPS) {
         keyHandler = new KeyHandler(this);
         render = new Renderer(keyHandler, width, height, FPS);
 
@@ -31,9 +31,9 @@ public class GUI extends JFrame {
         this.setVisible(true);
     }
 
-    public static GUI init(int width, int height, int FPS) {
+    public static Window init(int width, int height, int FPS) {
         if(window == null) {
-            window = new GUI(width, height, FPS);
+            window = new Window(width, height, FPS);
         }
         return window;
     }

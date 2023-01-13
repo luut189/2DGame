@@ -22,9 +22,9 @@ public class KeyHandler extends KeyAdapter {
 
     private int keyPressing = 0;
 
-    private GUI window;
+    private Window window;
 
-    public KeyHandler(GUI window) {
+    public KeyHandler(Window window) {
         this.window = window;
     }
 

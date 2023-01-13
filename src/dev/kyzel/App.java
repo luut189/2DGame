@@ -1,6 +1,6 @@
 package dev.kyzel;
 
-import dev.kyzel.gfx.GUI;
+import dev.kyzel.gfx.Window;
 import dev.kyzel.world.gen.LevelGenerator;
 
 public class App {
@@ -14,6 +14,6 @@ public class App {
          */
         LevelGenerator.setSeedValue(3.6);
         
-        GUI.init(1280, 720, 60);
+        Window.init(1280, 720, 60);
     }
 }
