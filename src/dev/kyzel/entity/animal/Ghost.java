@@ -22,6 +22,7 @@ public class Ghost extends Animal {
     public void initTexture() {
         animalImage = AssetManager.ghostImage[imageIndex];
     }
+    
     @Override
     public void update() {
         super.update();
