@@ -25,14 +25,16 @@ If you're using **Replit**:
 
 - I have it setup on **Replit** so you can just press `Run`.
 
+- However, I **do not** recommend running it on **Replit** because of how big this project is.
+
 If you're running it via **Terminal** because you think you're cool:
 
 ```bash
 git clone https://github.com/luut189/2DGame.git
 cd 2DGame
 cd src
-javac -d ../bin App.java
-java -classpath ../bin App
+javac -cp . -d ../bin dev/kyzel/App.java
+java -classpath ../bin dev.kyzel.App
 ```
 
 If you're using something else, **why?**

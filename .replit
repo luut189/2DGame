@@ -1,5 +1,5 @@
-compile = "cd src; javac -d ../bin App.java"
-run = "java -classpath ./bin:./res App"
+compile = "cd src; javac -cp . -d ../bin dev/kyzel/App.java"
+run = "java -classpath ./bin:./res dev.kyzel.App"
 hidden = ["**/*.class"]
 
 [packager]
