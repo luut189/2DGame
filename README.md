@@ -25,6 +25,8 @@ If you're using **Replit**:
 
 - I have it setup on **Replit** so you can just press `Run`.
 
+- However, I **do not** recommend running it on **Replit** because of how big this project is.
+
 If you're running it via **Terminal** because you think you're cool:
 
 ```bash
