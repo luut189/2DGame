@@ -38,6 +38,10 @@ public class Window extends JFrame {
         return window;
     }
 
+    public static Window init() {
+        return init(800, 600, 60);
+    }
+
     public void setFullscreen() {
         if(gd.getFullScreenWindow() == null) {
             this.dispose();
