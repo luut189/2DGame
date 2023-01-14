@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
@@ -20,8 +21,8 @@ public class Player extends Entity {
     private boolean isSwimming = false;
     private boolean isLeftLeg = false;
 
-    public Player(Renderer render, int x, int y, int speed) {
-        super(render, x, y, speed);
+    public Player(Renderer render, Game game, int x, int y, int speed) {
+        super(render, game, x, y, speed);
 
         maxHealthValue = 10;
         currentHealthValue = maxHealthValue;
@@ -45,10 +46,10 @@ public class Player extends Entity {
         state = EntityState.STANDING;
         direction = Direction.NONE;
 
-        int nextTileX = (-render.getSceneX() + render.getUnitSize() / 2 + render.getCamX()) / render.getUnitSize();
-        int nextTileY = (-render.getSceneY() + render.getUnitSize() + render.getCamY()) / render.getUnitSize();
+        int nextTileX = (-game.getSceneX() + render.getUnitSize() / 2 + game.getCamX()) / render.getUnitSize();
+        int nextTileY = (-game.getSceneY() + render.getUnitSize() + game.getCamY()) / render.getUnitSize();
 
-        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        Tile current = game.getTileManager().getTile(nextTileX, nextTileY);
         if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
@@ -65,10 +66,10 @@ public class Player extends Entity {
     public void update() {
         invincibleCounter++;
         spriteCounter++;
-        int nextTileX = (-render.getSceneX()+render.getUnitSize()/2+render.getCamX())/render.getUnitSize();
-        int nextTileY = (-render.getSceneY()+render.getUnitSize()+render.getCamY())/render.getUnitSize();
+        int nextTileX = (-game.getSceneX()+render.getUnitSize()/2+game.getCamX())/render.getUnitSize();
+        int nextTileY = (-game.getSceneY()+render.getUnitSize()+game.getCamY())/render.getUnitSize();
         
-        Tile current = render.getTileManager().getTile(nextTileX, nextTileY);
+        Tile current = game.getTileManager().getTile(nextTileX, nextTileY);
         if(current != null && current.getTileName().equals("water")) {
             state = EntityState.SWIMMING;
             isSwimming = true;
@@ -82,12 +83,12 @@ public class Player extends Entity {
         if(state == EntityState.ATTACKING) {
             setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
             // TODO - What will happen when player attack?
-            int targetIndex = getAttackedEntity(render.getEntityList());
+            int targetIndex = getAttackedEntity(game.getEntityList());
             if(targetIndex != -1) {
-                Entity target = render.getEntityList().get(targetIndex);
+                Entity target = game.getEntityList().get(targetIndex);
                 inflictAttack(target);
                 if(target.getHealthValue() <= 0) {
-                    render.getEntityList().set(targetIndex, new Ghost(target.getRender(), target.getX(), target.getY(), 2));
+                    game.getEntityList().set(targetIndex, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
                 }
             }
         }
@@ -98,27 +99,27 @@ public class Player extends Entity {
         }
 
         setCurrentPlayerImage(direction);
-        if(collideWithTile(render.getTileManager().getWorldTiles()) || collideWithEntity(render.getEntityList())) {
+        if(collideWithTile(game.getTileManager().getWorldTiles()) || collideWithEntity(game.getEntityList())) {
             return;
         }
         switch(direction) {
             case UP -> {
-                if(-render.getSceneY() + y <= 0) break;
-                render.setSceneY(render.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-game.getSceneY() + y <= 0) break;
+                game.setSceneY(game.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
             }
             case DOWN -> {
-                if(-render.getSceneY() + y > render.getTileManager().getMaxCol() * render.getUnitSize() - render.getUnitSize())
+                if(-game.getSceneY() + y > game.getTileManager().getMaxCol() * render.getUnitSize() - render.getUnitSize())
                     break;
-                render.setSceneY(render.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                game.setSceneY(game.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
             }
             case RIGHT -> {
-                if(-render.getSceneX() + x > render.getTileManager().getMaxRow() * render.getUnitSize() - render.getUnitSize())
+                if(-game.getSceneX() + x > game.getTileManager().getMaxRow() * render.getUnitSize() - render.getUnitSize())
                     break;
-                render.setSceneX(render.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                game.setSceneX(game.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
             }
             case LEFT -> {
-                if(-render.getSceneX() + x <= 0) break;
-                render.setSceneX(render.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(-game.getSceneX() + x <= 0) break;
+                game.setSceneX(game.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
             }
             default -> {}
         }
@@ -216,7 +217,7 @@ public class Player extends Entity {
             g.drawImage(playerImage, x, y, null);
             g.setPaintMode();
         }
-        // g.fillRect(solidArea.x+render.getCamX(), solidArea.y+render.getCamY(), solidArea.width, solidArea.height);
+        // g.fillRect(solidArea.x+game.getCamX(), solidArea.y+game.getCamY(), solidArea.width, solidArea.height);
     }
 
 }

@@ -2,13 +2,14 @@ package dev.kyzel.game.entity.animal;
 
 import java.awt.Rectangle;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
 public class Ghost extends Animal {
 
-    public Ghost(Renderer render, int x, int y, int speed) {
-        super(render, x, y, speed);
+    public Ghost(Renderer render, Game game, int x, int y, int speed) {
+        super(render, game, x, y, speed);
         maxHealthValue = 2;
         currentHealthValue = maxHealthValue;
         attackValue = 0;

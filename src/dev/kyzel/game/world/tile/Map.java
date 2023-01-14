@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.gfx.KeyHandler;
 import dev.kyzel.gfx.Renderer;
 
 public class Map {
 
     private Renderer render;
+    private Game game;
+
     private Tile[][] worldTiles;
     private int maxRow, maxCol;
 
@@ -17,8 +20,9 @@ public class Map {
 
     private int mapSize;
 
-    public Map(Renderer render, TileManager tileManager, int mapSize) {
+    public Map(Renderer render, Game game, TileManager tileManager, int mapSize) {
         this.render = render;
+        this.game = game;
         this.worldTiles = tileManager.getWorldTiles();
         this.maxRow = tileManager.getMaxRow();
         this.maxCol = tileManager.getMaxCol();
@@ -49,8 +53,8 @@ public class Map {
         while(row < maxRow && col < maxCol) {
             int x = row*render.getUnitSize();
             int y = col*render.getUnitSize();
-            int translateX = -render.getCamX()+render.getSceneX()+worldMapWidth/2;
-            int translateY = -render.getCamY()+render.getSceneY()+worldMapHeight/2;
+            int translateX = -game.getCamX()+game.getSceneX()+worldMapWidth/2;
+            int translateY = -game.getCamY()+game.getSceneY()+worldMapHeight/2;
             if(
                 x >= -translateX-render.getUnitSize() &&
                 y >= -translateY-render.getUnitSize() &&
@@ -89,11 +93,11 @@ public class Map {
         g.drawImage(worldMap, x, y, width, height, null);
         
         double scale = (double) (render.getUnitSize() * maxRow)/maxRow*render.getUnitSize();
-        int playerX = (int) ((-render.getCamX())/scale) + width/2;
-        int playerY = (int) ((-render.getCamY())/scale) + height/2;
+        int playerX = (int) ((-game.getCamX())/scale) + width/2;
+        int playerY = (int) ((-game.getCamY())/scale) + height/2;
         int playerSize = width/mapSize;
         g.translate(x, y);
-        g.drawImage(render.getPlayer().getPlayerImage(), playerX, playerY, playerSize, playerSize, null);
+        g.drawImage(game.getPlayer().getPlayerImage(), playerX, playerY, playerSize, playerSize, null);
 
     }
 }

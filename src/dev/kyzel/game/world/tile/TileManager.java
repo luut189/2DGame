@@ -2,6 +2,7 @@ package dev.kyzel.game.world.tile;
 
 import java.awt.Graphics;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.gen.LevelGenerator;
 
@@ -10,14 +11,16 @@ import java.awt.Color;
 public class TileManager {
 
     protected Renderer render;
+    protected Game game;
 
     protected int maxRow, maxCol;
 
     private double[][] numberWorldTile;
     protected Tile[][] worldTiles;
 
-    public TileManager(Renderer render) {
+    public TileManager(Renderer render, Game game) {
         this.render = render;
+        this.game = game;
         
         // maxRow = render.getWidth()/render.getUnitSize();
         // maxCol = render.getHeight()/render.getUnitSize();
@@ -76,23 +79,23 @@ public class TileManager {
 
     public void drawAllTexture(Graphics g) {
 
-        int xOffset = maxRow*render.getUnitSize() - render.getCamX()*2 - render.getUnitSize();
-        int yOffset = maxCol*render.getUnitSize() - render.getCamY()*2 - render.getUnitSize();
+        int xOffset = maxRow*render.getUnitSize() - game.getCamX()*2 - render.getUnitSize();
+        int yOffset = maxCol*render.getUnitSize() - game.getCamY()*2 - render.getUnitSize();
 
-        if(-render.getSceneX() >= xOffset) {
-            render.setPlayerSceneX(-xOffset);
+        if(-game.getSceneX() >= xOffset) {
+            game.setPlayerSceneX(-xOffset);
             g.translate(-xOffset, 0);
-        } else if(render.getSceneX() < 0) {
-            render.setPlayerSceneX(render.getSceneX());
-            g.translate(render.getSceneX(), 0);
+        } else if(game.getSceneX() < 0) {
+            game.setPlayerSceneX(game.getSceneX());
+            g.translate(game.getSceneX(), 0);
         }
         
-        if(-render.getSceneY() >= yOffset) {
-            render.setPlayerSceneY(-yOffset);
+        if(-game.getSceneY() >= yOffset) {
+            game.setPlayerSceneY(-yOffset);
             g.translate(0, -yOffset);
-        } else if(render.getSceneY() < 0) {
-            render.setPlayerSceneY(render.getSceneY());
-            g.translate(0, render.getSceneY());
+        } else if(game.getSceneY() < 0) {
+            game.setPlayerSceneY(game.getSceneY());
+            g.translate(0, game.getSceneY());
         }
 
         for(Tile[] tilesList : worldTiles) {
@@ -100,10 +103,10 @@ public class TileManager {
                 if(tile != null) {
                     if
                     (
-                        tile.getX() * render.getUnitSize() >= -render.getPlayerSceneX() - render.getUnitSize() &&
-                        tile.getY() * render.getUnitSize() >= -render.getPlayerSceneY() - render.getUnitSize() &&
-                        tile.getX() * render.getUnitSize() < render.getWidth() - render.getPlayerSceneX() &&
-                        tile.getY() * render.getUnitSize() < render.getHeight() - render.getPlayerSceneY()
+                        tile.getX() * render.getUnitSize() >= -game.getPlayerSceneX() - render.getUnitSize() &&
+                        tile.getY() * render.getUnitSize() >= -game.getPlayerSceneY() - render.getUnitSize() &&
+                        tile.getX() * render.getUnitSize() < render.getWidth() - game.getPlayerSceneX() &&
+                        tile.getY() * render.getUnitSize() < render.getHeight() - game.getPlayerSceneY()
                     ) {
                         tile.draw(g);
                     }

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import java.util.ArrayList;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Animal;
 import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.gfx.Renderer;
@@ -13,6 +14,7 @@ import dev.kyzel.game.world.tile.Tile;
 public abstract class Entity implements IAttackable {
 
     protected Renderer render;
+    protected Game game;
 
     protected Direction direction;
     protected EntityState state;
@@ -34,8 +36,9 @@ public abstract class Entity implements IAttackable {
     protected final int maxInvincibleCounter = 10;
     protected int invincibleCounter = maxInvincibleCounter;
 
-    public Entity(Renderer render, int x, int y, int speed) {
+    public Entity(Renderer render, Game game, int x, int y, int speed) {
         this.render = render;
+        this.game = game;
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -75,12 +78,12 @@ public abstract class Entity implements IAttackable {
         int entityTopY = y + solidArea.y;
         int entityBottomY = y + solidArea.y + solidArea.height;
 
-        if(this.equals(render.getPlayer())) {
-            entityLeftX -= render.getSceneX();
-            entityRightX -= render.getSceneX();
+        if(this.equals(game.getPlayer())) {
+            entityLeftX -= game.getSceneX();
+            entityRightX -= game.getSceneX();
 
-            entityTopY -= render.getSceneY();
-            entityBottomY -= render.getSceneY();
+            entityTopY -= game.getSceneY();
+            entityBottomY -= game.getSceneY();
         }
 
         int entityLeftCol = entityLeftX/render.getUnitSize();
@@ -142,10 +145,10 @@ public abstract class Entity implements IAttackable {
     public boolean collideWithEntity(ArrayList<Entity> targetList) {
         for(Entity entity : targetList) {
             if(!entity.isAlive()) continue;
-            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
-                if(this.equals(render.getPlayer())) {
-                    solidArea.x += -render.getSceneX() + x;
-                    solidArea.y += -render.getSceneY() + y;
+            if(entity != null && !entity.equals(this) && !entity.equals(game.getPlayer())) {
+                if(this.equals(game.getPlayer())) {
+                    solidArea.x += -game.getSceneX() + x;
+                    solidArea.y += -game.getSceneY() + y;
                 } else {
                     solidArea.x += x;
                     solidArea.y += y;
@@ -177,11 +180,11 @@ public abstract class Entity implements IAttackable {
     }
 
     public boolean collideWithPlayer() {
-        if(!render.getPlayer().isAlive()) return false;
+        if(!game.getPlayer().isAlive()) return false;
         solidArea.x += x;
         solidArea.y += y;
-        render.getPlayer().getSolidArea().x += -render.getSceneX() + render.getPlayer().getX();
-        render.getPlayer().getSolidArea().y += -render.getSceneY() + render.getPlayer().getY();
+        game.getPlayer().getSolidArea().x += -game.getSceneX() + game.getPlayer().getX();
+        game.getPlayer().getSolidArea().y += -game.getSceneY() + game.getPlayer().getY();
 
         switch(direction) {
             case UP -> solidArea.y -= speed;
@@ -190,27 +193,27 @@ public abstract class Entity implements IAttackable {
             case LEFT -> solidArea.x -= speed;
             default -> {}
         }
-        if(solidArea.intersects(render.getPlayer().getSolidArea())) {
+        if(solidArea.intersects(game.getPlayer().getSolidArea())) {
             solidArea.x = solidAreaDefaultX;
             solidArea.y = solidAreaDefaultY;
-            render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-            render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+            game.getPlayer().getSolidArea().x = game.getPlayer().getSolidAreaDefaultX();
+            game.getPlayer().getSolidArea().y = game.getPlayer().getSolidAreaDefaultY();
             return true;
         }
         solidArea.x = solidAreaDefaultX;
         solidArea.y = solidAreaDefaultY;
-        render.getPlayer().getSolidArea().x = render.getPlayer().getSolidAreaDefaultX();
-        render.getPlayer().getSolidArea().y = render.getPlayer().getSolidAreaDefaultY();
+        game.getPlayer().getSolidArea().x = game.getPlayer().getSolidAreaDefaultX();
+        game.getPlayer().getSolidArea().y = game.getPlayer().getSolidAreaDefaultY();
         return false;
     }
 
     public int getAttackedEntity(ArrayList<Entity> targetList) {
         for(int i = 0; i < targetList.size(); i++) {
             Entity entity = targetList.get(i);
-            if(entity != null && !entity.equals(this) && !entity.equals(render.getPlayer())) {
-                if(this.equals(render.getPlayer())) {
-                    solidArea.x += -render.getSceneX() + x;
-                    solidArea.y += -render.getSceneY() + y;
+            if(entity != null && !entity.equals(this) && !entity.equals(game.getPlayer())) {
+                if(this.equals(game.getPlayer())) {
+                    solidArea.x += -game.getSceneX() + x;
+                    solidArea.y += -game.getSceneY() + y;
                 } else {
                     solidArea.x += x;
                     solidArea.y += y;
@@ -255,6 +258,10 @@ public abstract class Entity implements IAttackable {
 
     public void setRender(Renderer render) {
         this.render = render;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public int getX() {

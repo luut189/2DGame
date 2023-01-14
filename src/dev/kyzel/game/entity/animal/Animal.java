@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.Direction;
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.EntityState;
@@ -22,8 +23,8 @@ public abstract class Animal extends Entity {
     private int actionCounter;
     private final int maxActionCount = 120;
 
-    public Animal(Renderer render, int x, int y, int speed) {
-        super(render, x, y, speed);
+    public Animal(Renderer render, Game game, int x, int y, int speed) {
+        super(render, game, x, y, speed);
         
         direction = Direction.NONE;
         state = EntityState.STANDING;
@@ -42,15 +43,15 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(render.getEntityList()) || collideWithPlayer()) {
+        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(game.getEntityList()) || collideWithPlayer()) {
             if(collideWithPlayer()) {
-                Entity target = render.getPlayer();
+                Entity target = game.getPlayer();
                 if(state == EntityState.STANDING) return;
-                int x = target.getX()-render.getSceneX();
-                int y = target.getY()-render.getSceneY();
+                int x = target.getX()-game.getSceneX();
+                int y = target.getY()-game.getSceneY();
                 inflictAttack(target);
                 if(target.getHealthValue() <= 0) {
-                    render.getEntityList().set(0 ,new Ghost(target.getRender(), x, y, 2));
+                    game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
                 direction = Direction.getOppositeDirection(direction);
                 return;
@@ -92,7 +93,7 @@ public abstract class Animal extends Entity {
             state = Math.random() < hostileProb ? EntityState.ATTACKING : EntityState.STANDING;
             actionCounter = 0;
         }
-        move(render.getTileManager());
+        move(game.getTileManager());
     }
 
     @Override

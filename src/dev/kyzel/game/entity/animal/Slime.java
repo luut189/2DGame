@@ -2,14 +2,15 @@ package dev.kyzel.game.entity.animal;
 
 import java.awt.Rectangle;
 
+import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.EntityState;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
 public class Slime extends Animal {
 
-    public Slime(Renderer render, int x, int y, int speed) {
-        super(render, x, y, speed);
+    public Slime(Renderer render, Game game, int x, int y, int speed) {
+        super(render, game, x, y, speed);
         hostileProb = 0.01;
         maxHealthValue = 3;
         currentHealthValue = maxHealthValue;
