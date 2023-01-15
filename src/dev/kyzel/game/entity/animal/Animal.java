@@ -43,8 +43,12 @@ public abstract class Animal extends Entity {
     }
 
     public void move(TileManager tileManager) {
-        if(collideWithTile(tileManager.getWorldTiles()) || collideWithEntity(game.getEntityList()) || collideWithPlayer()) {
-            if(collideWithPlayer()) {
+        boolean collideWithTile = collideWithTile(tileManager.getWorldTiles());
+        int collidedEntity = collideWithEntity(game.getEntityList(), direction);
+        boolean collideWithPlayer = collideWithPlayer();
+
+        if(collideWithTile || collidedEntity != -1 || collideWithPlayer) {
+            if(collideWithPlayer) {
                 Entity target = game.getPlayer();
                 if(state == EntityState.STANDING) return;
                 int x = target.getX()-game.getSceneX();
@@ -54,6 +58,17 @@ public abstract class Animal extends Entity {
                     game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
                 direction = Direction.getOppositeDirection(direction);
+                return;
+            } else if(collidedEntity != -1) {
+                Entity target = game.getEntityList().get(collidedEntity);
+                if(state == EntityState.STANDING) return;
+                int x = target.getX();
+                int y = target.getY();
+                inflictAttack(target);
+                if(target.getHealthValue() <= 0) {
+                    game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                }
+                target.setDirection(direction);
                 return;
             }
             state = EntityState.STANDING;

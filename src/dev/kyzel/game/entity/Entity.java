@@ -33,7 +33,7 @@ public abstract class Entity implements IAttackable {
 
     protected int spriteCounter = 0;
 
-    protected final int maxInvincibleCounter = 10;
+    protected final int maxInvincibleCounter = 20;
     protected int invincibleCounter = maxInvincibleCounter;
 
     public Entity(Renderer render, Game game, int x, int y, int speed) {
@@ -60,7 +60,7 @@ public abstract class Entity implements IAttackable {
     public abstract void initTexture();
 
     public void inflictAttack(Entity target) {
-        if(invincibleCounter < maxInvincibleCounter) return;
+        if(target.getInvincibleCounter() < maxInvincibleCounter) return;
         target.setHealthValue(target.getHealthValue() - attackValue);
         target.setInvincibleCounter(0);
     }
@@ -142,43 +142,6 @@ public abstract class Entity implements IAttackable {
         return tile1.isSolid() || tile2.isSolid();
     }
 
-    public boolean collideWithEntity(ArrayList<Entity> targetList) {
-        for(Entity entity : targetList) {
-            if(!entity.isAlive()) continue;
-            if(entity != null && !entity.equals(this) && !entity.equals(game.getPlayer())) {
-                if(this.equals(game.getPlayer())) {
-                    solidArea.x += -game.getSceneX() + x;
-                    solidArea.y += -game.getSceneY() + y;
-                } else {
-                    solidArea.x += x;
-                    solidArea.y += y;
-                }
-                entity.getSolidArea().x += entity.getX();
-                entity.getSolidArea().y += entity.getY();
-
-                switch(direction) {
-                    case UP -> solidArea.y -= speed;
-                    case DOWN -> solidArea.y += speed;
-                    case RIGHT -> solidArea.x += speed;
-                    case LEFT -> solidArea.x -= speed;
-                    default -> {}
-                }
-                if(solidArea.intersects(entity.getSolidArea())) {
-                    solidArea.x = solidAreaDefaultX;
-                    solidArea.y = solidAreaDefaultY;
-                    entity.getSolidArea().x = entity.getSolidAreaDefaultX();
-                    entity.getSolidArea().y = entity.getSolidAreaDefaultY();
-                    return true;
-                }
-                solidArea.x = solidAreaDefaultX;
-                solidArea.y = solidAreaDefaultY;
-                entity.getSolidArea().x = entity.getSolidAreaDefaultX();
-                entity.getSolidArea().y = entity.getSolidAreaDefaultY();
-            }
-        }
-        return false;
-    }
-
     public boolean collideWithPlayer() {
         if(!game.getPlayer().isAlive()) return false;
         solidArea.x += x;
@@ -207,7 +170,7 @@ public abstract class Entity implements IAttackable {
         return false;
     }
 
-    public int getAttackedEntity(ArrayList<Entity> targetList) {
+    public int collideWithEntity(ArrayList<Entity> targetList, Direction currentEntityDirection) {
         for(int i = 0; i < targetList.size(); i++) {
             Entity entity = targetList.get(i);
             if(entity != null && !entity.equals(this) && !entity.equals(game.getPlayer())) {
@@ -221,7 +184,7 @@ public abstract class Entity implements IAttackable {
                 entity.getSolidArea().x += entity.getX();
                 entity.getSolidArea().y += entity.getY();
 
-                switch(direction) {
+                switch(currentEntityDirection) {
                     case UP -> solidArea.y -= speed;
                     case DOWN -> solidArea.y += speed;
                     case RIGHT -> solidArea.x += speed;
@@ -296,6 +259,10 @@ public abstract class Entity implements IAttackable {
         return direction;
     }
 
+    public void setDirection(Direction dir) {
+        direction = dir;
+    }
+
     @Override
     public void setAttackValue(int value) {
         attackValue = value;
@@ -310,14 +277,13 @@ public abstract class Entity implements IAttackable {
     public void setHealthValue(int value) {
         if(value > maxHealthValue) {
             System.err.println("Invalid value");
-            currentHealthValue = 0;
+            currentHealthValue = maxHealthValue;
             return;
         }
         if(invincibleCounter < maxInvincibleCounter) {
             return;
         }
 
-        invincibleCounter = 0;
         currentHealthValue = value;
     }
 

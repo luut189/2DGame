@@ -80,26 +80,30 @@ public class Player extends Entity {
         direction = render.getKeyHandler().getPlayerDirection();
         state = isSwimming ? EntityState.SWIMMING : render.getKeyHandler().getPlayerState();
 
+        Direction previousDirection = render.getKeyHandler().getPreviousPlayerDirection();
+        
+        boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
+        int collidedEntity = collideWithEntity(game.getEntityList(), direction == Direction.NONE ? previousDirection : direction);
+
         if(state == EntityState.ATTACKING) {
-            setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
-            // TODO - What will happen when player attack?
-            int targetIndex = getAttackedEntity(game.getEntityList());
-            if(targetIndex != -1) {
-                Entity target = game.getEntityList().get(targetIndex);
+            setCurrentPlayerImage(previousDirection);
+            
+            if(collidedEntity != -1) {
+                Entity target = game.getEntityList().get(collidedEntity);
                 inflictAttack(target);
                 if(target.getHealthValue() <= 0) {
-                    game.getEntityList().set(targetIndex, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
+                    game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
                 }
             }
         }
 
         if(direction == Direction.NONE) {
-            setCurrentPlayerImage(render.getKeyHandler().getPreviousPlayerDirection());
+            setCurrentPlayerImage(previousDirection);
             return;
         }
 
         setCurrentPlayerImage(direction);
-        if(collideWithTile(game.getTileManager().getWorldTiles()) || collideWithEntity(game.getEntityList())) {
+        if(collideWithTile || collidedEntity != -1) {
             return;
         }
         switch(direction) {
