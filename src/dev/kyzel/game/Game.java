@@ -139,6 +139,7 @@ public class Game implements Runnable {
             if(entity instanceof Player) {
                 gameImageGraphics.translate(-sceneX, -sceneY);
                 entity.draw(gameImageGraphics);
+                if(keyHandler.hasHUD()) ((Player) entity).drawHitDelayBar(gameImageGraphics);
                 gameImageGraphics.translate(sceneX, sceneY);
             } else {
                 if(

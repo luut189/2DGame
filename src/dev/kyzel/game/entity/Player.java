@@ -65,7 +65,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        hitTick++;
+        if(hitTick < maxHitTick) hitTick++;
         invincibleCounter++;
         spriteCounter++;
         int nextTileX = (-game.getSceneX()+render.getUnitSize()/2+game.getCamX())/render.getUnitSize();
@@ -217,6 +217,17 @@ public class Player extends Entity {
             currentHeart++;
         }
         g2d.translate(-20, -20);
+    }
+
+    public void drawHitDelayBar(Graphics g) {
+        double scale = (double) render.getUnitSize()/maxHitTick;
+        double healthBarValue = scale * hitTick;
+
+        g.setColor(new Color(35, 35, 35));
+        g.fillRect(x, y-render.getUnitSize()/2-1, render.getUnitSize()+2, 6);
+
+        g.setColor(new Color(255, 140, 30));
+        g.fillRect(x+1, y-render.getUnitSize()/2, (int) healthBarValue, 4);
     }
 
     @Override
