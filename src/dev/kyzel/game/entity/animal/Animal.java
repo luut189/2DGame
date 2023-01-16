@@ -112,7 +112,11 @@ public abstract class Animal extends Entity {
             actionCounter = 0;
         }
         move(game.getTileManager());
+
+        setCurrentAnimalImage();
     }
+
+    public abstract void setCurrentAnimalImage();
 
     @Override
     public void drawHealthBar(Graphics g) {

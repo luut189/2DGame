@@ -23,14 +23,9 @@ public class Ghost extends Animal {
     public void initTexture() {
         animalImage = AssetManager.ghostImage[imageIndex];
     }
-    
-    @Override
-    public void update() {
-        super.update();
-        setCurrentGhostImage();
-    }
 
-    public void setCurrentGhostImage() {
+    @Override
+    public void setCurrentAnimalImage() {
         if(spriteCounter > 12) {
             imageIndex = increaseImageIndex(imageIndex, 2);
             animalImage = AssetManager.ghostImage[imageIndex];

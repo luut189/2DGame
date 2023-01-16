@@ -33,12 +33,7 @@ public class Slime extends Animal {
     }
 
     @Override
-    public void update() {
-        super.update();
-        setCurrentSlimeImage();
-    }
-
-    public void setCurrentSlimeImage() {
+    public void setCurrentAnimalImage() {
         if(state == EntityState.STANDING) {
             animalImage = AssetManager.slimeImage[0];
             return;
