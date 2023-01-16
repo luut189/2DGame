@@ -40,33 +40,33 @@ public class AssetManager {
 
         loadPlayerImage(loader, unitSize);
 
-        slimeImage = loadResource(loader, "/animal/slime", unitSize, 2);
-        ghostImage = loadResource(loader, "/animal/ghost", unitSize, 2);
+        slimeImage = loadResource(loader, "/image/animal/slime", unitSize, 2);
+        ghostImage = loadResource(loader, "/image/animal/ghost", unitSize, 2);
 
         loadTileImage(loader, unitSize);
     }
 
     private static void loadHeartImage(TextureLoader loader, int unitSize) {
-        emptyHeartImage = loadResource(loader, "/hud/heart/empty_heart", unitSize);
-        fullHeartImage = loadResource(loader, "/hud/heart/full_heart", unitSize);
-        halfHeartImage = loadResource(loader, "/hud/heart/half_heart", unitSize);
+        emptyHeartImage = loadResource(loader, "/image/hud/heart/empty_heart", unitSize);
+        fullHeartImage = loadResource(loader, "/image/hud/heart/full_heart", unitSize);
+        halfHeartImage = loadResource(loader, "/image/hud/heart/half_heart", unitSize);
     }
 
     private static void loadPlayerImage(TextureLoader loader, int unitSize) {
-        downImage = loadResource(loader, "/player/walking/down", unitSize, 3);
-        upImage = loadResource(loader, "/player/walking/up", unitSize, 3);
-        rightImage = loadResource(loader, "/player/walking/right", unitSize, 4);
-        leftImage = loadResource(loader, "/player/walking/left", unitSize, 4);
+        downImage = loadResource(loader, "/image/player/walking/down", unitSize, 3);
+        upImage = loadResource(loader, "/image/player/walking/up", unitSize, 3);
+        rightImage = loadResource(loader, "/image/player/walking/right", unitSize, 4);
+        leftImage = loadResource(loader, "/image/player/walking/left", unitSize, 4);
 
-        downSwimmingImage = loadResource(loader, "/player/swim/swim_down", unitSize);
-        upSwimmingImage = loadResource(loader, "/player/swim/swim_up", unitSize);
-        rightSwimmingImage = loadResource(loader, "/player/swim/swim_right", unitSize);
-        leftSwimmingImage = loadResource(loader, "/player/swim/swim_left", unitSize);
+        downSwimmingImage = loadResource(loader, "/image/player/swim/swim_down", unitSize);
+        upSwimmingImage = loadResource(loader, "/image/player/swim/swim_up", unitSize);
+        rightSwimmingImage = loadResource(loader, "/image/player/swim/swim_right", unitSize);
+        leftSwimmingImage = loadResource(loader, "/image/player/swim/swim_left", unitSize);
     }
 
     private static void loadTileImage(TextureLoader loader, int unitSize) {
         for(String name : tilesName) {
-            BufferedImage image = scaleImage(loader.loadImage("/tiles/" + name + ".png"), unitSize);
+            BufferedImage image = scaleImage(loader.loadImage("/image/tiles/" + name + ".png"), unitSize);
             tileMap.put(name, image);
         }
     }
