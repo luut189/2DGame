@@ -53,7 +53,7 @@ public abstract class Animal extends Entity {
                 if(state == EntityState.STANDING) return;
                 int x = target.getX()-game.getSceneX();
                 int y = target.getY()-game.getSceneY();
-                inflictAttack(target);
+                inflictDamage(target);
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
@@ -64,7 +64,7 @@ public abstract class Animal extends Entity {
                 if(state == EntityState.STANDING) return;
                 int x = target.getX();
                 int y = target.getY();
-                inflictAttack(target);
+                inflictDamage(target);
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }

@@ -59,7 +59,7 @@ public abstract class Entity implements IAttackable {
 
     public abstract void initTexture();
 
-    public void inflictAttack(Entity target) {
+    public void inflictDamage(Entity target) {
         if(target.getInvincibleCounter() < maxInvincibleCounter) return;
         target.setHealthValue(target.getHealthValue() - attackValue);
         target.setInvincibleCounter(0);

@@ -90,7 +90,7 @@ public class Player extends Entity {
             
             if(collidedEntity != -1) {
                 Entity target = game.getEntityList().get(collidedEntity);
-                inflictAttack(target);
+                inflictDamage(target);
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
                 }
