@@ -1,10 +1,11 @@
-package dev.kyzel.gfx;
+package dev.kyzel.game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import dev.kyzel.game.entity.Direction;
 import dev.kyzel.game.entity.EntityState;
+import dev.kyzel.gfx.Window;
 
 public class KeyHandler extends KeyAdapter {
 

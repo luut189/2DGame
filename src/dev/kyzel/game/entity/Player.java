@@ -77,10 +77,10 @@ public class Player extends Entity {
             isSwimming = false;
         }
         
-        direction = render.getKeyHandler().getPlayerDirection();
-        state = isSwimming ? EntityState.SWIMMING : render.getKeyHandler().getPlayerState();
+        direction = game.getKeyHandler().getPlayerDirection();
+        state = isSwimming ? EntityState.SWIMMING : game.getKeyHandler().getPlayerState();
 
-        Direction previousDirection = render.getKeyHandler().getPreviousPlayerDirection();
+        Direction previousDirection = game.getKeyHandler().getPreviousPlayerDirection();
         
         boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
         int collidedEntity = collideWithEntity(game.getEntityList(), direction == Direction.NONE ? previousDirection : direction);

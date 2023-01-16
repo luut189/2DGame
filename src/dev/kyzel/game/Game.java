@@ -13,6 +13,7 @@ import dev.kyzel.utils.EntityLoader;
 public class Game implements Runnable {
 
     private Renderer render;
+    private KeyHandler keyHandler;
 
     private TileManager tileManager;
 
@@ -28,8 +29,9 @@ public class Game implements Runnable {
 
     private Thread gameThread;
 
-    public Game(Renderer render) {
+    public Game(Renderer render, KeyHandler keyHandler) {
         this.render = render;
+        this.keyHandler = keyHandler;
 
         camX = render.getWidth()/2-render.getUnitSize()/2;
         camY = render.getHeight()/2-render.getUnitSize()/2;
@@ -43,7 +45,7 @@ public class Game implements Runnable {
         tileManager = new TileManager(render, this);
 
         map = new Map(render, this, tileManager, 10);
-        render.getKeyHandler().setZoomDist(map.getMapSize());
+        this.keyHandler.setZoomDist(map.getMapSize());
 
         player = new Player(render, this, camX, camY, 4);
         entityList = new ArrayList<>();
@@ -65,6 +67,10 @@ public class Game implements Runnable {
 
         player.setX(camX);
         player.setY(camY);
+    }
+
+    public KeyHandler getKeyHandler() {
+        return keyHandler;
     }
 
     public Player getPlayer() {
@@ -142,21 +148,21 @@ public class Game implements Runnable {
                     entity.getY() < render.getHeight() - playerSceneY
                 ) {
                     entity.draw(gameImageGraphics);
-                    if(render.getKeyHandler().hasHUD()) entity.drawHealthBar(gameImageGraphics);
+                    if(keyHandler.hasHUD()) entity.drawHealthBar(gameImageGraphics);
                 }
             }
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
 
-        if(render.getKeyHandler().hasHUD()) player.drawHealthBar(gameImageGraphics);
+        if(keyHandler.hasHUD()) player.drawHealthBar(gameImageGraphics);
 
-        if(render.getKeyHandler().hasMinimap()) map.drawMinimap(gameImageGraphics);
+        if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
 
         gameImageGraphics.dispose();
     }
 
     public void update() {
-        map.update(render.getKeyHandler());
+        map.update(keyHandler);
         for(Entity entity : entityList) {
             if(entity instanceof Player) entity.update();
             else if(

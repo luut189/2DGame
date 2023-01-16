@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
+import dev.kyzel.game.KeyHandler;
 import dev.kyzel.utils.AssetManager;
 
 public class Window extends JFrame {

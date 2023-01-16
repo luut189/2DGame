@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import dev.kyzel.game.Game;
-import dev.kyzel.gfx.KeyHandler;
+import dev.kyzel.game.KeyHandler;
 import dev.kyzel.gfx.Renderer;
 
 public class Map {
