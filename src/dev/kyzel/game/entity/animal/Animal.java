@@ -48,6 +48,10 @@ public abstract class Animal extends Entity {
         boolean collideWithPlayer = collideWithPlayer();
 
         if(collideWithTile || collidedEntity != -1 || collideWithPlayer) {
+            if(!collideWithTile) {
+                state = Math.random() < hostileProb ? EntityState.ATTACKING : EntityState.STANDING;
+            }
+
             if(collideWithPlayer) {
                 Entity target = game.getPlayer();
                 if(state == EntityState.STANDING) return;
@@ -105,7 +109,6 @@ public abstract class Animal extends Entity {
         invincibleCounter++;
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
-            state = Math.random() < hostileProb ? EntityState.ATTACKING : EntityState.STANDING;
             actionCounter = 0;
         }
         move(game.getTileManager());
