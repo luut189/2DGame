@@ -12,7 +12,7 @@
   
   - [x] Tree
   
-  - [ ] Rock (Probably not gonna add it)
+  - [ ] Tiles connection (smoother transition between tiles)
 
 - [x] Create a random world
 
@@ -30,14 +30,14 @@
 
 - [x] Fullscreen Mode
   
-- [ ] Fighting mechanics
+- [x] Fighting mechanics (**In Progress**)
 
   - [x] Health bar
 
-  - [ ] Punching/Melee
+  - [x] Punching/Melee
 
-  - [ ] Animals attacking player
+  - [x] Animals attacking player
 
   - [ ] Spells/Magic system
 
-- [ ] Make an actual `README.md`
+- [x] Make an actual `README.md` (**In Progress**)
