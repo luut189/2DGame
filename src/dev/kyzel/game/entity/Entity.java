@@ -13,6 +13,9 @@ import dev.kyzel.game.world.tile.Tile;
 
 public abstract class Entity implements IAttackable {
 
+    public static final int maxHitTick = 30;
+    public static final int maxInvincibleCounter = 20;
+
     protected Renderer render;
     protected Game game;
 
@@ -33,7 +36,7 @@ public abstract class Entity implements IAttackable {
 
     protected int spriteCounter = 0;
 
-    protected final int maxInvincibleCounter = 20;
+    protected int hitTick = maxHitTick;
     protected int invincibleCounter = maxInvincibleCounter;
 
     public Entity(Renderer render, Game game, int x, int y, int speed) {
@@ -60,6 +63,7 @@ public abstract class Entity implements IAttackable {
     public abstract void initTexture();
 
     public void inflictDamage(Entity target) {
+        if(hitTick < maxHitTick) return;
         if(target.getInvincibleCounter() < maxInvincibleCounter) return;
         target.setHealthValue(target.getHealthValue() - attackValue);
         target.setInvincibleCounter(0);
