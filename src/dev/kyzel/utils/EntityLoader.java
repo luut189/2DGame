@@ -29,7 +29,7 @@ public class EntityLoader {
                 y = (int) (Math.random() * tileManager.getMaxCol());
                 currentTile = tileManager.getWorldTiles()[x][y];
             }
-            entityList.add(new Slime(render, game,x*render.getUnitSize(), y*render.getUnitSize(), 1));
+            entityList.add(new Slime(render, game, x*render.getUnitSize(), y*render.getUnitSize(), 1));
         }
     }
 }
