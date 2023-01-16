@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.gfx.Renderer;
+import dev.kyzel.sfx.Sound;
 import dev.kyzel.utils.AssetManager;
 import dev.kyzel.game.world.tile.Tile;
 
@@ -64,6 +65,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+        hitTick++;
         invincibleCounter++;
         spriteCounter++;
         int nextTileX = (-game.getSceneX()+render.getUnitSize()/2+game.getCamX())/render.getUnitSize();
@@ -91,10 +93,14 @@ public class Player extends Entity {
             if(collidedEntity != -1) {
                 Entity target = game.getEntityList().get(collidedEntity);
                 inflictDamage(target);
+                if(hitTick >= maxHitTick) Sound.HURT.play();
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
                 }
+            } else {
+                if(hitTick >= maxHitTick) Sound.MISS.play();
             }
+            hitTick = 0;
         }
 
         if(direction == Direction.NONE) {

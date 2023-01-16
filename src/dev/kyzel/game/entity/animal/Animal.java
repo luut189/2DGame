@@ -12,6 +12,7 @@ import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.EntityState;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.tile.TileManager;
+import dev.kyzel.sfx.Sound;
 
 public abstract class Animal extends Entity {
 
@@ -58,10 +59,13 @@ public abstract class Animal extends Entity {
                 int x = target.getX()-game.getSceneX();
                 int y = target.getY()-game.getSceneY();
                 inflictDamage(target);
+                if(hitTick >= maxHitTick) Sound.PLAYER_HURT.play();
                 if(target.getHealthValue() <= 0) {
+                    Sound.LOSE.play();
                     game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
                 direction = Direction.getOppositeDirection(direction);
+                hitTick = 0;
                 return;
             } else if(collidedEntity != -1) {
                 Entity target = game.getEntityList().get(collidedEntity);
@@ -69,10 +73,12 @@ public abstract class Animal extends Entity {
                 int x = target.getX();
                 int y = target.getY();
                 inflictDamage(target);
+                if(hitTick >= maxHitTick) Sound.HURT.play();
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
                 target.setDirection(direction);
+                hitTick = 0;
                 return;
             }
             state = EntityState.STANDING;
@@ -105,6 +111,7 @@ public abstract class Animal extends Entity {
 
     @Override
     public void update() {
+        hitTick++;
         actionCounter++;
         invincibleCounter++;
         if(actionCounter >= maxActionCount) {
