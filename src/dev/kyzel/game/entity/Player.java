@@ -188,6 +188,7 @@ public class Player extends Entity {
         g2d.translate(20, 20);
         
         int maxHeart = maxHealthValue / 2;
+        maxHeart += maxHealthValue % 2 == 0 ? 0 : 1;
         
         int healthBarBorderWidth = maxHeart*(render.getUnitSize()+10);
         int healthBarY = render.getHeight() - render.getUnitSize()*2;
