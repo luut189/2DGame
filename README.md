@@ -55,13 +55,17 @@ The workspace contains:
 
 - `src/dev/kyzel`: Sources
 
-  - `entity`: Entity-related components
+  - `game`: Game-related components
+    
+    - `entity`: Entity-related components
+    
+    - `world`: World-related components
 
-  - `gfx`: GUI-related component
+  - `gfx`: GUI-related components
+  
+  - `sfx`: Sound-related component
 
   - `utils`: Utilities components (mostly include ***Loaders*** for the game)
-
-  - `world`: World-related components
 
   - `App.java`: main class
 
