@@ -115,6 +115,11 @@ public class Player extends Entity {
         if(hitTick < maxHitTick) hitTick++;
         invincibleCounter++;
         spriteCounter++;
+        if(currentHealthValue < maxHealthValue) healingCounter--;
+        if(healingCounter <= 0) {
+            currentHealthValue++;
+            healingCounter = maxHealingCounter;
+        }
 
         checkSwimming();
 

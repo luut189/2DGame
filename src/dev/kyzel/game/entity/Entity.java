@@ -13,6 +13,7 @@ import dev.kyzel.game.world.tile.Tile;
 
 public abstract class Entity implements IAttackable {
 
+    public static final int maxHealingCounter = 300;
     public static final int maxHitTick = 20;
     public static final int maxInvincibleCounter = 20;
 
@@ -36,6 +37,7 @@ public abstract class Entity implements IAttackable {
 
     protected int spriteCounter = 0;
 
+    protected int healingCounter = maxHealingCounter;
     protected int hitTick = maxHitTick;
     protected int invincibleCounter = maxInvincibleCounter;
 
