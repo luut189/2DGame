@@ -56,30 +56,32 @@ public abstract class Animal extends Entity {
             if(collideWithPlayer) {
                 Entity target = game.getPlayer();
                 if(state == EntityState.STANDING) return;
-                int x = target.getX()-game.getSceneX();
-                int y = target.getY()-game.getSceneY();
                 inflictDamage(target);
                 if(hitTick >= maxHitTick) Sound.PLAYER_HURT.play();
                 if(target.getHealthValue() <= 0) {
                     Sound.LOSE.play();
+                    int x = target.getX()-game.getSceneX();
+                    int y = target.getY()-game.getSceneY();
                     game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
                 }
                 direction = Direction.getOppositeDirection(direction);
                 hitTick = 0;
-                return;
             } else if(collidedEntity != -1) {
                 Entity target = game.getEntityList().get(collidedEntity);
-                if(state == EntityState.STANDING) return;
-                int x = target.getX();
-                int y = target.getY();
-                inflictDamage(target);
-                if(hitTick >= maxHitTick) Sound.HURT.play();
-                if(target.getHealthValue() <= 0) {
-                    game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                if(target.getClass() == this.getClass()) {
+                    direction = Direction.getOppositeDirection(direction);
+                } else {
+                    if(state == EntityState.STANDING) return;
+                    inflictDamage(target);
+                    if(hitTick >= maxHitTick) Sound.HURT.play();
+                    if(target.getHealthValue() <= 0) {
+                        int x = target.getX();
+                        int y = target.getY();
+                        game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                    }
+                    direction = Direction.getOppositeDirection(direction);
+                    hitTick = 0;
                 }
-                target.setDirection(direction);
-                hitTick = 0;
-                return;
             }
             state = EntityState.STANDING;
             return;
