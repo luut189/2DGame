@@ -22,6 +22,11 @@ public class AssetManager {
     public static BufferedImage[] slimeImage;
     public static BufferedImage[] ghostImage;
 
+    public static BufferedImage[] zombieDownImage;
+    public static BufferedImage[] zombieUpImage;
+    public static BufferedImage[] zombieRightImage;
+    public static BufferedImage[] zombieLeftImage;
+
     public static BufferedImage emptyHeartImage;
     public static BufferedImage fullHeartImage;
     public static BufferedImage halfHeartImage;
@@ -40,10 +45,18 @@ public class AssetManager {
 
         loadPlayerImage(loader, unitSize);
 
-        slimeImage = loadResource(loader, "/image/animal/slime", unitSize, 2);
-        ghostImage = loadResource(loader, "/image/animal/ghost", unitSize, 2);
+        slimeImage = loadResource(loader, "/image/animal/slime/", unitSize, 2);
+        ghostImage = loadResource(loader, "/image/animal/ghost/", unitSize, 2);
+        loadZombieImage(loader, unitSize);
 
         loadTileImage(loader, unitSize);
+    }
+
+    private static void loadZombieImage(TextureLoader loader, int unitSize) {
+        zombieDownImage = loadResource(loader, "/image/animal/zombie/down", unitSize, 3);
+        zombieUpImage = loadResource(loader, "/image/animal/zombie/up", unitSize, 3);
+        zombieRightImage = loadResource(loader, "/image/animal/zombie/right", unitSize, 4);
+        zombieLeftImage = loadResource(loader, "/image/animal/zombie/left", unitSize, 4);
     }
 
     private static void loadHeartImage(TextureLoader loader, int unitSize) {
