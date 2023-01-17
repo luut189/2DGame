@@ -87,22 +87,34 @@ public abstract class Animal extends Entity {
         }
         switch(direction) {
             case UP -> {
-                if(y <= 0) break;
+                if(y <= 0) {
+                    state = EntityState.STANDING;
+                    break;
+                }
                 state = EntityState.WALKING;
                 y -= speed;
             }
             case DOWN -> {
-                if(y >= tileManager.getMaxCol() * render.getUnitSize() - render.getUnitSize()) break;
+                if(y >= tileManager.getMaxCol() * render.getUnitSize() - render.getUnitSize()) {
+                    state = EntityState.STANDING;
+                    break;
+                }
                 state = EntityState.WALKING;
                 y += speed;
             }
             case RIGHT -> {
-                if(x >= tileManager.getMaxRow() * render.getUnitSize() - render.getUnitSize()) break;
+                if(x >= tileManager.getMaxRow() * render.getUnitSize() - render.getUnitSize()) {
+                    state = EntityState.STANDING;
+                    break;
+                }
                 state = EntityState.WALKING;
                 x += speed;
             }
             case LEFT -> {
-                if(x <= 0) break;
+                if(x <= 0) {
+                    state = EntityState.STANDING;
+                    break;
+                }
                 state = EntityState.WALKING;
                 x -= speed;
             }
