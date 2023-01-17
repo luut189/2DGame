@@ -1,6 +1,10 @@
 package dev.kyzel.game;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import dev.kyzel.game.entity.Entity;
@@ -11,6 +15,8 @@ import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.EntityLoader;
 
 public class Game implements Runnable {
+
+    private GameState gameState;
 
     private Renderer render;
     private KeyHandler keyHandler;
@@ -30,6 +36,8 @@ public class Game implements Runnable {
     private Thread gameThread;
 
     public Game(Renderer render, KeyHandler keyHandler) {
+        gameState = GameState.PLAYING;
+
         this.render = render;
         this.keyHandler = keyHandler;
 
@@ -156,8 +164,31 @@ public class Game implements Runnable {
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
 
         if(keyHandler.hasHUD()) player.drawHealthBar(gameImageGraphics);
-
         if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
+    
+        if(gameState == GameState.PAUSE) {
+            Graphics2D g2d = (Graphics2D) gameImageGraphics;
+
+            String pauseText = "PAUSED";
+            gameImageGraphics.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 50));
+            int textWidth = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getWidth();
+            int textHeight = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getHeight();
+
+            int boxWidth = textWidth * 2;
+            int boxHeight = 100;
+
+            int boxX = render.getWidth()/2 - boxWidth/2;
+            int boxY = render.getHeight()/2 - boxHeight/2;
+            
+            g2d.setColor(Color.white);
+            g2d.setStroke(new BasicStroke(5));
+            g2d.drawRoundRect(boxX, boxY, boxWidth, boxHeight, 10, 10);
+            g2d.setColor(new Color(0, 0, 0, 200));
+            g2d.fillRoundRect(boxX, boxY, boxWidth, boxHeight, 10, 10);
+            
+            gameImageGraphics.setColor(Color.white);
+            gameImageGraphics.drawString(pauseText, render.getWidth()/2 - textWidth/2, render.getHeight()/2 + textHeight/4);
+        }
 
         gameImageGraphics.dispose();
     }
@@ -189,7 +220,8 @@ public class Game implements Runnable {
             delta += (currentTime - lastTime)/interval;
             lastTime = currentTime;
             if(delta >= 1) {
-                update();
+                gameState = keyHandler.getGameState();
+                if(gameState != GameState.TITLE && gameState != GameState.PAUSE) update();
                 draw(render.getGameImageGraphics());
                 render.drawToScreen();
                 delta--;

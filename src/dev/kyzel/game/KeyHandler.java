@@ -9,6 +9,8 @@ import dev.kyzel.gfx.Window;
 
 public class KeyHandler extends KeyAdapter {
 
+    private GameState gameState = GameState.PLAYING;
+
     private Direction playerDirection = Direction.NONE;
 
     private EntityState playerState = EntityState.STANDING;
@@ -49,6 +51,10 @@ public class KeyHandler extends KeyAdapter {
         this.zoomDist = zoomDist;
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
     public Direction getPlayerDirection() {
         return playerDirection;
     }
@@ -76,6 +82,9 @@ public class KeyHandler extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        
+        if(gameState == GameState.PAUSE && (key != KeyEvent.VK_ESCAPE && key != KeyEvent.VK_F)) return;
+        
         if(key == KeyEvent.VK_Q || key == KeyEvent.VK_E) {
             isZooming = true;
         }
@@ -116,6 +125,10 @@ public class KeyHandler extends KeyAdapter {
                 break;
             case KeyEvent.VK_F:
                 window.setFullscreen();
+                break;
+            case KeyEvent.VK_ESCAPE:
+                if(gameState == GameState.PLAYING) gameState = GameState.PAUSE;
+                else if(gameState == GameState.PAUSE) gameState = GameState.PLAYING;
                 break;
             default:
                 break;
