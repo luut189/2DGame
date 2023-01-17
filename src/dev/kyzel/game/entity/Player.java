@@ -97,10 +97,11 @@ public class Player extends Entity {
                 if(target.getHealthValue() <= 0) {
                     game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
                 }
+                hitTick = 0;
             } else {
                 if(hitTick >= maxHitTick) Sound.MISS.play();
+                hitTick = 15;
             }
-            hitTick = 0;
         }
 
         if(direction == Direction.NONE) {
