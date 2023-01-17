@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Sound {
+
+    public static final Sound THEME = new Sound("/sound/stew_theme.wav");
     public static final Sound HURT = new Sound("/sound/hurt.wav");
     public static final Sound LOSE = new Sound("/sound/lose.wav");
     public static final Sound PLAYER_HURT = new Sound("/sound/player_hurt.wav");
@@ -58,6 +60,21 @@ public class Sound {
 
             clip.setFramePosition(0);
             clip.start();
+        }).start();
+    }
+
+    public void play(boolean loop) {
+        new Thread(() -> {
+            Clip clip = clips.stream()
+                    .filter(c ->
+                            c.getFramePosition() == 0 ||
+                                    c.getFramePosition() == c.getFrameLength())
+                    .findFirst()
+                    .orElseGet(this::createNewClip);
+
+            clip.setFramePosition(0);
+            clip.start();
+            if(loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
         }).start();
     }
 }
