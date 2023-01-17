@@ -52,10 +52,10 @@ public abstract class Animal extends Entity {
             if(!collideWithTile) {
                 state = Math.random() < hostileProb ? EntityState.ATTACKING : EntityState.STANDING;
             }
+            if(state == EntityState.STANDING) return;
 
             if(collideWithPlayer) {
                 Entity target = game.getPlayer();
-                if(state == EntityState.STANDING) return;
                 inflictDamage(target);
                 if(hitTick >= maxHitTick) Sound.PLAYER_HURT.play();
                 if(target.getHealthValue() <= 0) {
@@ -71,7 +71,6 @@ public abstract class Animal extends Entity {
                 if(target.getClass() == this.getClass()) {
                     direction = Direction.getOppositeDirection(direction);
                 } else {
-                    if(state == EntityState.STANDING) return;
                     inflictDamage(target);
                     if(hitTick >= maxHitTick) Sound.HURT.play();
                     if(target.getHealthValue() <= 0) {
