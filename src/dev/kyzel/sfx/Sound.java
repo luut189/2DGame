@@ -5,22 +5,22 @@ package dev.kyzel.sfx;
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Sound {
 
     public static final Sound THEME = new Sound("/sound/stew_theme.wav");
+    public static final Sound SCORE_UP = new Sound("/sound/score_up.wav");
+    public static final Sound LEVEL_UP = new Sound("/sound/level_up.wav");
+
     public static final Sound HURT = new Sound("/sound/hurt.wav");
     public static final Sound LOSE = new Sound("/sound/lose.wav");
     public static final Sound PLAYER_HURT = new Sound("/sound/player_hurt.wav");
     public static final Sound MISS = new Sound("/sound/miss.wav");
 
-    private final Set<Clip> clips = Collections.synchronizedSet(new HashSet<>());
-
     private final AudioFormat format;
     private final byte[] bytes;
+
+    private Clip playingClip;
 
     public Sound(String path) {
         try {
@@ -29,52 +29,35 @@ public class Sound {
 
             this.format = stream.getFormat();
             this.bytes = stream.readAllBytes();
-
-            for (int i = 0; i < 4; i++) {
-                this.createNewClip();
-            }
         } catch (IOException | UnsupportedAudioFileException e) {
             throw new Error(e);
         }
     }
 
-    private Clip createNewClip() {
+    public void play() {
         try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(this.format, this.bytes, 0, this.bytes.length);
-            clips.add(clip);
-            return clip;
+            playingClip = AudioSystem.getClip();
+            playingClip.open(this.format, this.bytes, 0, this.bytes.length);
+            playingClip.start();
         } catch (LineUnavailableException e) {
-            throw new Error(e);
+            e.printStackTrace();
         }
     }
+    
+    public void stop() {
+        if(playingClip == null) return;
 
-    public void play() {
-        new Thread(() -> {
-            Clip clip = clips.stream()
-                    .filter(c ->
-                            c.getFramePosition() == 0 ||
-                                    c.getFramePosition() == c.getFrameLength())
-                    .findFirst()
-                    .orElseGet(this::createNewClip);
-
-            clip.setFramePosition(0);
-            clip.start();
-        }).start();
+        playingClip.stop();
     }
 
     public void play(boolean loop) {
-        new Thread(() -> {
-            Clip clip = clips.stream()
-                    .filter(c ->
-                            c.getFramePosition() == 0 ||
-                                    c.getFramePosition() == c.getFrameLength())
-                    .findFirst()
-                    .orElseGet(this::createNewClip);
-
-            clip.setFramePosition(0);
-            clip.start();
-            if(loop) clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }).start();
+        try {
+            playingClip = AudioSystem.getClip();
+            playingClip.open(this.format, this.bytes, 0, this.bytes.length);
+            playingClip.start();
+            if(loop) playingClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }
