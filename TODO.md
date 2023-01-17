@@ -24,7 +24,7 @@
 
   - [x] Ghost
 
-  - [ ] Zombie
+  - [x] Zombie
 
   - [ ] Skeleton
 
@@ -34,9 +34,13 @@
 
   - [x] Health bar
 
+  - [x] Hit cooldown bar
+
   - [x] Punching/Melee
 
   - [x] Animals attacking player
+
+  - [x] Experience/Score system
 
   - [ ] Spells/Magic system
 
