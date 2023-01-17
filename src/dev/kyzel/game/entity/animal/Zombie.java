@@ -17,7 +17,7 @@ public class Zombie extends Animal {
         hostileProb = 1;
         maxHealthValue = 5;
         currentHealthValue = maxHealthValue;
-        attackValue = 1;
+        attackValue = 2;
 
         int offsetX = render.getUnitSize()/4;
         int offsetY = render.getUnitSize()/4;
