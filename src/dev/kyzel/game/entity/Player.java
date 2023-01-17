@@ -192,13 +192,13 @@ public class Player extends Entity {
         
         int healthBarBorderWidth = maxHeart*(render.getUnitSize()+10);
         int healthBarY = render.getHeight() - render.getUnitSize()*2;
-
+            
         g2d.setColor(Color.black);
-        g2d.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g2d.drawRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize());
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
         g2d.setColor(new Color(0, 0, 0, 127));
-        g2d.fillRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize());
-
+        g2d.fillRoundRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
+        
         while(i > 0) {
             g2d.drawImage(AssetManager.emptyHeartImage, currentHeart*(render.getUnitSize()+10), healthBarY, null);
             i -= 2;
