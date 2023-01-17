@@ -126,6 +126,8 @@ public abstract class Animal extends Entity {
 
     public abstract void setCurrentAnimalImage();
 
+    public abstract int getScore();
+
     @Override
     public void drawHealthBar(Graphics g) {
         double scale = (double) render.getUnitSize()/maxHealthValue;

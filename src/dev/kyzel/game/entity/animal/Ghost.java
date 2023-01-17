@@ -33,4 +33,9 @@ public class Ghost extends Animal {
         }
         spriteCounter++;
     }
+
+    @Override
+    public int getScore() {
+        return 0;
+    }
 }

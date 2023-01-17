@@ -61,4 +61,9 @@ public class Zombie extends Animal {
             default -> {}
         }
     }
+
+    @Override
+    public int getScore() {
+        return 2;
+    }
 }

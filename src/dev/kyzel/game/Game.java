@@ -147,7 +147,6 @@ public class Game implements Runnable {
             if(entity instanceof Player) {
                 gameImageGraphics.translate(-sceneX, -sceneY);
                 entity.draw(gameImageGraphics);
-                if(keyHandler.hasHUD()) ((Player) entity).drawHitDelayBar(gameImageGraphics);
                 gameImageGraphics.translate(sceneX, sceneY);
             } else {
                 if(
@@ -163,7 +162,11 @@ public class Game implements Runnable {
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
 
-        if(keyHandler.hasHUD()) player.drawHealthBar(gameImageGraphics);
+        if(keyHandler.hasHUD()) {
+            player.drawHealthBar(gameImageGraphics);
+            player.drawScoreBar(gameImageGraphics);
+            player.drawHitCooldownBar(gameImageGraphics);
+        }
         if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
     
         if(gameState == GameState.PAUSE) {
