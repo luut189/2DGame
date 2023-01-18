@@ -26,7 +26,7 @@ public class Player extends Entity {
     private int currentLevel = 1;
 
     private int score = 0;
-    private int maxScoreMutiplier = 5;
+    private final int maxScoreMultiplier = 5;
 
     public Player(Renderer render, Game game, int x, int y, int speed) {
         super(render, game, x, y, speed);
@@ -84,9 +84,9 @@ public class Player extends Entity {
 
     private void scoreUp(Animal target) {
         score += target.getScore();
-        int remainingScore = score % (currentLevel * maxScoreMutiplier);
+        int remainingScore = score % (currentLevel * maxScoreMultiplier);
         Sound.SCORE_UP.play();
-        if(score >= currentLevel * maxScoreMutiplier) {
+        if(score >= currentLevel * maxScoreMultiplier) {
             Sound.LEVEL_UP.play();
             currentLevel++;
             maxHealthValue++;
@@ -247,8 +247,8 @@ public class Player extends Entity {
 
         int scoreWidth = render.getUnitSize()*5;
 
-        double scale = (double) scoreWidth/(currentLevel*maxScoreMutiplier);
-        double maxScoreValue = scale * currentLevel*maxScoreMutiplier;
+        double scale = (double) scoreWidth/(currentLevel* maxScoreMultiplier);
+        double maxScoreValue = scale * currentLevel* maxScoreMultiplier;
         double scoreValue = scale * score;
 
         int scoreBarX = 15;

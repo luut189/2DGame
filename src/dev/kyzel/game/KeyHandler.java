@@ -25,7 +25,7 @@ public class KeyHandler extends KeyAdapter {
 
     private int keyPressing = 0;
 
-    private Window window;
+    private final Window window;
 
     public KeyHandler(Window window) {
         this.window = window;
@@ -93,45 +93,38 @@ public class KeyHandler extends KeyAdapter {
         }
 
         switch(key) {
-            case KeyEvent.VK_W:
+            case KeyEvent.VK_W -> {
                 keyPressing = key;
                 playerDirection = Direction.UP;
-                break;
-            case KeyEvent.VK_S:
+            }
+            case KeyEvent.VK_S -> {
                 keyPressing = key;
                 playerDirection = Direction.DOWN;
-                break;
-            case KeyEvent.VK_D:
+            }
+            case KeyEvent.VK_D -> {
                 keyPressing = key;
                 playerDirection = Direction.RIGHT;
-                break;
-            case KeyEvent.VK_A:
+            }
+            case KeyEvent.VK_A -> {
                 keyPressing = key;
                 playerDirection = Direction.LEFT;
-                break;
-            case KeyEvent.VK_M:
-                hasMinimap = !hasMinimap;
-                break;
-            case KeyEvent.VK_E:
+            }
+            case KeyEvent.VK_M -> hasMinimap = !hasMinimap;
+            case KeyEvent.VK_E -> {
                 if(zoomDist > 30) break;
                 zoomDist++;
-                break;
-            case KeyEvent.VK_Q:
+            }
+            case KeyEvent.VK_Q -> {
                 if(zoomDist == 5) break;
                 zoomDist--;
-                break;
-            case KeyEvent.VK_H:
-                hasHUD = !hasHUD;
-                break;
-            case KeyEvent.VK_F:
-                window.setFullscreen();
-                break;
-            case KeyEvent.VK_ESCAPE:
+            }
+            case KeyEvent.VK_H -> hasHUD = !hasHUD;
+            case KeyEvent.VK_F -> window.setFullscreen();
+            case KeyEvent.VK_ESCAPE -> {
                 if(gameState == GameState.PLAYING) gameState = GameState.PAUSE;
                 else if(gameState == GameState.PAUSE) gameState = GameState.PLAYING;
-                break;
-            default:
-                break;
+            }
+            default -> {}
         }
 
         if(key == KeyEvent.VK_SPACE) {

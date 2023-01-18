@@ -4,7 +4,7 @@ import dev.kyzel.gfx.Window;
 import dev.kyzel.game.world.gen.LevelGenerator;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         /**
          * use the method below to set the seed for world generation
