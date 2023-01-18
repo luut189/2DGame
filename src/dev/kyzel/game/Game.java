@@ -23,7 +23,7 @@ public class Game implements Runnable {
 
     private TileManager tileManager;
 
-    private Minimap map;
+    private Minimap minimap;
 
     private int camX, camY;
     private int sceneX, sceneY;
@@ -52,8 +52,8 @@ public class Game implements Runnable {
 
         tileManager = new TileManager(render, this);
 
-        map = new Minimap(render, this, tileManager, 10);
-        this.keyHandler.setZoomDist(map.getMapSize());
+        minimap = new Minimap(render, this, tileManager, 10);
+        this.keyHandler.setZoomDist(minimap.getMapSize());
 
         player = new Player(render, this, camX, camY, 4);
         entityList = new ArrayList<>();
@@ -167,7 +167,7 @@ public class Game implements Runnable {
             player.drawScoreBar(gameImageGraphics);
             player.drawHitCooldownBar(gameImageGraphics);
         }
-        if(keyHandler.hasMinimap()) map.drawMinimap(gameImageGraphics);
+        if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
     
         if(gameState == GameState.PAUSE) {
             Graphics2D g2d = (Graphics2D) gameImageGraphics;
@@ -197,7 +197,7 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        map.update(keyHandler);
+        minimap.update(keyHandler);
         for(Entity entity : entityList) {
             if(entity instanceof Player) entity.update();
             else if(

@@ -80,7 +80,7 @@ public class Minimap {
         g.dispose();
     }
 
-    public void drawMinimap(Graphics g) {
+    public void draw(Graphics g) {
         createWorldMap();
         int width = 200;
         int height = 200;
