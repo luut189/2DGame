@@ -28,7 +28,15 @@
 
   - [ ] Skeleton
 
+  - [ ] Some kind of friendly animals
+
 - [x] Fullscreen Mode
+
+- [ ] Make a title screen
+
+- [ ] Make an actual pause menu
+
+- [ ] Make a game-over menu
   
 - [x] Fighting mechanics (**In Progress**)
 
