@@ -2,14 +2,13 @@ package dev.kyzel.game.entity;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
 import java.util.ArrayList;
 
 import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Animal;
 import dev.kyzel.game.entity.animal.Ghost;
-import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.tile.Tile;
+import dev.kyzel.gfx.Renderer;
 
 public abstract class Entity implements IAttackable {
 

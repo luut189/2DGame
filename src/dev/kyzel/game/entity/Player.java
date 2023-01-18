@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Animal;
 import dev.kyzel.game.entity.animal.Ghost;
+import dev.kyzel.game.world.tile.Tile;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.sfx.Sound;
 import dev.kyzel.utils.AssetManager;
-import dev.kyzel.game.world.tile.Tile;
 
 public class Player extends Entity {
     

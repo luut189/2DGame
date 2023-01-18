@@ -10,8 +10,8 @@ import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.Direction;
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.EntityState;
-import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.tile.TileManager;
+import dev.kyzel.gfx.Renderer;
 import dev.kyzel.sfx.Sound;
 
 public abstract class Animal extends Entity {

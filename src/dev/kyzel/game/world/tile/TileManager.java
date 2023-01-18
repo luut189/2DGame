@@ -1,12 +1,11 @@
 package dev.kyzel.game.world.tile;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import dev.kyzel.game.Game;
-import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.gen.LevelGenerator;
-
-import java.awt.Color;
+import dev.kyzel.gfx.Renderer;
 
 public class TileManager {
 

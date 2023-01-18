@@ -6,9 +6,9 @@ import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.animal.Slime;
 import dev.kyzel.game.entity.animal.Zombie;
-import dev.kyzel.gfx.Renderer;
 import dev.kyzel.game.world.tile.Tile;
 import dev.kyzel.game.world.tile.TileManager;
+import dev.kyzel.gfx.Renderer;
 
 public class EntityLoader {
 
