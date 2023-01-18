@@ -94,6 +94,13 @@ public class Player extends Entity {
         }
     }
 
+    private void healing() {
+        if(healingCounter <= 0) {
+            currentHealthValue++;
+            healingCounter = maxHealingCounter;
+        }
+    }
+
     private void attack(int collidedEntity) {
         if(collidedEntity != -1) {
             Entity target = game.getEntityList().get(collidedEntity);
@@ -116,53 +123,46 @@ public class Player extends Entity {
         invincibleCounter++;
         spriteCounter++;
         if(currentHealthValue < maxHealthValue) healingCounter--;
-        if(healingCounter <= 0) {
-            currentHealthValue++;
-            healingCounter = maxHealingCounter;
-        }
 
+        healing();
         checkSwimming();
 
         direction = game.getKeyHandler().getPlayerDirection();
         state = isSwimming ? EntityState.SWIMMING : game.getKeyHandler().getPlayerState();
 
         Direction previousDirection = game.getKeyHandler().getPreviousPlayerDirection();
+
+        Direction currentDirection = direction == Direction.NONE ? previousDirection : direction;
         
         boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
-        int collidedEntity = collideWithEntity(game.getEntityList(), direction == Direction.NONE ? previousDirection : direction);
+        int collidedEntity = collideWithEntity(game.getEntityList(), currentDirection);
 
+        setCurrentPlayerImage(currentDirection);
         if(state == EntityState.ATTACKING) {
-            setCurrentPlayerImage(previousDirection);
             attack(collidedEntity);
         }
 
-        if(direction == Direction.NONE) {
-            setCurrentPlayerImage(previousDirection);
-            return;
-        }
-
-        setCurrentPlayerImage(direction);
         if(collideWithTile || collidedEntity != -1) {
             return;
         }
+
+        int currentSpeed = state != EntityState.SWIMMING ? speed : getSwimmingSpeed();
         switch(direction) {
             case UP -> {
-                if(-game.getSceneY() + y <= 0) break;
-                game.setSceneY(game.getSceneY() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(y - game.getSceneY() <= 0) break;
+                game.setSceneY(game.getSceneY() + currentSpeed);
             }
             case DOWN -> {
-                if(-game.getSceneY() + y > game.getTileManager().getMaxCol() * render.getUnitSize() - render.getUnitSize())
-                    break;
-                game.setSceneY(game.getSceneY() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(y - game.getSceneY() > game.getTileManager().getMaxCol() * render.getUnitSize() - render.getUnitSize()) break;
+                game.setSceneY(game.getSceneY() - currentSpeed);
             }
             case RIGHT -> {
-                if(-game.getSceneX() + x > game.getTileManager().getMaxRow() * render.getUnitSize() - render.getUnitSize())
-                    break;
-                game.setSceneX(game.getSceneX() - (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(x - game.getSceneX() > game.getTileManager().getMaxRow() * render.getUnitSize() - render.getUnitSize()) break;
+                game.setSceneX(game.getSceneX() - currentSpeed);
             }
             case LEFT -> {
-                if(-game.getSceneX() + x <= 0) break;
-                game.setSceneX(game.getSceneX() + (state != EntityState.SWIMMING ? getSpeed() : getSwimmingSpeed()));
+                if(x - game.getSceneX() <= 0) break;
+                game.setSceneX(game.getSceneX() + currentSpeed);
             }
             default -> {}
         }
@@ -175,13 +175,6 @@ public class Player extends Entity {
     public void setCurrentPlayerImage(Direction playerDir) {
         if(state == EntityState.STANDING) {
             imageIndex = 0;
-            switch(playerDir) {
-                case UP -> playerImage = AssetManager.upImage[imageIndex];
-                case DOWN -> playerImage = AssetManager.downImage[imageIndex];
-                case RIGHT -> playerImage = AssetManager.rightImage[imageIndex];
-                case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
-                default -> {}
-            }
         } else if(state == EntityState.WALKING || state == EntityState.ATTACKING) {
             boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
             if(spriteCounter > (isSideWay ? 10 : 12)) {
@@ -194,19 +187,22 @@ public class Player extends Entity {
             if(!isSideWay) {
                 imageIndex = isLeftLeg ? 1 : 2;
             }
-            switch(playerDir) {
-                case UP -> playerImage = AssetManager.upImage[imageIndex];
-                case DOWN -> playerImage = AssetManager.downImage[imageIndex];
-                case RIGHT -> playerImage = AssetManager.rightImage[imageIndex];
-                case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
-                default -> {}
-            }
-        } else if(state == EntityState.SWIMMING) {
+        }
+        
+        if(state == EntityState.SWIMMING) {
             switch(playerDir) {
                 case UP -> playerImage = AssetManager.upSwimmingImage;
                 case DOWN -> playerImage = AssetManager.downSwimmingImage;
                 case RIGHT -> playerImage = AssetManager.rightSwimmingImage;
                 case LEFT -> playerImage = AssetManager.leftSwimmingImage;
+                default -> {}
+            }
+        } else {
+            switch(playerDir) {
+                case UP -> playerImage = AssetManager.upImage[imageIndex];
+                case DOWN -> playerImage = AssetManager.downImage[imageIndex];
+                case RIGHT -> playerImage = AssetManager.rightImage[imageIndex];
+                case LEFT -> playerImage = AssetManager.leftImage[imageIndex];
                 default -> {}
             }
         }
