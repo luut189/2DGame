@@ -120,6 +120,8 @@ public abstract class Animal extends Entity {
         hitTick++;
         actionCounter++;
         invincibleCounter++;
+        healing();
+        
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
             actionCounter = 0;

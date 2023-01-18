@@ -94,13 +94,6 @@ public class Player extends Entity {
         }
     }
 
-    private void healing() {
-        if(healingCounter <= 0) {
-            currentHealthValue++;
-            healingCounter = maxHealingCounter;
-        }
-    }
-
     private void attack(int collidedEntity) {
         if(collidedEntity != -1) {
             Entity target = game.getEntityList().get(collidedEntity);
@@ -122,7 +115,6 @@ public class Player extends Entity {
         if(hitTick < maxHitTick) hitTick++;
         invincibleCounter++;
         spriteCounter++;
-        if(currentHealthValue < maxHealthValue) healingCounter--;
 
         healing();
         checkSwimming();

@@ -71,6 +71,14 @@ public abstract class Entity implements IAttackable {
         target.setInvincibleCounter(0);
     }
 
+    public void healing() {
+        if(currentHealthValue < maxHealthValue) healingCounter--;
+        if(healingCounter <= 0) {
+            currentHealthValue++;
+            healingCounter = maxHealingCounter;
+        }
+    }
+
     public boolean isAlive() {
         return currentHealthValue > 0;
     }
