@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
-import dev.kyzel.game.world.tile.Map;
+import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.EntityLoader;
@@ -23,7 +23,7 @@ public class Game implements Runnable {
 
     private TileManager tileManager;
 
-    private Map map;
+    private Minimap map;
 
     private int camX, camY;
     private int sceneX, sceneY;
@@ -52,7 +52,7 @@ public class Game implements Runnable {
 
         tileManager = new TileManager(render, this);
 
-        map = new Map(render, this, tileManager, 10);
+        map = new Minimap(render, this, tileManager, 10);
         this.keyHandler.setZoomDist(map.getMapSize());
 
         player = new Player(render, this, camX, camY, 4);

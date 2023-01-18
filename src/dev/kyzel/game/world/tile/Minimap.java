@@ -8,7 +8,7 @@ import dev.kyzel.game.Game;
 import dev.kyzel.game.KeyHandler;
 import dev.kyzel.gfx.Renderer;
 
-public class Map {
+public class Minimap {
 
     private Renderer render;
     private Game game;
@@ -20,7 +20,7 @@ public class Map {
 
     private int mapSize;
 
-    public Map(Renderer render, Game game, TileManager tileManager, int mapSize) {
+    public Minimap(Renderer render, Game game, TileManager tileManager, int mapSize) {
         this.render = render;
         this.game = game;
         this.worldTiles = tileManager.getWorldTiles();
@@ -98,6 +98,6 @@ public class Map {
         int playerSize = width/mapSize;
         g.translate(x, y);
         g.drawImage(game.getPlayer().getPlayerImage(), playerX, playerY, playerSize, playerSize, null);
-
+        g.translate(-x, -y);
     }
 }
