@@ -78,6 +78,12 @@ public abstract class Entity implements IAttackable {
         }
     }
 
+    public void cursed() {
+        if(currentHealthValue <= maxHealthValue/2) return;
+
+        currentHealthValue--;
+    }
+
     public boolean isAlive() {
         return currentHealthValue > 0;
     }

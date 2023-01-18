@@ -1,8 +1,11 @@
 package dev.kyzel.game.entity.animal;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import dev.kyzel.game.Game;
+import dev.kyzel.game.entity.Entity;
+import dev.kyzel.game.entity.Player;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
@@ -22,6 +25,27 @@ public class Ghost extends Animal {
     @Override
     public void initTexture() {
         animalImage = AssetManager.ghostImage[imageIndex];
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        ArrayList<Entity> entityList = game.getEntityList();
+        for(Entity entity : entityList) {
+            if(entity instanceof Ghost) continue;
+            int entityX = entity.getX();
+            int entityY = entity.getY();
+
+            if(entity instanceof Player) {
+                entityX -= game.getSceneX();
+                entityY -= game.getSceneY();
+            }
+
+            if(Math.abs(entityX - x) <= 5 ||
+                    Math.abs(entityY - y) <= 5) {
+                entity.cursed();
+            }
+        }
     }
 
     @Override
