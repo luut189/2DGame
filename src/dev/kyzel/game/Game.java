@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
+import dev.kyzel.game.menu.TextMenu;
 import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
@@ -168,6 +169,13 @@ public class Game implements Runnable {
             player.drawHitCooldownBar(gameImageGraphics);
         }
         if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
+        String[] test = {
+                "HELLO WORLD",
+                "TEST"
+        };
+        Font testFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
+        TextMenu menu = new TextMenu(render, test, testFont);
+        menu.draw(gameImageGraphics);
     
         if(gameState == GameState.PAUSE) {
             Graphics2D g2d = (Graphics2D) gameImageGraphics;
@@ -177,8 +185,8 @@ public class Game implements Runnable {
             int textWidth = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getWidth();
             int textHeight = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getHeight();
 
-            int boxWidth = textWidth * 2;
-            int boxHeight = 100;
+            int boxWidth = textWidth + textWidth/2;
+            int boxHeight = textHeight + textHeight/2;
 
             int boxX = render.getWidth()/2 - boxWidth/2;
             int boxY = render.getHeight()/2 - boxHeight/2;
