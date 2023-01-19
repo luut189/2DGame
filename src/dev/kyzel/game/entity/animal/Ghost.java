@@ -59,7 +59,7 @@ public class Ghost extends Animal {
     }
 
     @Override
-    public int getScore() {
+    public int getPoint() {
         return 0;
     }
 }

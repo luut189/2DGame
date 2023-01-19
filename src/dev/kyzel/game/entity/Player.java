@@ -83,7 +83,7 @@ public class Player extends Entity {
     }
 
     private void scoreUp(Animal target) {
-        score += target.getScore();
+        score += target.getPoint();
         int remainingScore = score % (currentLevel * maxScoreMultiplier);
         Sound.SCORE_UP.play();
         if(score >= currentLevel * maxScoreMultiplier) {

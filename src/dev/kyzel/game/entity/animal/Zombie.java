@@ -63,7 +63,7 @@ public class Zombie extends Animal {
     }
 
     @Override
-    public int getScore() {
+    public int getPoint() {
         return 2;
     }
 }

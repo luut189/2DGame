@@ -133,7 +133,7 @@ public abstract class Animal extends Entity {
 
     public abstract void setCurrentAnimalImage();
 
-    public abstract int getScore();
+    public abstract int getPoint();
 
     @Override
     public void drawHealthBar(Graphics g) {

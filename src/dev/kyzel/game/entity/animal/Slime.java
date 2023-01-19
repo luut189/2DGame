@@ -47,7 +47,7 @@ public class Slime extends Animal {
     }
 
     @Override
-    public int getScore() {
+    public int getPoint() {
         return 1;
     }
     
