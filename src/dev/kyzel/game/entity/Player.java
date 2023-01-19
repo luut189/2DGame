@@ -200,29 +200,63 @@ public class Player extends Entity {
         }
     }
 
+    public void drawStatusBar(Graphics g, Color color, int value, int maxValue, int barIndex) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        int barWidth = render.getUnitSize()*5;
+
+        double scale = (double) barWidth/(maxValue);
+        double maxBarValue = scale * maxValue;
+        double currentBarValue = scale * value;
+
+        int spacingBetweenBar = 10;
+        int barHeight = 10;
+        int startAt = render.getHeight() - (spacingBetweenBar+render.getUnitSize()/2);
+
+        int barX = 15;
+        int barY = startAt - (spacingBetweenBar+barHeight)*barIndex;
+
+        // background color
+        g2d.setColor(new Color(0, 0, 0, 127));
+        g2d.fillRoundRect(barX, barY, (int) maxBarValue, barHeight, 4, 4);
+
+        // foreground color
+        g2d.setColor(color);
+        g2d.fillRoundRect(barX, barY, (int) currentBarValue, barHeight, 4, 4);
+        
+        // border
+        g2d.setColor(Color.black);
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRoundRect(barX, barY, (int) maxBarValue, barHeight, 4, 4);
+    }
+
     @Override
     public void drawHealthBar(Graphics g) {
+        Color healthColor = new Color(210, 48, 48);
+        drawStatusBar(g, healthColor, currentHealthValue, maxHealthValue, 0);
+
+        /* disable the heart health bar for now
         Graphics2D g2d = (Graphics2D) g;
         int i = maxHealthValue;
         int currentHeart = 0;
-        
-        g2d.translate(20, 20);
         
         int maxHeart = maxHealthValue / 2;
         maxHeart += maxHealthValue % 2 == 0 ? 0 : 1;
         
         int heartWidth = render.getUnitSize()+10;
         int healthBarBorderWidth = maxHeart*heartWidth;
+        
+        int healthBarX = 15;
         int healthBarY = render.getHeight() - render.getUnitSize()*2;
             
         g2d.setColor(Color.black);
         g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
+        g2d.drawRoundRect(healthBarX, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
         g2d.setColor(new Color(0, 0, 0, 127));
-        g2d.fillRoundRect(-5, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
+        g2d.fillRoundRect(healthBarX, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
         
         while(i > 0) {
-            g2d.drawImage(AssetManager.emptyHeartImage, currentHeart*heartWidth, healthBarY, null);
+            g2d.drawImage(AssetManager.emptyHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
             i -= 2;
             currentHeart++;
         }
@@ -231,67 +265,25 @@ public class Player extends Entity {
         currentHeart = 0;
         while(tempCurrentHealth > 0) {
             if(tempCurrentHealth >= 2) {
-                g2d.drawImage(AssetManager.fullHeartImage, currentHeart*heartWidth, healthBarY, null);
+                g2d.drawImage(AssetManager.fullHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
                 tempCurrentHealth -= 2;
             } else {
-                g2d.drawImage(AssetManager.halfHeartImage, currentHeart*heartWidth, healthBarY, null);
+                g2d.drawImage(AssetManager.halfHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
                 tempCurrentHealth--;
             }
             currentHeart++;
         }
-        g2d.translate(-20, -20);
+        */
     }
 
     public void drawScoreBar(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
-        int scoreWidth = render.getUnitSize()*5;
-
-        double scale = (double) scoreWidth/(currentLevel* maxScoreMultiplier);
-        double maxScoreValue = scale * currentLevel* maxScoreMultiplier;
-        double scoreValue = scale * score;
-
-        int scoreBarX = 15;
-        int scoreBarY = render.getHeight() - render.getUnitSize()*2 - render.getUnitSize()/2;
-
-        // background color
-        g2d.setColor(new Color(0, 0, 0, 127));
-        g2d.fillRoundRect(scoreBarX, scoreBarY, (int) maxScoreValue, 10, 4, 4);
-
-        // foreground color
-        g2d.setColor(new Color(0, 150, 136));
-        g2d.fillRoundRect(scoreBarX, scoreBarY, (int) scoreValue, 10, 4, 4);
-        
-        // border
-        g2d.setColor(Color.black);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(scoreBarX, scoreBarY, (int) maxScoreValue, 10, 4, 4);
+        Color scoreColor = new Color(0, 150, 136);
+        drawStatusBar(g, scoreColor, score, currentLevel*maxScoreMultiplier, 2);
     }
 
     public void drawHitCooldownBar(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-
-        int hitTickBarWidth = render.getUnitSize()*5;
-
-        double scale = (double) hitTickBarWidth/(maxHitTick);
-        double maxHitTickValue = scale * maxHitTick;
-        double hitTickValue = scale * hitTick;
-
-        int hitTickBarX = 15;
-        int hitTickBarY = render.getHeight() - render.getUnitSize()*2;
-
-        // background color
-        g2d.setColor(new Color(0, 0, 0, 127));
-        g2d.fillRoundRect(hitTickBarX, hitTickBarY, (int) maxHitTickValue, 10, 4, 4);
-
-        // foreground color
-        g2d.setColor(new Color(255, 140, 30));
-        g2d.fillRoundRect(hitTickBarX, hitTickBarY, (int) hitTickValue, 10, 4, 4);
-        
-        // border
-        g2d.setColor(Color.black);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(hitTickBarX, hitTickBarY, (int) maxHitTickValue, 10, 4, 4);
+        Color hitCooldownColor = new Color(255, 140, 30);
+        drawStatusBar(g, hitCooldownColor, hitTick, maxHitTick, 1);
     }
 
     @Override

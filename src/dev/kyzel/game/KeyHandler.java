@@ -16,7 +16,7 @@ public class KeyHandler extends KeyAdapter {
     private EntityState playerState = EntityState.STANDING;
     private Direction previousPlayerDirection = Direction.NONE;
 
-    private boolean hasHUD = false;
+    private boolean hasHUD = true;
 
     private boolean hasMinimap = false;
     
