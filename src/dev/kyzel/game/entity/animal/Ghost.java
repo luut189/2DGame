@@ -41,8 +41,8 @@ public class Ghost extends Animal {
                 entityY -= game.getSceneY();
             }
 
-            if(Math.abs(entityX - x) <= 5 ||
-                    Math.abs(entityY - y) <= 5) {
+            if(Math.abs(entityX - x) <= render.getUnitSize()/2 &&
+                    Math.abs(entityY - y) <= render.getUnitSize()/2) {
                 entity.cursed();
             }
         }
