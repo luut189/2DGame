@@ -18,7 +18,8 @@ public class OverMenu extends TextMenu {
             new Font[] {
                 new Font(Font.MONOSPACED, Font.BOLD, 50),
                 new Font(Font.MONOSPACED, Font.PLAIN, 25)
-            }
+            },
+            X_CENTER | Y_CENTER
         );
     }
     

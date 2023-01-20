@@ -15,30 +15,38 @@ public class TextMenu extends Menu {
 
     private final Font[] fontList;
     private final boolean useOneFont;
+    
+    // constructors with alignment
+    public TextMenu(Renderer render, String[] text, Font font, int alignment) {
+        super(render, alignment);
 
-    public TextMenu(Renderer render, String text, Font font) {
-        super(render);
         this.fontList = new Font[1];
         this.fontList[0] = font;
         useOneFont = true;
 
-        this.text = new String[1];
-        this.text[0] = text;
-        this.textWidth = new int[1];
-        this.textHeight = new int[1];
+        this.text = text;
+        this.textWidth = new int[text.length];
+        this.textHeight = new int[text.length];
+        
+        importTextAndFont();
+        calculateXY();
+    }
 
-        Graphics g = render.getGameImageGraphics();
-        g.setFont(font);
-        textWidth[0] = (int) getTextSize(g, text).getWidth();
-        textHeight[0] = (int) getTextSize(g, text).getHeight();
+    public TextMenu(Renderer render, String[] text, Font[] fontList, int alignment) {
+        super(render, alignment);
 
-        width = textWidth[0] + textWidth[0]/2;
-        height = textHeight[0] + textHeight[0]/2;
+        this.fontList = fontList;
+        useOneFont = false;
 
-        x = render.getWidth()/2 - width/2;
-        y = render.getHeight()/2 - height/2;
+        this.text = text;
+        this.textWidth = new int[text.length];
+        this.textHeight = new int[text.length];
+
+        importTextAndFont();
+        calculateXY();
     }
     
+    // constructors without alignment
     public TextMenu(Renderer render, String[] text, Font font) {
         super(render);
 
@@ -49,22 +57,9 @@ public class TextMenu extends Menu {
         this.text = text;
         this.textWidth = new int[text.length];
         this.textHeight = new int[text.length];
-
-        Graphics g = render.getGameImageGraphics();
-        for(int i = 0; i < text.length; i++) {
-            String str = text[i];
-            g.setFont(font);
-            textWidth[i] = (int) getTextSize(g, str).getWidth();
-            textHeight[i] = (int) getTextSize(g, str).getHeight();
-            
-            width = Math.max(width, textWidth[i]);
-            height += textHeight[i];
-        }
-        width += width/2;
-        height += textHeight[text.length-1]/2;
-
-        x = render.getWidth()/2 - width/2;
-        y = render.getHeight()/2 - height/2;
+        
+        importTextAndFont();
+        calculateXY();
     }
 
     public TextMenu(Renderer render, String[] text, Font[] fontList) {
@@ -77,10 +72,15 @@ public class TextMenu extends Menu {
         this.textWidth = new int[text.length];
         this.textHeight = new int[text.length];
 
+        importTextAndFont();
+        calculateXY();
+    }
+
+    public void importTextAndFont() {
         Graphics g = render.getGameImageGraphics();
         for(int i = 0; i < text.length; i++) {
             String str = text[i];
-            g.setFont(fontList[i]);
+            g.setFont(useOneFont ? fontList[0] : fontList[i]);
             textWidth[i] = (int) getTextSize(g, str).getWidth();
             textHeight[i] = (int) getTextSize(g, str).getHeight();
             
@@ -90,8 +90,23 @@ public class TextMenu extends Menu {
         width += width/2;
         height += textHeight[text.length-1]/2;
 
-        x = render.getWidth()/2 - width/2;
-        y = render.getHeight()/2 - height/2;
+    }
+
+    public void calculateXY() {
+        int xAlignment = getXAlignment();
+        int yAlignment = getYAlignment();
+        switch (xAlignment) {
+            case X_LEFT -> x = width/2;
+            case X_CENTER -> x = render.getWidth()/2 - width/2;
+            case X_RIGHT -> x = render.getWidth() - width/2 - width;
+            default -> {}
+        }
+        switch (yAlignment) {
+            case Y_TOP -> y = height/2;
+            case Y_CENTER -> y = render.getHeight()/2 - height/2;
+            case Y_BOTTOM -> y = render.getHeight() - height/2 - height;
+            default -> {}
+        }
     }
 
     public Rectangle2D getTextSize(Graphics g, String text) {

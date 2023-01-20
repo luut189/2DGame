@@ -15,7 +15,8 @@ public class PauseMenu extends TextMenu {
             },
             new Font[] {
                 new Font(Font.MONOSPACED, Font.PLAIN, 50),
-            }
+            },
+            X_CENTER | Y_CENTER
         );
     }
 
