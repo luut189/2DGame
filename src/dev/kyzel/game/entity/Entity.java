@@ -88,6 +88,10 @@ public abstract class Entity implements IAttackable {
         return currentHealthValue > 0;
     }
 
+    public boolean isDead() {
+        return currentHealthValue <= 0;
+    }
+
     public boolean collideWithTile(Tile[][] tileMap) {
         if(this instanceof Ghost) return false;
         
@@ -162,7 +166,7 @@ public abstract class Entity implements IAttackable {
     }
 
     public boolean collideWithPlayer() {
-        if(!game.getPlayer().isAlive()) return false;
+        if(game.getPlayer().isDead()) return false;
         solidArea.x += x;
         solidArea.y += y;
         game.getPlayer().getSolidArea().x += -game.getSceneX() + game.getPlayer().getX();

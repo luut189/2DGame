@@ -99,7 +99,7 @@ public class Player extends Entity {
             Entity target = game.getEntityList().get(collidedEntity);
             inflictDamage(target);
             if(hitTick >= maxHitTick) Sound.HURT.play();
-            if(target.getHealthValue() <= 0) {
+            if(target.isDead()) {
                 scoreUp((Animal) target);
                 game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
             }

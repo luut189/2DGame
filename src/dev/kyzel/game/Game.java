@@ -189,7 +189,7 @@ public class Game implements Runnable {
                 entity.update();
             }
         }
-        if(!player.isAlive()) {
+        if(player.isDead()) {
             gameState = GameState.OVER;
             gameThread = null;
         }

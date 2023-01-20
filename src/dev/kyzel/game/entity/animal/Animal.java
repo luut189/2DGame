@@ -58,7 +58,7 @@ public abstract class Animal extends Entity {
                 Entity target = game.getPlayer();
                 inflictDamage(target);
                 if(hitTick >= maxHitTick) Sound.PLAYER_HURT.play();
-                if(target.getHealthValue() <= 0) {
+                if(target.isDead()) {
                     Sound.LOSE.play();
                     int x = target.getX()-game.getSceneX();
                     int y = target.getY()-game.getSceneY();
@@ -73,7 +73,7 @@ public abstract class Animal extends Entity {
                 } else {
                     inflictDamage(target);
                     if(hitTick >= maxHitTick) Sound.HURT.play();
-                    if(target.getHealthValue() <= 0) {
+                    if(target.isDead()) {
                         int x = target.getX();
                         int y = target.getY();
                         game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
