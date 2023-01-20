@@ -164,6 +164,10 @@ public class Player extends Entity {
         return playerImage;
     }
 
+    public int getScore() {
+        return (currentLevel-1) * maxScoreMultiplier + score;
+    }
+
     public void setCurrentPlayerImage(Direction playerDir) {
         if(state == EntityState.STANDING) {
             imageIndex = 0;
@@ -234,46 +238,6 @@ public class Player extends Entity {
     public void drawHealthBar(Graphics g) {
         Color healthColor = new Color(210, 48, 48);
         drawStatusBar(g, healthColor, currentHealthValue, maxHealthValue, 0);
-
-        /* disable the heart health bar for now
-        Graphics2D g2d = (Graphics2D) g;
-        int i = maxHealthValue;
-        int currentHeart = 0;
-        
-        int maxHeart = maxHealthValue / 2;
-        maxHeart += maxHealthValue % 2 == 0 ? 0 : 1;
-        
-        int heartWidth = render.getUnitSize()+10;
-        int healthBarBorderWidth = maxHeart*heartWidth;
-        
-        int healthBarX = 15;
-        int healthBarY = render.getHeight() - render.getUnitSize()*2;
-            
-        g2d.setColor(Color.black);
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(healthBarX, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
-        g2d.setColor(new Color(0, 0, 0, 127));
-        g2d.fillRoundRect(healthBarX, healthBarY, healthBarBorderWidth, render.getUnitSize(), 10, 10);
-        
-        while(i > 0) {
-            g2d.drawImage(AssetManager.emptyHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
-            i -= 2;
-            currentHeart++;
-        }
-
-        int tempCurrentHealth = currentHealthValue;
-        currentHeart = 0;
-        while(tempCurrentHealth > 0) {
-            if(tempCurrentHealth >= 2) {
-                g2d.drawImage(AssetManager.fullHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
-                tempCurrentHealth -= 2;
-            } else {
-                g2d.drawImage(AssetManager.halfHeartImage, healthBarX+5+currentHeart*heartWidth, healthBarY, null);
-                tempCurrentHealth--;
-            }
-            currentHeart++;
-        }
-        */
     }
 
     public void drawScoreBar(Graphics g) {
