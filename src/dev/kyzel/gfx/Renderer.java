@@ -36,8 +36,8 @@ public class Renderer extends JPanel {
         this.setPreferredSize(new Dimension(this.width, this.height));
         this.setDoubleBuffered(true);
 
-        game = new Game(this, keyHandler);
         gameImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
+        game = new Game(this, keyHandler);
     }
 
     public Graphics getGameImageGraphics() {

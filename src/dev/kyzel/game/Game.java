@@ -1,15 +1,12 @@
 package dev.kyzel.game;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
-import dev.kyzel.game.menu.TextMenu;
+import dev.kyzel.game.menu.Menu;
+import dev.kyzel.game.menu.PauseMenu;
 import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
@@ -18,6 +15,8 @@ import dev.kyzel.utils.EntityLoader;
 public class Game implements Runnable {
 
     private GameState gameState;
+
+    private Menu pauseMenu;
 
     private Renderer render;
     private KeyHandler keyHandler;
@@ -38,6 +37,7 @@ public class Game implements Runnable {
 
     public Game(Renderer render, KeyHandler keyHandler) {
         gameState = GameState.PLAYING;
+        pauseMenu = new PauseMenu(render);
 
         this.render = render;
         this.keyHandler = keyHandler;
@@ -169,36 +169,9 @@ public class Game implements Runnable {
             player.drawHitCooldownBar(gameImageGraphics);
         }
         if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
-        String[] test = {
-                "HELLO WORLD",
-                "TEST"
-        };
-        Font testFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
-        TextMenu menu = new TextMenu(render, test, testFont);
-        menu.draw(gameImageGraphics);
     
         if(gameState == GameState.PAUSE) {
-            Graphics2D g2d = (Graphics2D) gameImageGraphics;
-
-            String pauseText = "PAUSED";
-            gameImageGraphics.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 50));
-            int textWidth = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getWidth();
-            int textHeight = (int) gameImageGraphics.getFontMetrics().getStringBounds(pauseText, gameImageGraphics).getHeight();
-
-            int boxWidth = textWidth + textWidth/2;
-            int boxHeight = textHeight + textHeight/2;
-
-            int boxX = render.getWidth()/2 - boxWidth/2;
-            int boxY = render.getHeight()/2 - boxHeight/2;
-            
-            g2d.setColor(Color.white);
-            g2d.setStroke(new BasicStroke(5));
-            g2d.drawRoundRect(boxX, boxY, boxWidth, boxHeight, 10, 10);
-            g2d.setColor(new Color(0, 0, 0, 200));
-            g2d.fillRoundRect(boxX, boxY, boxWidth, boxHeight, 10, 10);
-            
-            gameImageGraphics.setColor(Color.white);
-            gameImageGraphics.drawString(pauseText, render.getWidth()/2 - textWidth/2, render.getHeight()/2 + textHeight/4);
+            pauseMenu.draw(gameImageGraphics);
         }
 
         gameImageGraphics.dispose();
