@@ -13,18 +13,49 @@ import dev.kyzel.utils.TextureLoader;
 
 public class Renderer extends JPanel {
 
+    /**
+     * The width and height of this instance.
+     */
     private int width, height;
 
-    private int originalUnitSize = 16;
-    private int scale = 3;
+    /**
+     * The unit size of sprites.
+     */
+    private final int originalUnitSize = 16;
 
-    private int unitSize = originalUnitSize * scale;
+    /**
+     * The desired scale.
+     */
+    private final int scale = 3;
 
-    private int FPS;
+    /**
+     * The actual unit size of sprites after scaling.
+     */
+    private final int unitSize = originalUnitSize * scale;
 
-    private Game game;
+    /**
+     * The frame rate (FPS).
+     */
+    private final int FPS;
+
+    /**
+     * The game to render.
+     */
+    private final Game game;
+
+    /**
+     * The main {@link BufferedImage}, which the Renderer uses to draw on.
+     */
     private BufferedImage gameImage;
 
+    /**
+     * Creates a new Renderer.
+     *
+     * @param keyHandler the keyboard handler
+     * @param width the width of the drawing canvas
+     * @param height the height of the drawing canvas
+     * @param FPS the desired frame rate (FPS)
+     */
     public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
         AssetManager.loadAllRes(new TextureLoader(), unitSize);
 
@@ -40,30 +71,57 @@ public class Renderer extends JPanel {
         game = new Game(this, keyHandler);
     }
 
+    /**
+     * Creates a graphics context of {@link #gameImage}.
+     * @return the graphics context of {@link #gameImage}
+     */
     public Graphics getGameImageGraphics() {
         return gameImage.getGraphics();
     }
 
+    /**
+     * Gets the frame rate (FPS).
+     * @return the frame rate (FPS)
+     */
     public int getFPS() {
         return FPS;
     }
 
+    /**
+     * Gets the scale of unit size
+     * @return the scale of unit size
+     */
     public int getUnitScale() {
         return scale;
     }
 
+    /**
+     * Gets the actual unit size
+     * @return the actual unit size
+     */
     public int getUnitSize() {
         return unitSize;
     }
 
+    /**
+     * Gets the width of this instance.
+     * @return the width of this instance
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the height of this instance.
+     * @return the height of this instance
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Draws the {@link #gameImage} to the window.
+     */
     public void drawToScreen() {
         Graphics g = getGraphics();
         if(g == null) {
@@ -74,6 +132,12 @@ public class Renderer extends JPanel {
         g.dispose();
     }
 
+    /**
+     * Set the attributes of this instance to match with the new width and height.
+     *
+     * @param width the new width
+     * @param height the new height
+     */
     public void setFullscreenAttribute(int width, int height) {
         this.width = width;
         this.height = height;

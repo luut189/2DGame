@@ -23,11 +23,26 @@ public class Sound {
     public static final Sound PLAYER_HURT = new Sound("/sound/player_hurt.wav");
     public static final Sound MISS = new Sound("/sound/miss.wav");
 
+    /**
+     * Format of the input audio file.
+     */
     private final AudioFormat format;
+
+    /**
+     * The bytes of the input file.
+     */
     private final byte[] bytes;
 
+    /**
+     * The clip that is currently playing.
+     */
     private Clip playingClip;
 
+    /**
+     * Create a new Sound with the given path.
+     *
+     * @param path the path of the sound file
+     */
     public Sound(String path) {
         try {
             AudioInputStream stream = AudioSystem.getAudioInputStream(
@@ -40,6 +55,9 @@ public class Sound {
         }
     }
 
+    /**
+     * Play the sound.
+     */
     public void play() {
         try {
             playingClip = AudioSystem.getClip();
@@ -49,13 +67,21 @@ public class Sound {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Stop if the sound is currently playing.
+     */
     public void stop() {
         if(playingClip == null) return;
 
         playingClip.stop();
     }
 
+    /**
+     * Play the sound.
+     *
+     * @param loop the sound will be looped if true, and vice versa
+     */
     public void play(boolean loop) {
         try {
             playingClip = AudioSystem.getClip();

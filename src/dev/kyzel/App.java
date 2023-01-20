@@ -6,11 +6,11 @@ import dev.kyzel.game.world.gen.LevelGenerator;
 public class App {
     public static void main(String[] args) {
 
-        /**
-         * use the method below to set the seed for world generation
-         * if not set by user, a random value will be used
-         * decimal value works better
-         * value in the same range (eg. 0.2 - 0.8) will generate almost identical world
+        /*
+        Use the method below to set the seed for world generation.
+        If it wasn't set by the user, a random value will be used.
+        A decimal value works better with this.
+        Values that are in the same range (e.g. 0.2 and 0.8) will generate almost identical world.
          */
         LevelGenerator.setSeedValue(3.6);
         
