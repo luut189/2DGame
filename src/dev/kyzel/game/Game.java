@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
 import dev.kyzel.game.menu.Menu;
+import dev.kyzel.game.menu.OverMenu;
 import dev.kyzel.game.menu.PauseMenu;
 import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
@@ -170,8 +171,13 @@ public class Game implements Runnable {
         }
         if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
     
-        if(gameState == GameState.PAUSE) {
-            pauseMenu.draw(gameImageGraphics);
+        switch(gameState) {
+            case PAUSE -> pauseMenu.draw(gameImageGraphics);
+            case OVER -> {
+                new OverMenu(render, this).draw(gameImageGraphics);
+                gameThread = null;
+            }
+            default -> {}
         }
 
         gameImageGraphics.dispose();
@@ -190,6 +196,7 @@ public class Game implements Runnable {
                 entity.update();
             }
         }
+        if(!player.isAlive()) gameState = GameState.OVER;
     }
 
     @Override
