@@ -2,9 +2,15 @@
 
 ![This is supposed to be my line-of-code count](https://tokei.rs/b1/github/luut189/2DGame?category=code)
 
+## About this
+
 This is an attempt at making a 2D game for the **ICS4UI**'s final project
 
-![Screenshot](screenshot/2.png)
+## Screenshots
+
+![Screenshot](screenshots/3.png)
+
+![Screenshot](screenshots/5.png)
 
 ## How to run
 
@@ -45,6 +51,8 @@ java -classpath ../bin dev.kyzel.App
 
 If you're using something else, **why?**
 
+> Using **IntelliJ IDEA** is understandable though.
+
 ## Folder Structure
 
 The workspace contains:
@@ -58,6 +66,8 @@ The workspace contains:
   - `game`: Game-related components
 
     - `entity`: Entity-related components
+
+    - `menu`: Menu-related components
 
     - `world`: World-related components
 
