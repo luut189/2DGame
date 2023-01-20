@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
-import dev.kyzel.game.menu.Menu;
 import dev.kyzel.game.menu.OverMenu;
 import dev.kyzel.game.menu.PauseMenu;
 import dev.kyzel.game.world.tile.Minimap;
@@ -16,8 +15,6 @@ import dev.kyzel.utils.EntityLoader;
 public class Game implements Runnable {
 
     private GameState gameState;
-
-    private Menu pauseMenu;
 
     private Renderer render;
     private KeyHandler keyHandler;
@@ -38,7 +35,6 @@ public class Game implements Runnable {
 
     public Game(Renderer render, KeyHandler keyHandler) {
         gameState = GameState.PLAYING;
-        pauseMenu = new PauseMenu(render);
 
         this.render = render;
         this.keyHandler = keyHandler;
@@ -172,11 +168,8 @@ public class Game implements Runnable {
         if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
     
         switch(gameState) {
-            case PAUSE -> pauseMenu.draw(gameImageGraphics);
-            case OVER -> {
-                new OverMenu(render, this).draw(gameImageGraphics);
-                gameThread = null;
-            }
+            case PAUSE -> new PauseMenu(render).draw(gameImageGraphics);
+            case OVER -> new OverMenu(render, this).draw(gameImageGraphics);
             default -> {}
         }
 
@@ -196,12 +189,15 @@ public class Game implements Runnable {
                 entity.update();
             }
         }
-        if(!player.isAlive()) gameState = GameState.OVER;
+        if(!player.isAlive()) {
+            gameState = GameState.OVER;
+            gameThread = null;
+        }
     }
 
     @Override
     public void run() {
-        double interval = 1000000000/ render.getFPS();
+        double interval = 1000000000.0 / render.getFPS();
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
