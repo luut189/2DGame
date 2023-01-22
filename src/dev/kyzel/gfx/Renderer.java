@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import dev.kyzel.game.Game;
-import dev.kyzel.game.KeyHandler;
 import dev.kyzel.utils.AssetManager;
 import dev.kyzel.utils.TextureLoader;
 
@@ -56,7 +55,7 @@ public class Renderer extends JPanel {
      * @param height the height of the drawing canvas
      * @param FPS the desired frame rate (FPS)
      */
-    public Renderer(KeyHandler keyHandler, int width, int height, int FPS) {
+    public Renderer(int width, int height, int FPS) {
         AssetManager.loadAllRes(new TextureLoader(), unitSize);
 
         this.width = width/unitSize*unitSize;
@@ -68,7 +67,7 @@ public class Renderer extends JPanel {
         this.setDoubleBuffered(true);
 
         gameImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
-        game = new Game(this, keyHandler);
+        game = new Game(this);
     }
 
     /**

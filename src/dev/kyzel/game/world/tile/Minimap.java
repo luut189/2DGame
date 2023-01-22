@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import dev.kyzel.game.ControlHandler;
 import dev.kyzel.game.Game;
-import dev.kyzel.game.KeyHandler;
 import dev.kyzel.gfx.Renderer;
 
 public class Minimap {
@@ -37,9 +37,11 @@ public class Minimap {
         this.mapSize = mapSize;
     }
 
-    public void update(KeyHandler keyHandler) {
-        if(keyHandler.isZooming()) {
-            setMapSize(keyHandler.getZoomDist());
+    public void update() {
+        if(ControlHandler.ZOOM_OUT_MINIMAP.down() && mapSize < 30) {
+            mapSize++;
+        } else if(ControlHandler.ZOOM_IN_MINIMAP.down() && mapSize > 10) {
+            mapSize--;
         }
     }
 

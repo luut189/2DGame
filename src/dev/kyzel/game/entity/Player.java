@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import dev.kyzel.game.ControlHandler;
 import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Animal;
 import dev.kyzel.game.entity.animal.Ghost;
@@ -19,6 +20,8 @@ public class Player extends Entity {
     
     private int imageIndex = 0;
     private BufferedImage playerImage;
+
+    private Direction previousDirection = Direction.NONE;
 
     private boolean isSwimming = false;
     private boolean isLeftLeg = false;
@@ -119,10 +122,27 @@ public class Player extends Entity {
         healing();
         checkSwimming();
 
-        direction = game.getKeyHandler().getPlayerDirection();
-        state = isSwimming ? EntityState.SWIMMING : game.getKeyHandler().getPlayerState();
-
-        Direction previousDirection = game.getKeyHandler().getPreviousPlayerDirection();
+        if(ControlHandler.UP.down()) {
+            previousDirection = direction;
+            direction = Direction.UP;
+        }
+        if(ControlHandler.DOWN.down()) {
+            previousDirection = direction;
+            direction = Direction.DOWN;
+        }
+        if(ControlHandler.RIGHT.down()) {
+            previousDirection = direction;
+            direction = Direction.RIGHT;
+        }
+        if(ControlHandler.LEFT.down()) {
+            previousDirection = direction;
+            direction = Direction.LEFT;
+        }
+        if(isSwimming) state = EntityState.SWIMMING;
+        else {
+            if(direction != Direction.NONE) state = EntityState.WALKING;
+            if(ControlHandler.ATTACK.down()) state = EntityState.ATTACKING;
+        }
 
         Direction currentDirection = direction == Direction.NONE ? previousDirection : direction;
         
@@ -158,6 +178,7 @@ public class Player extends Entity {
             }
             default -> {}
         }
+        direction = Direction.NONE;
     }
 
     public BufferedImage getPlayerImage() {
@@ -165,7 +186,7 @@ public class Player extends Entity {
     }
 
     public int getScore() {
-        return (currentLevel-1) * maxScoreMultiplier + score;
+        return currentLevel * maxScoreMultiplier + score;
     }
 
     public void setCurrentPlayerImage(Direction playerDir) {

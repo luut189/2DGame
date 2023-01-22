@@ -11,17 +11,17 @@ import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.EntityLoader;
+import dev.kyzel.utils.Keyboard;
 
 public class Game implements Runnable {
 
     private GameState gameState;
-
     private Renderer render;
-    private KeyHandler keyHandler;
-
     private TileManager tileManager;
-
     private Minimap minimap;
+
+    private boolean isPausing;
+    private boolean hasHUD, hasMinimap;
 
     private int camX, camY;
     private int sceneX, sceneY;
@@ -33,11 +33,14 @@ public class Game implements Runnable {
 
     private Thread gameThread;
 
-    public Game(Renderer render, KeyHandler keyHandler) {
+    public Game(Renderer render) {
         gameState = GameState.PLAYING;
 
         this.render = render;
-        this.keyHandler = keyHandler;
+
+        isPausing = false;
+        hasHUD = true;
+        hasMinimap = false;
 
         camX = render.getWidth()/2-render.getUnitSize()/2;
         camY = render.getHeight()/2-render.getUnitSize()/2;
@@ -51,7 +54,6 @@ public class Game implements Runnable {
         tileManager = new TileManager(render, this);
 
         minimap = new Minimap(render, this, tileManager, 10);
-        this.keyHandler.setZoomDist(minimap.getMapSize());
 
         player = new Player(render, this, camX, camY, 4);
         entityList = new ArrayList<>();
@@ -73,10 +75,6 @@ public class Game implements Runnable {
 
         player.setX(camX);
         player.setY(camY);
-    }
-
-    public KeyHandler getKeyHandler() {
-        return keyHandler;
     }
 
     public Player getPlayer() {
@@ -154,18 +152,18 @@ public class Game implements Runnable {
                     entity.getY() < render.getHeight() - playerSceneY
                 ) {
                     entity.draw(gameImageGraphics);
-                    if(keyHandler.hasHUD()) entity.drawHealthBar(gameImageGraphics);
+                    if(hasHUD) entity.drawHealthBar(gameImageGraphics);
                 }
             }
         }
         gameImageGraphics.translate(-playerSceneX, -playerSceneY);
 
-        if(keyHandler.hasHUD()) {
+        if(hasHUD) {
             player.drawHealthBar(gameImageGraphics);
             player.drawScoreBar(gameImageGraphics);
             player.drawHitCooldownBar(gameImageGraphics);
         }
-        if(keyHandler.hasMinimap()) minimap.draw(gameImageGraphics);
+        if(hasMinimap) minimap.draw(gameImageGraphics);
     
         switch(gameState) {
             case PAUSE -> new PauseMenu(render).draw(gameImageGraphics);
@@ -177,7 +175,14 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        minimap.update(keyHandler);
+        Keyboard.update();
+        if(ControlHandler.PAUSE.pressed()) isPausing = !isPausing;
+        if(isPausing) return;
+        
+        if(ControlHandler.TOGGLE_MINIMAP.pressed()) hasMinimap = !hasMinimap;
+        if(ControlHandler.TOGGLE_HUD.pressed()) hasHUD = !hasHUD;
+
+        minimap.update();
         for(Entity entity : entityList) {
             if(entity instanceof Player) entity.update();
             else if(
@@ -207,8 +212,8 @@ public class Game implements Runnable {
             delta += (currentTime - lastTime)/interval;
             lastTime = currentTime;
             if(delta >= 1) {
-                gameState = keyHandler.getGameState();
-                if(gameState != GameState.TITLE && gameState != GameState.PAUSE) update();
+                gameState = isPausing ? GameState.PAUSE : GameState.PLAYING;
+                update();
                 draw(render.getGameImageGraphics());
                 render.drawToScreen();
                 delta--;

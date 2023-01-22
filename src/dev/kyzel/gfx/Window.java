@@ -5,8 +5,8 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
-import dev.kyzel.game.KeyHandler;
 import dev.kyzel.utils.AssetManager;
+import dev.kyzel.utils.Keyboard;
 
 public class Window extends JFrame {
 
@@ -34,14 +34,13 @@ public class Window extends JFrame {
      * @param FPS the desired frame rate (FPS)
      */
     private Window(int width, int height, int FPS) {
-        KeyHandler keyHandler = new KeyHandler(this);
-        render = new Renderer(keyHandler, width, height, FPS);
+        render = new Renderer(width, height, FPS);
 
         this.setTitle("Stew the Wanderer");
         this.setIconImage(AssetManager.downImage[0]);
         this.add(render);
         this.pack();
-        this.addKeyListener(keyHandler);
+        this.addKeyListener(Keyboard.getListener());
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -90,5 +89,4 @@ public class Window extends JFrame {
             render.setFullscreenAttribute(getWidth(), getHeight()-32);
         }
     }
-    
 }
