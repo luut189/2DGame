@@ -23,7 +23,7 @@ public class Window extends JFrame {
     /**
      * The only Window that should be used.
      */
-    private static Window window;
+    public static Window window;
 
     /**
      * Creates a new Window.

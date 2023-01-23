@@ -10,6 +10,7 @@ import dev.kyzel.game.menu.PauseMenu;
 import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
+import dev.kyzel.gfx.Window;
 import dev.kyzel.utils.EntityLoader;
 import dev.kyzel.utils.Keyboard;
 
@@ -177,6 +178,7 @@ public class Game implements Runnable {
     public void update() {
         Keyboard.update();
         if(ControlHandler.PAUSE.pressed()) isPausing = !isPausing;
+        if(ControlHandler.TOGGLE_FULLSCREEN.pressed()) Window.window.setFullscreen();
         if(isPausing) return;
         
         if(ControlHandler.TOGGLE_MINIMAP.pressed()) hasMinimap = !hasMinimap;
