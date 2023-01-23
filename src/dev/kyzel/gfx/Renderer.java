@@ -50,7 +50,6 @@ public class Renderer extends JPanel {
     /**
      * Creates a new Renderer.
      *
-     * @param keyHandler the keyboard handler
      * @param width the width of the drawing canvas
      * @param height the height of the drawing canvas
      * @param FPS the desired frame rate (FPS)
