@@ -147,18 +147,19 @@ public class Player extends Entity {
         }
 
         Direction currentDirection = direction == Direction.NONE ? previousDirection : direction;
-        
         boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
         int collidedEntity = collideWithEntity(game.getEntityList(), currentDirection);
 
         setCurrentPlayerImage(currentDirection);
         if(state == EntityState.ATTACKING) {
             attack(collidedEntity);
+            previousDirection = currentDirection;
+            direction = Direction.NONE;
+            return;
         }
 
         if(collideWithTile || collidedEntity != -1) {
-            state = EntityState.WALKING;
-            setCurrentPlayerImage(currentDirection);
+            previousDirection = currentDirection;
             direction = Direction.NONE;
             return;
         }
@@ -183,7 +184,7 @@ public class Player extends Entity {
             }
             default -> {}
         }
-        previousDirection = direction;
+        previousDirection = currentDirection;
         direction = Direction.NONE;
     }
 
