@@ -115,11 +115,9 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if(hitTick < maxHitTick) hitTick++;
-        invincibleCounter++;
+        super.update();
         spriteCounter++;
 
-        healing();
         checkSwimming();
 
         state = EntityState.STANDING;
@@ -264,8 +262,13 @@ public class Player extends Entity {
 
     @Override
     public void drawHealthBar(Graphics g) {
-        Color healthColor = new Color(210, 48, 48);
+        // health bar
+        Color healthColor = isCursed ? new Color(62, 48, 86) : new Color(210, 48, 48);
         drawStatusBar(g, healthColor, currentHealthValue, maxHealthValue, 0);
+
+        // regeneration cooldown bar
+        Color regenColor = new Color(87, 189, 112);
+        drawStatusBar(g, regenColor, healingCounter, maxHealingCounter, 3);
     }
 
     public void drawScoreBar(Graphics g) {

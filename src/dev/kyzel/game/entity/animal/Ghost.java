@@ -16,6 +16,7 @@ public class Ghost extends Animal {
         maxHealthValue = 2;
         currentHealthValue = maxHealthValue;
         attackValue = 0;
+        isCursed = true;
         
         this.solidArea = new Rectangle(0, 0, 0, 0);
         solidAreaDefaultX = solidArea.x;

@@ -31,12 +31,14 @@ public abstract class Entity implements IAttackable {
     
     protected int speed;
 
+    protected boolean isCursed = false;
+
     protected Rectangle solidArea;
     protected int solidAreaDefaultX, solidAreaDefaultY;
 
     protected int spriteCounter = 0;
 
-    protected int healingCounter = maxHealingCounter;
+    protected int healingCounter = 0;
     protected int hitTick = maxHitTick;
     protected int invincibleCounter = maxInvincibleCounter;
 
@@ -59,7 +61,11 @@ public abstract class Entity implements IAttackable {
         );
     }
 
-    public abstract void update();
+    public void update() {
+        if(hitTick < maxHitTick) hitTick++;
+        invincibleCounter++;
+        healing();
+    }
 
     public abstract void initTexture();
 
@@ -71,16 +77,20 @@ public abstract class Entity implements IAttackable {
     }
 
     public void healing() {
-        if(currentHealthValue < maxHealthValue) healingCounter--;
-        if(healingCounter <= 0) {
+        if(currentHealthValue >= maxHealthValue) return;
+        if(healingCounter < maxHealingCounter) healingCounter++;
+        if(healingCounter == maxHealingCounter) {
+            isCursed = false;
             currentHealthValue++;
-            healingCounter = maxHealingCounter;
+            healingCounter = 0;
         }
     }
 
     public void cursed() {
+        healingCounter = 0;
         if(currentHealthValue <= maxHealthValue/2) return;
 
+        isCursed = true;
         currentHealthValue--;
     }
 

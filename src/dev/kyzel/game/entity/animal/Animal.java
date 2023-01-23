@@ -117,10 +117,8 @@ public abstract class Animal extends Entity {
 
     @Override
     public void update() {
-        hitTick++;
+        super.update();
         actionCounter++;
-        invincibleCounter++;
-        healing();
         
         if(actionCounter >= maxActionCount) {
             direction = getAnimalDirection(Math.random());
@@ -143,7 +141,8 @@ public abstract class Animal extends Entity {
         g.setColor(new Color(35, 35, 35));
         g.fillRect(x, y-render.getUnitSize()/2, render.getUnitSize(), 6);
 
-        g.setColor(new Color(255, 0, 30));
+        Color healthBarColor = isCursed ? new Color(62, 48, 86) : new Color(255, 0, 30);
+        g.setColor(healthBarColor);
         g.fillRect(x, y-render.getUnitSize()/2, (int) healthBarValue, 4);
     }
 
