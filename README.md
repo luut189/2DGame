@@ -6,13 +6,49 @@
 
 This is an attempt at making a 2D game for the **ICS4UI**'s final project
 
+- ![Screenshots](#screenshots)
+
+- ![Keybindings](#keybindings)
+
+- ![How To Run](#how-to-run)
+
+- ![Folder Structure](#folder-structure)
+
 ## Screenshots
 
 ![Screenshot](screenshots/3.png)
 
 ![Screenshot](screenshots/5.png)
 
-## How to run
+## Keybindings
+
+Gameplay-related Keybinds:
+
+- **W**: Move up
+
+- **S**: Move down
+
+- **D**: Move right
+
+- **A**: Move left
+
+- **Space**: Attack
+
+- **M**: Toggle the map
+
+- **Q**: Zoom the map out
+
+- **E**: Zoom the map in
+
+Application-related Keybinds:
+
+- **ESC**: Pause the game
+
+- **H**: Toggle the HUD
+
+- **F**: Toggle between fullscreen mode and windowed mode
+
+## How To Run
 
 If you're using **Visual Studio Code**:
 
@@ -59,7 +95,7 @@ The workspace contains:
 
 - `.vscode`: Visual Studio Code's settings
 
-- `res`: Resources (*sprites*, *textures*,...)
+- `res`: Resources (*sprites*, *textures*, *musics*,...)
 
 - `src/dev/kyzel`: Sources
 
