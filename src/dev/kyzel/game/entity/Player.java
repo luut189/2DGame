@@ -122,6 +122,7 @@ public class Player extends Entity {
         healing();
         checkSwimming();
 
+        state = EntityState.STANDING;
         if(ControlHandler.UP.down()) {
             previousDirection = direction;
             direction = Direction.UP;
@@ -138,6 +139,7 @@ public class Player extends Entity {
             previousDirection = direction;
             direction = Direction.LEFT;
         }
+        
         if(isSwimming) state = EntityState.SWIMMING;
         else {
             if(direction != Direction.NONE) state = EntityState.WALKING;
@@ -155,6 +157,9 @@ public class Player extends Entity {
         }
 
         if(collideWithTile || collidedEntity != -1) {
+            state = EntityState.WALKING;
+            setCurrentPlayerImage(currentDirection);
+            direction = Direction.NONE;
             return;
         }
 
@@ -178,6 +183,7 @@ public class Player extends Entity {
             }
             default -> {}
         }
+        previousDirection = direction;
         direction = Direction.NONE;
     }
 
