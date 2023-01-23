@@ -6,13 +6,13 @@
 
 This is an attempt at making a 2D game for the **ICS4UI**'s final project
 
-- ![Screenshots](#screenshots)
+- [Screenshots](#screenshots)
 
-- ![Keybindings](#keybindings)
+- [Keybindings](#keybindings)
 
-- ![How To Run](#how-to-run)
+- [How To Run](#how-to-run)
 
-- ![Folder Structure](#folder-structure)
+- [Folder Structure](#folder-structure)
 
 ## Screenshots
 
