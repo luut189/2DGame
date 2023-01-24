@@ -5,6 +5,9 @@ import java.awt.Font;
 import dev.kyzel.game.Game;
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * The game-over menu class.
+ */
 public class OverMenu extends TextMenu {
     
     /**

@@ -7,6 +7,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+/**
+ * The menu super class.
+ */
 public abstract class Menu {
     
     /**

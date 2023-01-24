@@ -4,6 +4,9 @@ import java.awt.Font;
 
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * The pause menu class.
+ */
 public class PauseMenu extends TextMenu {
     
     /**
