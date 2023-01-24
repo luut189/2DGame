@@ -12,10 +12,27 @@ import dev.kyzel.gfx.Renderer;
 
 public class EntityLoader {
 
+    /**
+     * Loads entities into the game.
+     * 
+     * @param entityList the list to put the loaded entities into
+     * @param render the renderer of the game
+     * @param game the game
+     * @param tileManager the map of the game
+     */
     public static void loadEntity(ArrayList<Entity> entityList, Renderer render, Game game, TileManager tileManager) {
         loadHostile(10000, entityList, render, game, tileManager);
     }
 
+    /**
+     * Loads hostile entities into the game.
+     * 
+     * @param num the number of entities
+     * @param entityList the list to put the loaded entities into
+     * @param render the renderer of the game
+     * @param game the game
+     * @param tileManager the map of the game
+     */
     private static void loadHostile(int num, ArrayList<Entity> entityList, Renderer render, Game game, TileManager tileManager) {
         for(int i = 0; i < num; i++) {
 
