@@ -70,7 +70,7 @@ public class Sound {
     private Clip playingClip;
 
     /**
-     * Create a new Sound with the given path.
+     * Creates a new Sound with the given path.
      *
      * @param path the path of the sound file
      */
@@ -87,7 +87,7 @@ public class Sound {
     }
 
     /**
-     * Play the sound.
+     * Plays the sound.
      */
     public void play() {
         try {
@@ -100,7 +100,7 @@ public class Sound {
     }
 
     /**
-     * Stop if the sound is currently playing.
+     * Stops if the sound is currently playing.
      */
     public void stop() {
         if(playingClip == null) return;
@@ -109,7 +109,7 @@ public class Sound {
     }
 
     /**
-     * Play the sound.
+     * Plays the sound.
      *
      * @param loop the sound will be looped if true, and vice versa
      */
