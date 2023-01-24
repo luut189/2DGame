@@ -1,0 +1,10 @@
+dev.kyzel
+dev.kyzel.game
+dev.kyzel.game.entity
+dev.kyzel.game.entity.animal
+dev.kyzel.game.menu
+dev.kyzel.game.world.gen
+dev.kyzel.game.world.tile
+dev.kyzel.gfx
+dev.kyzel.sfx
+dev.kyzel.utils
