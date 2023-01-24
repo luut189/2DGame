@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import dev.kyzel.game.Game;
 import dev.kyzel.utils.AssetManager;
-import dev.kyzel.utils.TextureLoader;
 
 public class Renderer extends JPanel {
 
@@ -55,7 +54,7 @@ public class Renderer extends JPanel {
      * @param FPS the desired frame rate (FPS)
      */
     public Renderer(int width, int height, int FPS) {
-        AssetManager.loadAllRes(new TextureLoader(), unitSize);
+        AssetManager.loadAllRes(unitSize);
 
         this.width = width/unitSize*unitSize;
         this.height = height/unitSize*unitSize;

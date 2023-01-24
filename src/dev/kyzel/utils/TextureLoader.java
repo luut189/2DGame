@@ -6,10 +6,12 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import dev.kyzel.App;
+
 public class TextureLoader {
 
-    public BufferedImage loadImage(String path) {
-        InputStream stream = getClass().getResourceAsStream(path);
+    public static BufferedImage loadImage(String path) {
+        InputStream stream = App.class.getResourceAsStream(path);
         if(stream == null) return null;
         try {
             return ImageIO.read(stream);
