@@ -1,5 +1,8 @@
 package dev.kyzel.utils;
 
+/**
+ * A class to handle user's input.
+ */
 public class Control {
 
     private int[] keys;

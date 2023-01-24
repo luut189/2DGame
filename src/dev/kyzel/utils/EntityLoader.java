@@ -10,6 +10,9 @@ import dev.kyzel.game.world.tile.Tile;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * A class to load entities.
+ */
 public class EntityLoader {
 
     /**

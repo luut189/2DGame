@@ -12,17 +12,48 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * A class to handle Sound.
+ */
 public class Sound {
 
+    /**
+     * The theme song of the game.
+     */
     public static final Sound THEME = new Sound("/sound/stew_theme.wav");
+
+    /**
+     * The sound when player's score goes up.
+     */
     public static final Sound SCORE_UP = new Sound("/sound/score_up.wav");
+
+    /**
+     * The sound when player's level goes up.
+     */
     public static final Sound LEVEL_UP = new Sound("/sound/level_up.wav");
 
+
+    /**
+     * The sound when an Entity is hurt.
+     */
     public static final Sound HURT = new Sound("/sound/hurt.wav");
+
+    /**
+     * The sound when player loses.
+     */
     public static final Sound LOSE = new Sound("/sound/lose.wav");
+
+    /**
+     * The sound when player is hurt.
+     */
     public static final Sound PLAYER_HURT = new Sound("/sound/player_hurt.wav");
+
+    /**
+     * The sound when player misses.
+     */
     public static final Sound MISS = new Sound("/sound/miss.wav");
 
+    
     /**
      * Format of the input audio file.
      */

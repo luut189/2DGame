@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import dev.kyzel.utils.AssetManager;
 import dev.kyzel.utils.Keyboard;
 
+/**
+ * A class to handle creating and managing a Window.
+ */
 public class Window extends JFrame {
 
     /**

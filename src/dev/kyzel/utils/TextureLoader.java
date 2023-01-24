@@ -8,6 +8,9 @@ import javax.imageio.ImageIO;
 
 import dev.kyzel.App;
 
+/**
+ * A class to handle loading texture.
+ */
 public class TextureLoader {
 
     /**

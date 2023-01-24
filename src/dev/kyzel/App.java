@@ -3,7 +3,16 @@ package dev.kyzel;
 import dev.kyzel.gfx.Window;
 import dev.kyzel.game.world.gen.LevelGenerator;
 
+/**
+ * The main class.
+ */
 public class App {
+
+    /**
+     * The main method.
+     * 
+     * @param args ARGS!!
+     */
     public static void main(String[] args) {
 
         /*

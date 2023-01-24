@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import dev.kyzel.game.Game;
 import dev.kyzel.utils.AssetManager;
 
+/**
+ * A class to handle drawing stuff to the screen.
+ */
 public class Renderer extends JPanel {
 
     /**

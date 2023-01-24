@@ -3,6 +3,9 @@ package dev.kyzel.utils;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * A class to handle keyboard input.
+ */
 public class Keyboard {
 
     /**
