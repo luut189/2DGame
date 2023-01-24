@@ -5,6 +5,9 @@ package dev.kyzel.utils;
  */
 public class Control {
 
+    /**
+     * The list of all input keys.
+     */
     private int[] keys;
 
     /**
