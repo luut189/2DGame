@@ -7,6 +7,12 @@ import dev.kyzel.gfx.Renderer;
 
 public class OverMenu extends TextMenu {
     
+    /**
+     * Creates a game-over menu, which will display the score of the player.
+     * 
+     * @param render the {@link Renderer} where the menu will be drawn on
+     * @param game the {@link Game} where the menu will take information from
+     */
     public OverMenu(Renderer render, Game game) {
         super
         (

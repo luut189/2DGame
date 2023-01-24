@@ -9,14 +9,39 @@ import dev.kyzel.gfx.Renderer;
 
 public class TextMenu extends Menu {
 
+    /**
+     * The texts in the menu.
+     */
     private final String[] text;
+
+    /**
+     * The texts' width.
+     */
     private final int[] textWidth;
+
+    /**
+     * The texts' height.
+     */
     private final int[] textHeight;
 
+    /**
+     * The fonts list.
+     */
     private final Font[] fontList;
+
+    /**
+     * A variable to see if the menu only uses one font.
+     */
     private final boolean useOneFont;
     
-    // constructors with alignment
+    /**
+     * Creates a new text menu.
+     * 
+     * @param render the {@link Renderer} where the menu will be drawn on
+     * @param text the texts in the menu
+     * @param font the font for the texts
+     * @param alignment the alignment of the menu
+     */
     public TextMenu(Renderer render, String[] text, Font font, int alignment) {
         super(render, alignment);
 
@@ -31,7 +56,15 @@ public class TextMenu extends Menu {
         importTextAndFont();
         calculateXY();
     }
-
+    
+    /**
+     * Creates a new text menu.
+     * 
+     * @param render the {@link Renderer} where the menu will be drawn on
+     * @param text the texts in the menu
+     * @param font the fonts for the texts
+     * @param alignment the alignment of the menu
+     */
     public TextMenu(Renderer render, String[] text, Font[] fontList, int alignment) {
         super(render, alignment);
 
@@ -46,7 +79,13 @@ public class TextMenu extends Menu {
         calculateXY();
     }
     
-    // constructors without alignment
+    /**
+     * Creates a new text menu.
+     * 
+     * @param render the {@link Renderer} where the menu will be drawn on
+     * @param text the texts in the menu
+     * @param font the font for the texts
+     */
     public TextMenu(Renderer render, String[] text, Font font) {
         super(render);
 
@@ -62,6 +101,13 @@ public class TextMenu extends Menu {
         calculateXY();
     }
 
+    /**
+     * Creates a new text menu.
+     * 
+     * @param render the {@link Renderer} where the menu will be drawn on
+     * @param text the texts in the menu
+     * @param font the fonts for the texts
+     */
     public TextMenu(Renderer render, String[] text, Font[] fontList) {
         super(render);
 
@@ -76,6 +122,9 @@ public class TextMenu extends Menu {
         calculateXY();
     }
 
+    /**
+     * Import all the texts and fonts.
+     */
     public void importTextAndFont() {
         Graphics g = render.getGameImageGraphics();
         for(int i = 0; i < text.length; i++) {
@@ -92,6 +141,9 @@ public class TextMenu extends Menu {
 
     }
 
+    /**
+     * Calculate the x and y coordinates based on the given information.
+     */
     public void calculateXY() {
         int xAlignment = getXAlignment();
         int yAlignment = getYAlignment();
@@ -109,10 +161,21 @@ public class TextMenu extends Menu {
         }
     }
 
+    /**
+     * Gets the text size in the given {@link Graphics} context.
+     * @param g the given {@link Graphics} context
+     * @param text the text
+     * @return the size of the text, represents by a {@link Rectangle2D}
+     */
     public Rectangle2D getTextSize(Graphics g, String text) {
         return g.getFontMetrics().getStringBounds(text, g);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Draws the texts.
+     */
     @Override
     public void draw(Graphics g) {
         super.draw(g);
