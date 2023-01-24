@@ -67,7 +67,7 @@ public class TileManager {
     /**
      * Gets a list of all tiles.
      * 
-     * @return a list of all tiles
+     * @return an array of all tiles
      */
     public Tile[][] getWorldTiles() {
         return worldTiles;

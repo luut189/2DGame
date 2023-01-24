@@ -208,7 +208,7 @@ public class AssetManager {
      * 
      * @param path the path of the resource
      * @param unitSize the unit size of the {@link Renderer}
-     * @return
+     * @return the loaded and scaled image
      */
     private static BufferedImage loadResource(String path, int unitSize) {
         BufferedImage bf = TextureLoader.loadImage(path + ".png");

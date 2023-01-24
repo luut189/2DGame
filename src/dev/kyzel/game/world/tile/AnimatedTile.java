@@ -84,7 +84,6 @@ public class AnimatedTile extends Tile {
 
     /**
      * Updates the tile.
-     * 
      * {@inheritDoc}
      */
     @Override
