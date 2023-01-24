@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+import dev.kyzel.gfx.Renderer;
+
 /**
  * A class to store all the assets of the game.
  */

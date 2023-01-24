@@ -12,7 +12,28 @@ public class Keyboard {
      * The class that holds properties of a key.
      */
     public static class Key {
-        public boolean down, pressed, last;
+        
+        /**
+         * A variable to see if the key is pressed down.
+         */
+        public boolean down;
+
+        /**
+         * A variable to see if the key is pressed.
+         */
+        public boolean pressed;
+
+        /**
+         * A variable to check the last state of the key.
+         */
+        public boolean last;
+
+        /**
+         * Creates a new Key.
+         */
+        public Key() {
+
+        }
     }
 
     /**
