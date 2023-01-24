@@ -2,6 +2,12 @@ package dev.kyzel.game.world.gen;
 
 // JAVA REFERENCE IMPLEMENTATION OF IMPROVED NOISE - COPYRIGHT 2002 KEN PERLIN.
 
+/**
+ * @hidden
+ * @author Ken Perlin
+ * 
+ * This class is used to generate a noise map, which is used to generate the world map.
+ */
 public final class ImprovedNoise {
     public static double noise(double x, double y, double z) {
         int X = (int)Math.floor(x) & 255,                  // FIND UNIT CUBE THAT
