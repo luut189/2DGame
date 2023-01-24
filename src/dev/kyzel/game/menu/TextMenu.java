@@ -7,6 +7,9 @@ import java.awt.geom.Rectangle2D;
 
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * The text menu super class.
+ */
 public class TextMenu extends Menu {
 
     /**

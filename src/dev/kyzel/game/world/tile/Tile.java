@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
+/**
+ * The tile class.
+ */
 public class Tile {
 
     /**
