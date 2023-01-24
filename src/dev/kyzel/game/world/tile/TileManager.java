@@ -7,16 +7,47 @@ import dev.kyzel.game.Game;
 import dev.kyzel.game.world.gen.LevelGenerator;
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * A class to manage the tiles in the game.
+ */
 public class TileManager {
 
+    /**
+     * The {@link Renderer} where the all the tiles will be drawn on.
+     */
     protected Renderer render;
+    
+    /**
+     * The {@link Game} where the all the tiles' information will write to.
+     */
     protected Game game;
 
-    protected int maxRow, maxCol;
+    /**
+     * The max number of rows of the tiles list.
+     */
+    protected int maxRow;
 
+    /**
+     * The max number of columns of the tiles list.
+     */
+    protected int maxCol;
+
+    /**
+     * The list of number which is used to generate the map.
+     */
     private double[][] numberWorldTile;
+
+    /**
+     * The list of all tiles.
+     */
     protected Tile[][] worldTiles;
 
+    /**
+     * Creates a new TileManager.
+     * 
+     * @param render the {@link Renderer} where the all the tiles will be drawn on
+     * @param game the {@link Game} where the all the tiles' information will write to
+     */
     public TileManager(Renderer render, Game game) {
         this.render = render;
         this.game = game;
@@ -33,18 +64,40 @@ public class TileManager {
         loadAllTexture();
     }
 
+    /**
+     * Gets a list of all tiles.
+     * 
+     * @return a list of all tiles
+     */
     public Tile[][] getWorldTiles() {
         return worldTiles;
     }
     
+    /**
+     * Gets the max number of rows of the tiles list.
+     * 
+     * @return the max number of rows of the tiles list.
+     */
     public int getMaxRow() {
         return maxRow;
     }
 
+    /**
+     * Gets the max number of columns of the tiles list.
+     * 
+     * @return the max number of columns of the tiles list.
+     */
     public int getMaxCol() {
         return maxCol;
     }
 
+    /**
+     * Attempts to get a tile in the tiles list.
+     * 
+     * @param x the x coordinate of the tile
+     * @param y the y coordinate of the tile
+     * @return the tile if the given values are in range, null otherwise
+     */
     public Tile getTile(int x, int y) {
         if(
             x >= maxRow || x < 0 ||
@@ -53,6 +106,9 @@ public class TileManager {
         return worldTiles[x][y];
     }
 
+    /**
+     * Loads all tiles into the game.
+     */
     public void loadAllTexture() {
         for(int i = 0; i < worldTiles.length; i++) {
             for(int j = 0; j < worldTiles[i].length; j++) {
@@ -76,6 +132,11 @@ public class TileManager {
         }
     }
 
+    /**
+     * Draws all the visible tiles.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public void drawAllTexture(Graphics g) {
 
         int xOffset = maxRow*render.getUnitSize() - game.getCamX()*2 - render.getUnitSize();

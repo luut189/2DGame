@@ -8,35 +8,83 @@ import dev.kyzel.game.ControlHandler;
 import dev.kyzel.game.Game;
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * A class to handle minimap.
+ */
 public class Minimap {
 
+    /**
+     * The {@link Renderer} where the minimap will be drawn on.
+     */
     private Renderer render;
+
+    /**
+     * The {@link Game} where the minimap will take information from.
+     */
     private Game game;
 
+    /**
+     * The list of all tiles in the game.
+     */
     private Tile[][] worldTiles;
-    private int maxRow, maxCol;
 
+    /**
+     * The max number of rows of the tiles list.
+     */
+    private int maxRow;
+    
+    /**
+     * The max number of columns of tiles list.
+     */
+    private int maxCol;
+
+    /**
+     * The output minimap.
+     */
     BufferedImage worldMap;
 
+    /**
+     * The minimap's size.
+     */
     private int mapSize;
 
-    public Minimap(Renderer render, Game game, TileManager tileManager, int mapSize) {
+    /**
+     * Creates a new minimap.
+     * 
+     * @param render the {@link Renderer} where the minimap will be drawn on
+     * @param game {@link Game} where the minimap will take information from
+     * @param mapSize the minimap's size
+     */
+    public Minimap(Renderer render, Game game, int mapSize) {
         this.render = render;
         this.game = game;
-        this.worldTiles = tileManager.getWorldTiles();
-        this.maxRow = tileManager.getMaxRow();
-        this.maxCol = tileManager.getMaxCol();
+        this.worldTiles = game.getTileManager().getWorldTiles();
+        this.maxRow = game.getTileManager().getMaxRow();
+        this.maxCol = game.getTileManager().getMaxCol();
         this.mapSize = mapSize;
     }
 
+    /**
+     * Gets the minimap's size.
+     * 
+     * @return the minimap's size
+     */
     public int getMapSize() {
         return mapSize;
     }
 
+    /**
+     * Set the minimap's size to the given value.
+     * 
+     * @param mapSize the given value
+     */
     public void setMapSize(int mapSize) {
         this.mapSize = mapSize;
     }
 
+    /**
+     * Updates the minimap.
+     */
     public void update() {
         if(ControlHandler.ZOOM_OUT_MINIMAP.down() && mapSize < 30) {
             mapSize++;
@@ -45,7 +93,10 @@ public class Minimap {
         }
     }
 
-    public void createWorldMap() {
+    /**
+     * Creates the minimap.
+     */
+    public void createMinimap() {
         int worldMapWidth = mapSize*render.getUnitSize();
         int worldMapHeight = mapSize*render.getUnitSize();
         worldMap = new BufferedImage(worldMapWidth, worldMapHeight, BufferedImage.TYPE_INT_ARGB);
@@ -82,8 +133,13 @@ public class Minimap {
         g.dispose();
     }
 
+    /**
+     * Draws the minimap.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public void draw(Graphics g) {
-        createWorldMap();
+        createMinimap();
         int width = 200;
         int height = 200;
         int x = render.getWidth() - width - 50;
