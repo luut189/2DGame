@@ -14,16 +14,47 @@ import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.sfx.Sound;
 
+/**
+ * The animal super class.
+ */
 public abstract class Animal extends Entity {
 
+    /**
+     * The current animal's sprite.
+     */
     protected BufferedImage animalImage;
+
+    /**
+     * The current index to use as the animal's sprite.
+     */
     protected int imageIndex;
 
+    /**
+     * The hostile probability of the animal.
+     */
     protected double hostileProb;
 
+    /**
+     * The counter to see when the animal should do a different action (e.g. move in a different direction).
+     */
     private int actionCounter;
+
+    /**
+     * The max counter for action change.
+     */
     private final int maxActionCount = 120;
 
+   /**
+     * Creates a new Animal.
+     * Construction of a new, plain Animal is not allowed.
+     * Construction has to be explicitly typed (e.g. Zombie, Slime,...).
+     * 
+     * @param render the {@link Renderer} where the animal will be drawn on
+     * @param game the {@link Game} where the animal interacts
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param speed the speed of the animal
+     */
     public Animal(Renderer render, Game game, int x, int y, int speed) {
         super(render, game, x, y, speed);
         
@@ -35,6 +66,12 @@ public abstract class Animal extends Entity {
         initTexture();
     }
 
+    /**
+     * Gets a {@link Direction} to move in depends on the given number from 0 to 1.
+     * 
+     * @param num the given number
+     * @return the {@link Direction} to move in
+     */
     public Direction getAnimalDirection(double num) {
         if(num < 0.25) return Direction.UP;
         if(num < 0.5) return Direction.DOWN;
@@ -43,6 +80,11 @@ public abstract class Animal extends Entity {
         return Direction.NONE;
     }
 
+    /**
+     * Attempts to do an action with the animal (including moving, attacking something in the current {@link Direction}).
+     * 
+     * @param tileManager the {@link TileManager} of the game
+     */
     public void move(TileManager tileManager) {
         boolean collideWithTile = collideWithTile(tileManager.getWorldTiles());
         int collidedEntity = collideWithEntity(game.getEntityList(), direction);
@@ -129,8 +171,16 @@ public abstract class Animal extends Entity {
         setCurrentAnimalImage();
     }
 
+    /**
+     * Set the current animal's sprite.
+     */
     public abstract void setCurrentAnimalImage();
 
+    /**
+     * Gets the points of the animal.
+     * 
+     * @return the points of the animal
+     */
     public abstract int getPoint();
 
     @Override

@@ -8,10 +8,25 @@ import dev.kyzel.game.entity.EntityState;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
+/**
+ * The zombie class.
+ */
 public class Zombie extends Animal {
 
+    /**
+     * A variable to help with animation.
+     */
     private boolean isLeftLeg = false;
 
+    /**
+     * Creates a new Zombie.
+     * 
+     * @param render the {@link Renderer} where the zombie will be drawn on
+     * @param game the {@link Game} where the zombie interacts
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param speed the speed of the zombie
+     */
     public Zombie(Renderer render, Game game, int x, int y, int speed) {
         super(render, game, x, y, speed);
         hostileProb = 1;

@@ -16,21 +16,60 @@ import dev.kyzel.gfx.Renderer;
 import dev.kyzel.sfx.Sound;
 import dev.kyzel.utils.AssetManager;
 
+/**
+ * The player class.
+ */
 public class Player extends Entity {
     
+    /**
+     * The current index to use as the player's sprite.
+     */
     private int imageIndex = 0;
+
+    /**
+     * The current player's sprite.
+     */
     private BufferedImage playerImage;
 
-    private Direction previousDirection = Direction.NONE;
+    /**
+     * The last {@link Direction} of the player.
+     */
+    private Direction previousDirection = Direction.DOWN;
 
+    /**
+     * A variable to see if the player is swimming.
+     */
     private boolean isSwimming = false;
+
+    /**
+     * A variable to help with the animation.
+     */
     private boolean isLeftLeg = false;
 
+    /**
+     * The current level of the player.
+     */
     private int currentLevel = 1;
 
+    /**
+     * The current score of the player at the current level.
+     */
     private int score = 0;
+
+    /**
+     * The max score multiplier.
+     */
     private final int maxScoreMultiplier = 5;
 
+    /**
+     * Creates a new Player.
+     * 
+     * @param render the {@link Renderer} where the player will be drawn on
+     * @param game the {@link Game} where the player interacts
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param speed the speed of the player
+     */
     public Player(Renderer render, Game game, int x, int y, int speed) {
         super(render, game, x, y, speed);
 
@@ -72,6 +111,9 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Checks if the player is swimming.
+     */
     private void checkSwimming() {
         int nextTileX = (-game.getSceneX()+render.getUnitSize()/2+game.getCamX())/render.getUnitSize();
         int nextTileY = (-game.getSceneY()+render.getUnitSize()+game.getCamY())/render.getUnitSize();
@@ -85,6 +127,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Increases the player's score up with the points taken from the target.
+     * 
+     * @param target the target
+     */
     private void scoreUp(Animal target) {
         score += target.getPoint();
         int remainingScore = score % (currentLevel * maxScoreMultiplier);
@@ -97,6 +144,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Attempts to attack something.
+     * 
+     * @param collidedEntity the collided entity, -1 represents that there is no collided entity
+     */
     private void attack(int collidedEntity) {
         if(collidedEntity != -1) {
             Entity target = game.getEntityList().get(collidedEntity);
@@ -186,14 +238,29 @@ public class Player extends Entity {
         direction = Direction.NONE;
     }
 
+    /**
+     * Gets the current player's sprite.
+     * 
+     * @return the current player's sprite
+     */
     public BufferedImage getPlayerImage() {
         return playerImage;
     }
 
+    /**
+     * Gets the current score of the player.
+     * 
+     * @return the current score of the player
+     */
     public int getScore() {
         return currentLevel * maxScoreMultiplier + score;
     }
 
+    /**
+     * Set the player's sprite and handles animation in the given {@link Direction}.
+     * 
+     * @param playerDir the given {@link Direction}
+     */
     public void setCurrentPlayerImage(Direction playerDir) {
         if(state == EntityState.STANDING) {
             imageIndex = 0;
@@ -230,6 +297,15 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Draws a scalable value bar for the player.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     * @param color the color of the bar
+     * @param value the current value
+     * @param maxValue the max value
+     * @param barIndex the index of the bar, which is used to determine the order of the bar
+     */
     public void drawStatusBar(Graphics g, Color color, int value, int maxValue, int barIndex) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -271,11 +347,21 @@ public class Player extends Entity {
         drawStatusBar(g, regenColor, healingCounter, maxHealingCounter, 3);
     }
 
+    /**
+     * Draws the player's score/exp.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public void drawScoreBar(Graphics g) {
         Color scoreColor = new Color(0, 150, 136);
         drawStatusBar(g, scoreColor, score, currentLevel*maxScoreMultiplier, 2);
     }
 
+    /**
+     * Draws the player's hit cooldown.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public void drawHitCooldownBar(Graphics g) {
         Color hitCooldownColor = new Color(255, 140, 30);
         drawStatusBar(g, hitCooldownColor, hitTick, maxHitTick, 1);

@@ -9,8 +9,20 @@ import dev.kyzel.game.entity.Player;
 import dev.kyzel.gfx.Renderer;
 import dev.kyzel.utils.AssetManager;
 
+/**
+ * The ghost class.
+ */
 public class Ghost extends Animal {
 
+    /**
+     * Creates a new Ghost.
+     * 
+     * @param render the {@link Renderer} where the ghost will be drawn on
+     * @param game the {@link Game} where the ghost interacts
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param speed the speed of the ghost
+     */
     public Ghost(Renderer render, Game game, int x, int y, int speed) {
         super(render, game, x, y, speed);
         maxHealthValue = 2;
@@ -28,6 +40,10 @@ public class Ghost extends Animal {
         animalImage = AssetManager.ghostImage[imageIndex];
     }
 
+    /**
+     * {@inheritDoc}
+     * The ghost will curse any entity it goes through.
+     */
     @Override
     public void update() {
         super.update();

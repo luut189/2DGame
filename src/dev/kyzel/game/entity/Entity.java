@@ -10,38 +10,127 @@ import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.game.world.tile.Tile;
 import dev.kyzel.gfx.Renderer;
 
+/**
+ * A class to handle Entity in the game.
+ */
 public abstract class Entity implements IAttackable {
 
+    /**
+     * Constant for the max value of healing counter.
+     */
     public static final int maxHealingCounter = 300;
+
+    /**
+     * Constant for the max value of hit cooldown.
+     */
     public static final int maxHitTick = 20;
+    
+    /**
+     * Constant for the max value of invincible counter.
+     */
     public static final int maxInvincibleCounter = 20;
 
+    /**
+     * The {@link Renderer} where the entity will be drawn on.
+     */
     protected Renderer render;
+
+    /**
+     * The {@link Game} where the entity interacts.
+     */
     protected Game game;
 
+    /**
+     * The {@link Direction} the entity moves in.
+     */
     protected Direction direction;
+
+    /**
+     * The {@link EntityState} of the entity.
+     */
     protected EntityState state;
 
-    protected int x, y;
+    /**
+     * The x coordinate of the entity.
+     */
+    protected int x;
 
+    /**
+     * The y coordinate of the entity.
+     */
+    protected int y;
+
+    /**
+     * The max health value of the entity.
+     */
     protected int maxHealthValue;
+
+    /**
+     * The current health value of the entity.
+     */
     protected int currentHealthValue;
     
+    /**
+     * The attack damage value of the entity.
+     */
     protected int attackValue;
     
+    /**
+     * The speed of the entity.
+     */
     protected int speed;
 
+    /**
+     * A variable to see if the entity is cursed.
+     */
     protected boolean isCursed = false;
 
+    /**
+     * The hitbox of the entity.
+     */
     protected Rectangle solidArea;
-    protected int solidAreaDefaultX, solidAreaDefaultY;
+    
+    /**
+     * The default x coordinate of the hitbox.
+     */
+    protected int solidAreaDefaultX;
 
+    /**
+     * The default y coordinate of the hitbox.
+     */
+    protected int solidAreaDefaultY;
+
+    /**
+     * The sprite counter, which is used for the animation
+     */
     protected int spriteCounter = 0;
 
+    /**
+     * The default healing counter.
+     */
     protected int healingCounter = 0;
+
+    /**
+     * The default hit cooldown.
+     */
     protected int hitTick = maxHitTick;
+
+    /**
+     * The default invincible counter.
+     */
     protected int invincibleCounter = maxInvincibleCounter;
 
+    /**
+     * Creates a new Entity.
+     * Construction of a new, plain Entity is not allowed.
+     * Construction has to be explicitly typed (e.g. Player, Slime,...).
+     * 
+     * @param render the {@link Renderer} where the entity will be drawn on
+     * @param game the {@link Game} where the entity interacts
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param speed the speed of the entity
+     */
     public Entity(Renderer render, Game game, int x, int y, int speed) {
         this.render = render;
         this.game = game;
@@ -54,6 +143,14 @@ public abstract class Entity implements IAttackable {
         solidAreaDefaultY = solidArea.y;
     }
 
+    /**
+     * Checks if the entity is inside the map.
+     * 
+     * @param tileMap the map
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return if the entity is inside the map
+     */
     public boolean isInRange(Tile[][] tileMap, int x, int y) {
         return (
             x >= 0 && x < tileMap.length &&
@@ -61,14 +158,21 @@ public abstract class Entity implements IAttackable {
         );
     }
 
+    /**
+     * Updates the entity.
+     */
     public void update() {
         if(hitTick < maxHitTick) hitTick++;
         invincibleCounter++;
         healing();
     }
 
+    /**
+     * Initializes the base texture.
+     */
     public abstract void initTexture();
-
+    
+    @Override
     public void inflictDamage(Entity target) {
         if(hitTick < maxHitTick) return;
         if(target.getInvincibleCounter() < maxInvincibleCounter) return;
@@ -76,6 +180,9 @@ public abstract class Entity implements IAttackable {
         target.setInvincibleCounter(0);
     }
 
+    /**
+     * Heals the entity if the requirements are met.
+     */
     public void healing() {
         if(currentHealthValue >= maxHealthValue) return;
         if(healingCounter < maxHealingCounter) healingCounter++;
@@ -86,6 +193,9 @@ public abstract class Entity implements IAttackable {
         }
     }
 
+    /**
+     * Curses the entity.
+     */
     public void cursed() {
         healingCounter = 0;
         if(currentHealthValue <= maxHealthValue/2) return;
@@ -94,14 +204,30 @@ public abstract class Entity implements IAttackable {
         currentHealthValue--;
     }
 
+    /**
+     * Checks if the entity is alive.
+     * 
+     * @return if the entity is alive
+     */
     public boolean isAlive() {
         return currentHealthValue > 0;
     }
 
+    /**
+     * Checks if the entity is dead.
+     * 
+     * @return if the entity is dead
+     */
     public boolean isDead() {
         return currentHealthValue <= 0;
     }
 
+    /**
+     * Checks if the entity collides with any solid tile.
+     * 
+     * @param tileMap the map
+     * @return if the entity collides with any solid tile
+     */
     public boolean collideWithTile(Tile[][] tileMap) {
         if(this instanceof Ghost) return false;
         
@@ -168,6 +294,7 @@ public abstract class Entity implements IAttackable {
             }
         }
         
+        // if the entity is an animal, this method will return true
         if(this instanceof Animal) {
             if(tile1.getTileName().equals("water")) return true;
             if(tile2.getTileName().equals("water")) return true;
@@ -175,6 +302,11 @@ public abstract class Entity implements IAttackable {
         return tile1.isSolid() || tile2.isSolid();
     }
 
+    /**
+     * Checks if the entity collides with the player.
+     * 
+     * @return if the entity collides with the player.
+     */
     public boolean collideWithPlayer() {
         if(game.getPlayer().isDead()) return false;
         solidArea.x += x;
@@ -203,6 +335,13 @@ public abstract class Entity implements IAttackable {
         return false;
     }
 
+    /**
+     * Checks if the entity collides with any other entity in the given list.
+     * 
+     * @param targetList the list of all the target entities
+     * @param currentEntityDirection the current {@link Direction} of the entity
+     * @return the index of the entity in the list if the entity collides to any other entity, -1 otherwise
+     */
     public int collideWithEntity(ArrayList<Entity> targetList, Direction currentEntityDirection) {
         for(int i = 0; i < targetList.size(); i++) {
             Entity entity = targetList.get(i);
@@ -240,6 +379,13 @@ public abstract class Entity implements IAttackable {
         return -1;
     }
 
+    /**
+     * Increases the image index so that it will always be in range.
+     * 
+     * @param currentIndex the current index
+     * @param maxIndex the max index
+     * @return the new index
+     */
     public int increaseImageIndex(int currentIndex, int maxIndex) {
         int newIndex = currentIndex + 1;
         if(newIndex < maxIndex) {
@@ -248,50 +394,110 @@ public abstract class Entity implements IAttackable {
         return 0;
     }
     
+    /**
+     * Gets the {@link Renderer} where the entity will be drawn on.
+     * 
+     * @return the {@link Renderer} where the entity will be drawn on
+     */
     public Renderer getRender() {
         return render;
     }
 
+    /**
+     * Set the {@link Renderer} where the entity will be drawn on.
+     * 
+     * @param render the {@link Renderer} where the entity will be drawn on
+     */
     public void setRender(Renderer render) {
         this.render = render;
     }
 
+    /**
+     * Gets the {@link Game} where the entity interacts.
+     * 
+     * @return the {@link Game} where the entity interacts
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Gets the x coordinate of the entity.
+     * 
+     * @return the x coordinate of the entity
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Set the x coordinate of the entity to the given value.
+     * 
+     * @param x the given value
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Gets the y coordinate of the entity.
+     * 
+     * @return the y coordinate of the entity
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Set the y coordinate of the entity to the given value.
+     * 
+     * @param y the given value
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Gets the hitbox of the entity.
+     * 
+     * @return the hitbox of the entity
+     */
     public Rectangle getSolidArea() {
         return solidArea;
     }
 
+    /**
+     * Gets the default x coordinate of the hitbox.
+     * 
+     * @return the default x coordinate of the hitbox
+     */
     public int getSolidAreaDefaultX() {
         return solidAreaDefaultX;
     }
 
+    /**
+     * Gets the default y coordinate of the hitbox.
+     * 
+     * @return the default y coordinate of the hitbox
+     */
     public int getSolidAreaDefaultY() {
         return solidAreaDefaultY;
     }
 
+    /**
+     * Gets the current {@link Direction} of the entity.
+     * 
+     * @return the current {@link Direction} of the entity
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * Set the current {@link Direction} of the entity to the given value.
+     * 
+     * @param dir the given value
+     */
     public void setDirection(Direction dir) {
         direction = dir;
     }
@@ -335,27 +541,62 @@ public abstract class Entity implements IAttackable {
         return maxHealthValue;
     }
 
+    /**
+     * Gets the speed of the entity.
+     * 
+     * @return the speed of the entity
+     */
     public int getSpeed() {
         return speed;
     }
 
+    /**
+     * Set the speed of the entity to the given value.
+     * 
+     * @param speed the given value
+     */
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
+    /**
+     * Gets the speed of the entity when swimming.
+     * 
+     * @return the speed of the entity when swimming
+     */
     public int getSwimmingSpeed() {
         return speed - speed/3;
     }
 
+    /**
+     * Gets the current invincible counter of the entity.
+     * 
+     * @return the current invincible counter
+     */
     public int getInvincibleCounter() {
         return invincibleCounter;
     }
 
+    /**
+     * Set the current invincible counter of the entity to the given value.
+     * 
+     * @param counter the given value
+     */
     public void setInvincibleCounter(int counter) {
         invincibleCounter = counter;
     }
 
+    /**
+     * Draws the health bar of the entity.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public abstract void drawHealthBar(Graphics g);
 
+    /**
+     * Draws the entity.
+     * 
+     * @param g the {@link Graphics} which is used to draw
+     */
     public abstract void draw(Graphics g);
 }
