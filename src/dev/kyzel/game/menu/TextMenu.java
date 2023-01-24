@@ -65,7 +65,7 @@ public class TextMenu extends Menu {
      * 
      * @param render the {@link Renderer} where the menu will be drawn on
      * @param text the texts in the menu
-     * @param font the fonts for the texts
+     * @param fontList the fonts for the texts
      * @param alignment the alignment of the menu
      */
     public TextMenu(Renderer render, String[] text, Font[] fontList, int alignment) {
@@ -109,7 +109,7 @@ public class TextMenu extends Menu {
      * 
      * @param render the {@link Renderer} where the menu will be drawn on
      * @param text the texts in the menu
-     * @param font the fonts for the texts
+     * @param fontList the fonts for the texts
      */
     public TextMenu(Renderer render, String[] text, Font[] fontList) {
         super(render);
