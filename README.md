@@ -35,9 +35,11 @@ From top to bottom:
 - The first bar is your regeneration cooldown. When you're not at full health, the bar will start rising.
   - You will heal **1** unit of health when the bar is full.
 
-- The second bar is your experience bar. You will be able to increase your health capacity by **1** if this bar is full.
+- The second bar is your experience bar.
+  - You will be able to increase your health capacity by **1** if this bar is full.
 
-- The third bar is your hit cooldown. You can only deal damage to something when the bar is full.
+- The third bar is your hit cooldown.
+  - You can only deal damage to something when the bar is full.
 
 - The last bar is your health.
   - When you're in a normal state, this bar is red. However, it will turn into dark purple if you're cursed by a ghost.
