@@ -253,7 +253,18 @@ public class Player extends Entity {
      * @return the current score of the player
      */
     public int getScore() {
-        return currentLevel * maxScoreMultiplier + score;
+        if(currentLevel == 1) return score;
+        
+        return (currentLevel-1) * maxScoreMultiplier + score;
+    }
+
+    /**
+     * Gets the current level of the player.
+     * 
+     * @return the current level of the player
+     */
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 
     /**
