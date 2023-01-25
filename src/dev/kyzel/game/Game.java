@@ -7,6 +7,7 @@ import dev.kyzel.game.entity.Entity;
 import dev.kyzel.game.entity.Player;
 import dev.kyzel.game.menu.OverMenu;
 import dev.kyzel.game.menu.PauseMenu;
+import dev.kyzel.game.menu.StatMenu;
 import dev.kyzel.game.world.tile.Minimap;
 import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
@@ -311,6 +312,8 @@ public class Game implements Runnable {
             player.drawHitCooldownBar(gameImageGraphics);
         }
         if(hasMinimap) minimap.draw(gameImageGraphics);
+
+        if(ControlHandler.SHOW_STAT.down()) new StatMenu(render, this).draw(gameImageGraphics);
     
         switch(gameState) {
             case PAUSE -> new PauseMenu(render).draw(gameImageGraphics);

@@ -6,13 +6,12 @@
 
 This is an attempt at making a 2D game for the **ICS4UI**'s final project
 
-- [Screenshots](#screenshots)
-
-- [Keybindings](#keybindings)
-
-- [How To Run](#how-to-run)
-
-- [Folder Structure](#folder-structure)
+- [2D Game - Stew the Wanderer](#2d-game---stew-the-wanderer)
+  - [About this](#about-this)
+  - [Screenshots](#screenshots)
+  - [Keybindings](#keybindings)
+  - [How To Run](#how-to-run)
+  - [Folder Structure](#folder-structure)
 
 ## Screenshots
 
@@ -34,11 +33,13 @@ Gameplay-related Keybinds:
 
 - **Space**: Attack
 
+- **E**: Show the player's stats
+
 - **M**: Toggle the map
 
-- **Q**: Zoom the map out
+- **Z**: Zoom the map in
 
-- **E**: Zoom the map in
+- **X**: Zoom the map out
 
 Application-related Keybinds:
 

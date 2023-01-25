@@ -166,6 +166,7 @@ public class TextMenu extends Menu {
 
     /**
      * Gets the text size in the given {@link Graphics} context.
+     * 
      * @param g the given {@link Graphics} context
      * @param text the text
      * @return the size of the text, represents by a {@link Rectangle2D}

@@ -33,6 +33,10 @@ public class ControlHandler {
      */
     public static Control ATTACK = new Control(Keyboard.KEY_SPACE);
 
+    /**
+     * Keybinding for showing player's stats.
+     */
+    public static Control SHOW_STAT = new Control(Keyboard.KEY_E);
 
     /**
      * Keybinding for pausing the game.
@@ -57,11 +61,11 @@ public class ControlHandler {
     /**
      * Keybinding for zooming in the minimap.
      */
-    public static Control ZOOM_IN_MINIMAP = new Control(Keyboard.KEY_E);
+    public static Control ZOOM_IN_MINIMAP = new Control(Keyboard.KEY_Z);
 
     /**
      * Keybinding for zooming out the minimap.
      */
-    public static Control ZOOM_OUT_MINIMAP = new Control(Keyboard.KEY_Q);
+    public static Control ZOOM_OUT_MINIMAP = new Control(Keyboard.KEY_X);
     
 }

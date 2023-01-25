@@ -569,6 +569,15 @@ public abstract class Entity implements IAttackable {
     }
 
     /**
+     * Checks if the entity is cursed.
+     * 
+     * @return if the entity is cursed.
+     */
+    public boolean isCursed() {
+        return isCursed;
+    }
+
+    /**
      * Gets the current invincible counter of the entity.
      * 
      * @return the current invincible counter
