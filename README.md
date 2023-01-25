@@ -16,7 +16,7 @@ This is an attempt at making a 2D game for the **ICS4UI**'s final project
 
 ## Screenshots
 
-![Screenshot](screenshots/6.png)
+![Screenshot](screenshots/7.png)
 
 ## How To Play
 
