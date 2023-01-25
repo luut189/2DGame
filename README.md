@@ -9,6 +9,7 @@ This is an attempt at making a 2D game for the **ICS4UI**'s final project
 - [2D Game - Stew the Wanderer](#2d-game---stew-the-wanderer)
   - [About this](#about-this)
   - [Screenshots](#screenshots)
+  - [How To Play](#how-to-play)
   - [Keybindings](#keybindings)
   - [How To Run](#how-to-run)
   - [Folder Structure](#folder-structure)
@@ -18,6 +19,28 @@ This is an attempt at making a 2D game for the **ICS4UI**'s final project
 ![Screenshot](screenshots/3.png)
 
 ![Screenshot](screenshots/5.png)
+
+## How To Play
+
+In this game, you're a wanderer, who was teleported to an unknown world.
+
+You have to survive in this world by killing other creatures.
+
+Your only goal is not to die. (*for now*)
+
+You're equipped with high-level monitoring gears to check all your vitals.
+
+From top to bottom:
+
+- The first bar is your regeneration cooldown. When you're not at full health, the bar will start rising.
+  - You will heal **1** unit of health when the bar is full.
+
+- The second bar is your experience bar. You will be able to increase your health capacity by **1** if this bar is full.
+
+- The third bar is your hit cooldown. You can only deal damage to something when the bar is full.
+
+- The last bar is your health.
+  - When you're in a normal state, this bar is red. However, it will turn into dark purple if you're cursed by a ghost.
 
 ## Keybindings
 
@@ -72,7 +95,7 @@ If you're using **Visual Studio Code**:
 
 If you're using **Replit**:
 
-- I have it setup on **Replit** so you can just press `Run`.
+- I have it setup on **Replit**, so you can just press `Run`.
 
 - However, I **do not** recommend running it on **Replit** because of how big this project is.
 
