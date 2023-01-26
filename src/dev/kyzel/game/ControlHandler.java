@@ -61,11 +61,11 @@ public class ControlHandler {
     /**
      * Keybinding for zooming in the minimap.
      */
-    public static Control ZOOM_IN_MINIMAP = new Control(Keyboard.KEY_Z);
+    public static Control ZOOM_IN_MINIMAP = new Control(Keyboard.KEY_X);
 
     /**
      * Keybinding for zooming out the minimap.
      */
-    public static Control ZOOM_OUT_MINIMAP = new Control(Keyboard.KEY_X);
+    public static Control ZOOM_OUT_MINIMAP = new Control(Keyboard.KEY_Z);
     
 }
