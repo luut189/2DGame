@@ -83,13 +83,13 @@ public class Window extends JFrame {
             this.dispose();
             this.setUndecorated(true);
             gd.setFullScreenWindow(this);
-            render.setFullscreenAttribute(getWidth(), getHeight());
+            render.setAttributes(getWidth(), getHeight());
         } else {
             this.dispose();
             this.setUndecorated(false);
             this.setVisible(true);
             gd.setFullScreenWindow(null);
-            render.setFullscreenAttribute(getWidth(), getHeight()-32);
+            render.setAttributes(getWidth(), getHeight()-32);
         }
     }
 }

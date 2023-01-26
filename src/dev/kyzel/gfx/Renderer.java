@@ -138,11 +138,11 @@ public class Renderer extends JPanel {
      * @param width the new width
      * @param height the new height
      */
-    public void setFullscreenAttribute(int width, int height) {
+    public void setAttributes(int width, int height) {
         this.width = width;
         this.height = height;
 
         gameImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
-        game.setFullscreenAttribute(this.width, this.height);
+        game.setAttributes(this.width, this.height);
     }
 }
