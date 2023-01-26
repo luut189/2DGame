@@ -42,6 +42,8 @@ From top to bottom:
 - The last bar is your health.
   - When you're in a normal state, this bar is red. However, it will turn into dark purple if you're cursed by a ghost.
 
+You're also equipped with a small map that can quickly show your surrounding area.
+
 ## Keybindings
 
 Gameplay-related Keybinds:
@@ -60,9 +62,9 @@ Gameplay-related Keybinds:
 
 - **M**: Toggle the map
 
-- **Z**: Zoom the map in
+- **X**: Zoom the map in
 
-- **X**: Zoom the map out
+- **Z**: Zoom the map out
 
 Application-related Keybinds:
 

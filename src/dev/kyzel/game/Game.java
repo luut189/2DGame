@@ -117,17 +117,12 @@ public class Game implements Runnable {
         camX = render.getWidth()/2-render.getUnitSize()/2;
         camY = render.getHeight()/2-render.getUnitSize()/2;
 
-        sceneX = 0;
-        sceneY = 0;
-
-        playerSceneX = sceneX;
-        playerSceneY = sceneY;
-
         tileManager = new TileManager(render, this);
-
         minimap = new Minimap(render, this, 10);
 
+        setPlayerInitialPosition();
         player = new Player(render, this, camX, camY, 4);
+        
         entityList = new ArrayList<>();
         entityList.add(player);
         EntityLoader.loadEntity(entityList, render, this, tileManager);
@@ -137,12 +132,30 @@ public class Game implements Runnable {
     }
 
     /**
+     * Set the initial position for the player and camera.
+     */
+    public void setPlayerInitialPosition() {
+        sceneX = - (int) (Math.random() * tileManager.getMaxRow());
+        sceneY = - (int) (Math.random() * tileManager.getMaxCol());
+
+        while(tileManager.getTile(-sceneX, -sceneY).isSolid()) {
+            sceneX = - (int) (Math.random() * tileManager.getMaxRow());
+            sceneY = - (int) (Math.random() * tileManager.getMaxCol());
+        }
+        sceneX *= render.getUnitSize();
+        sceneY *= render.getUnitSize();
+
+        playerSceneX = sceneX;
+        playerSceneY = sceneY;
+    }
+
+    /**
      * Set the attributes of the game to match with the new width and height.
      *
      * @param width the new width
      * @param height the new height
      */
-    public void setFullscreenAttribute(int width, int height) {
+    public void setAttributes(int width, int height) {
         camX = width/2-render.getUnitSize()/2;
         camY = height/2-render.getUnitSize()/2;
 
