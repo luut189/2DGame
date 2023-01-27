@@ -160,6 +160,7 @@ public abstract class Animal extends Entity {
     @Override
     public void update() {
         super.update();
+        if(knockbackCounter < maxKnockbackCounter) return;
         actionCounter++;
         
         if(actionCounter >= maxActionCount) {
