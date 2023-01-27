@@ -188,7 +188,31 @@ public abstract class Entity implements IAttackable {
         invincibleCounter++;
         knockbackCounter++;
         healing();
-        
+        knockback();
+    }
+
+    /**
+     * Initializes the base texture.
+     */
+    public abstract void initTexture();
+
+    @Override
+    public void inflictDamage(Entity target) {
+        if(hitTick < maxHitTick) return;
+        if(target.getInvincibleCounter() < maxInvincibleCounter) return;
+        target.setHealthValue(target.getHealthValue() - attackValue);
+
+        target.setPreviousDirection(target.getDirection());
+        target.setDirection(direction);
+        target.setKnockbackCounter(0);
+
+        target.setInvincibleCounter(0);
+    }
+
+    /**
+     * Inflicts knockback on the entity.
+     */
+    public void knockback() {
         if(knockbackCounter < maxKnockbackCounter) {
             boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
             int collidedEntity = collideWithEntity(game.getEntityList(), direction);
@@ -197,7 +221,7 @@ public abstract class Entity implements IAttackable {
             if(collideWithTile || collidedEntity != -1 || collideWithPlayer) return;
 
             TileManager tileManager = game.getTileManager();
-            int knockbackStrength = speed*5;
+            int knockbackStrength = (int) (Math.random() * 10);
             if(this instanceof Player) {
                 switch(direction) {
                     case UP -> {
@@ -240,24 +264,6 @@ public abstract class Entity implements IAttackable {
                 }
             }
         }
-    }
-
-    /**
-     * Initializes the base texture.
-     */
-    public abstract void initTexture();
-    
-    @Override
-    public void inflictDamage(Entity target) {
-        if(hitTick < maxHitTick) return;
-        if(target.getInvincibleCounter() < maxInvincibleCounter) return;
-        target.setHealthValue(target.getHealthValue() - attackValue);
-
-        target.previousDirection = target.getDirection();
-        target.setDirection(direction);
-        target.knockbackCounter = 0;
-
-        target.setInvincibleCounter(0);
     }
 
     /**
@@ -582,6 +588,24 @@ public abstract class Entity implements IAttackable {
         direction = dir;
     }
 
+    /**
+     * Gets the previous direction of the entity.
+     *
+     * @return the previous direction of the entity
+     */
+    public Direction getPreviousDirection() {
+        return previousDirection;
+    }
+
+    /**
+     * Set the previous direction of the entity to the given value.
+     *
+     * @param previousDirection the given value
+     */
+    public void setPreviousDirection(Direction previousDirection) {
+        this.previousDirection = previousDirection;
+    }
+
     @Override
     public void setAttackValue(int value) {
         attackValue = value;
@@ -655,6 +679,24 @@ public abstract class Entity implements IAttackable {
      */
     public boolean isCursed() {
         return isCursed;
+    }
+
+    /**
+     * Gets the current knockback counter of the entity.
+     *
+     * @return the current knockback counter of the entity
+     */
+    public int getKnockbackCounter() {
+        return knockbackCounter;
+    }
+
+    /**
+     * Set the current knockback counter to the given value.
+     *
+     * @param counter the given value
+     */
+    public void setKnockbackCounter(int counter) {
+        this.knockbackCounter = counter;
     }
 
     /**
