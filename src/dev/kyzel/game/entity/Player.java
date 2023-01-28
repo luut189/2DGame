@@ -32,11 +32,6 @@ public class Player extends Entity {
     private BufferedImage playerImage;
 
     /**
-     * The last {@link Direction} of the player.
-     */
-    private Direction previousDirection = Direction.DOWN;
-
-    /**
      * A variable to see if the player is swimming.
      */
     private boolean isSwimming = false;
@@ -168,6 +163,7 @@ public class Player extends Entity {
     @Override
     public void update() {
         super.update();
+        if(knockbackCounter < maxKnockbackCounter) return;
         spriteCounter++;
 
         checkSwimming();

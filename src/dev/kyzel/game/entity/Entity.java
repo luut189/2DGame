@@ -8,6 +8,7 @@ import dev.kyzel.game.Game;
 import dev.kyzel.game.entity.animal.Animal;
 import dev.kyzel.game.entity.animal.Ghost;
 import dev.kyzel.game.world.tile.Tile;
+import dev.kyzel.game.world.tile.TileManager;
 import dev.kyzel.gfx.Renderer;
 
 /**
@@ -24,6 +25,11 @@ public abstract class Entity implements IAttackable {
      * Constant for the max value of hit cooldown.
      */
     public static final int maxHitTick = 20;
+
+    /**
+     * Constant for the max value of knockback counter.
+     */
+    public static final int maxKnockbackCounter = 20;
     
     /**
      * Constant for the max value of invincible counter.
@@ -44,6 +50,11 @@ public abstract class Entity implements IAttackable {
      * The {@link Direction} the entity moves in.
      */
     protected Direction direction;
+
+    /**
+     * The last {@link Direction} of the entity.
+     */
+    protected Direction previousDirection = Direction.DOWN;
 
     /**
      * The {@link EntityState} of the entity.
@@ -81,6 +92,11 @@ public abstract class Entity implements IAttackable {
     protected int speed;
 
     /**
+     * The based speed of the entity.
+     */
+    protected int basedSpeed;
+
+    /**
      * A variable to see if the entity is cursed.
      */
     protected boolean isCursed = false;
@@ -116,6 +132,11 @@ public abstract class Entity implements IAttackable {
     protected int hitTick = maxHitTick;
 
     /**
+     * The default knockback counter;
+     */
+    protected int knockbackCounter = maxKnockbackCounter;
+
+    /**
      * The default invincible counter.
      */
     protected int invincibleCounter = maxInvincibleCounter;
@@ -137,6 +158,7 @@ public abstract class Entity implements IAttackable {
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.basedSpeed = speed;
 
         solidArea = new Rectangle(0, 0, render.getUnitSize(), render.getUnitSize());
         solidAreaDefaultX = solidArea.x;
@@ -164,20 +186,84 @@ public abstract class Entity implements IAttackable {
     public void update() {
         if(hitTick < maxHitTick) hitTick++;
         invincibleCounter++;
+        knockbackCounter++;
         healing();
+        knockback();
     }
 
     /**
      * Initializes the base texture.
      */
     public abstract void initTexture();
-    
+
     @Override
     public void inflictDamage(Entity target) {
         if(hitTick < maxHitTick) return;
         if(target.getInvincibleCounter() < maxInvincibleCounter) return;
         target.setHealthValue(target.getHealthValue() - attackValue);
+
+        target.setPreviousDirection(target.getDirection());
+        target.setDirection(direction);
+        target.setKnockbackCounter(0);
+
         target.setInvincibleCounter(0);
+    }
+
+    /**
+     * Inflicts knockback on the entity.
+     */
+    public void knockback() {
+        if(knockbackCounter < maxKnockbackCounter) {
+            boolean collideWithTile = collideWithTile(game.getTileManager().getWorldTiles());
+            int collidedEntity = collideWithEntity(game.getEntityList(), direction);
+            boolean collideWithPlayer = !(this instanceof Player) && collideWithPlayer();
+
+            if(collideWithTile || collidedEntity != -1 || collideWithPlayer) return;
+
+            TileManager tileManager = game.getTileManager();
+            int knockbackStrength = (int) (Math.random() * 10);
+            if(this instanceof Player) {
+                switch(direction) {
+                    case UP -> {
+                        if(y - game.getSceneY() <= 0) break;
+                        game.setSceneY(game.getSceneY() + knockbackStrength);
+                    }
+                    case DOWN -> {
+                        if(y - game.getSceneY() > tileManager.getMaxCol() * render.getUnitSize() - render.getUnitSize()) break;
+                        game.setSceneY(game.getSceneY() - knockbackStrength);
+                    }
+                    case RIGHT -> {
+                        if(x - game.getSceneX() > tileManager.getMaxRow() * render.getUnitSize() - render.getUnitSize()) break;
+                        game.setSceneX(game.getSceneX() - knockbackStrength);
+                    }
+                    case LEFT -> {
+                        if(x - game.getSceneX() <= 0) break;
+                        game.setSceneX(game.getSceneX() + knockbackStrength);
+                    }
+                    default -> {}
+                }
+            } else {
+                switch(direction) {
+                    case UP -> {
+                        if(y <= 0) break;
+                        y -= knockbackStrength;
+                    }
+                    case DOWN -> {
+                        if(y >= tileManager.getMaxCol() * render.getUnitSize() - render.getUnitSize()) break;
+                        y += knockbackStrength;
+                    }
+                    case RIGHT -> {
+                        if(x >= tileManager.getMaxRow() * render.getUnitSize() - render.getUnitSize()) break;
+                        x += knockbackStrength;
+                    }
+                    case LEFT -> {
+                        if(x <= 0) break;
+                        x -= knockbackStrength;
+                    }
+                    default -> {}
+                }
+            }
+        }
     }
 
     /**
@@ -502,6 +588,24 @@ public abstract class Entity implements IAttackable {
         direction = dir;
     }
 
+    /**
+     * Gets the previous direction of the entity.
+     *
+     * @return the previous direction of the entity
+     */
+    public Direction getPreviousDirection() {
+        return previousDirection;
+    }
+
+    /**
+     * Set the previous direction of the entity to the given value.
+     *
+     * @param previousDirection the given value
+     */
+    public void setPreviousDirection(Direction previousDirection) {
+        this.previousDirection = previousDirection;
+    }
+
     @Override
     public void setAttackValue(int value) {
         attackValue = value;
@@ -575,6 +679,24 @@ public abstract class Entity implements IAttackable {
      */
     public boolean isCursed() {
         return isCursed;
+    }
+
+    /**
+     * Gets the current knockback counter of the entity.
+     *
+     * @return the current knockback counter of the entity
+     */
+    public int getKnockbackCounter() {
+        return knockbackCounter;
+    }
+
+    /**
+     * Set the current knockback counter to the given value.
+     *
+     * @param counter the given value
+     */
+    public void setKnockbackCounter(int counter) {
+        this.knockbackCounter = counter;
     }
 
     /**
