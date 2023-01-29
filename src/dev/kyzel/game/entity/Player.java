@@ -251,7 +251,11 @@ public class Player extends Entity {
     public int getScore() {
         if(currentLevel == 1) return score;
         
-        return (currentLevel-1) * maxScoreMultiplier + score;
+        int result = score;
+        for(int i = currentLevel - 1; i >= 0; i--) {
+            result += i * maxScoreMultiplier;
+        }
+        return result;
     }
 
     /**
