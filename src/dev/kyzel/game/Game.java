@@ -350,7 +350,9 @@ public class Game implements Runnable {
         if(ControlHandler.TOGGLE_HUD.pressed()) hasHUD = !hasHUD;
 
         minimap.update();
+
         for(Entity entity : entityList) {
+            if(entity == null) continue;
             if(entity instanceof Player) entity.update();
             else if(
                     entity.getX() >= -playerSceneX-render.getUnitSize() &&
@@ -360,6 +362,9 @@ public class Game implements Runnable {
             ) {
                 entity.update();
             }
+        }
+        while(entityList.contains(null)) {
+            entityList.remove(null);
         }
         if(player.isDead()) {
             gameState = GameState.OVER;

@@ -49,7 +49,7 @@ public class Ghost extends Animal {
         super.update();
         ArrayList<Entity> entityList = game.getEntityList();
         for(Entity entity : entityList) {
-            if(entity instanceof Ghost) continue;
+            if(entity instanceof Ghost || entity == null) continue;
             int entityX = entity.getX();
             int entityY = entity.getY();
 

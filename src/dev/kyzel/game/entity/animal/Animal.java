@@ -104,7 +104,13 @@ public abstract class Animal extends Entity {
                     Sound.LOSE.play();
                     int x = target.getX()-game.getSceneX();
                     int y = target.getY()-game.getSceneY();
-                    game.getEntityList().set(0 ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                    if(target.isCursed()) {
+                        // completely remove the entity from the game
+                        game.getEntityList().set(collidedEntity, null);
+                    } else {
+                        // make the ded entity become ghost
+                        game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                    }
                 }
                 direction = Direction.getOppositeDirection(direction);
                 hitTick = 0;
@@ -116,9 +122,14 @@ public abstract class Animal extends Entity {
                     inflictDamage(target);
                     if(hitTick >= maxHitTick) Sound.HURT.play();
                     if(target.isDead()) {
-                        int x = target.getX();
-                        int y = target.getY();
-                        game.getEntityList().set(collidedEntity ,new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                        if(target.isCursed()) {
+                            Sound.LOSE.play();
+                            // completely remove the entity from the game
+                            game.getEntityList().set(collidedEntity, null);
+                        } else {
+                            // make the ded entity become ghost
+                            game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
+                        }
                     }
                     direction = Direction.getOppositeDirection(direction);
                     hitTick = 0;
