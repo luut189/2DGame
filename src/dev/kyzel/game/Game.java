@@ -325,14 +325,22 @@ public class Game implements Runnable {
             player.drawHitCooldownBar(gameImageGraphics);
         }
         if(hasMinimap) minimap.draw(gameImageGraphics);
-
-        if(ControlHandler.SHOW_STAT.down()) new StatMenu(render, this).draw(gameImageGraphics);
     
         switch(gameState) {
-            case PAUSE -> new PauseMenu(render).draw(gameImageGraphics);
-            case OVER -> new OverMenu(render, this).draw(gameImageGraphics);
+            case OVER -> {
+                new OverMenu(render, this).draw(gameImageGraphics);
+                gameImageGraphics.dispose();
+                return;
+            }
+            case PAUSE -> {
+                new PauseMenu(render).draw(gameImageGraphics);
+                gameImageGraphics.dispose();
+                return;
+            }
             default -> {}
         }
+
+        if(ControlHandler.SHOW_STAT.down()) new StatMenu(render, this).draw(gameImageGraphics);
 
         gameImageGraphics.dispose();
     }
@@ -368,7 +376,6 @@ public class Game implements Runnable {
         }
         if(player.isDead()) {
             gameState = GameState.OVER;
-            gameThread = null;
         }
     }
 
@@ -387,7 +394,7 @@ public class Game implements Runnable {
             delta += (currentTime - lastTime)/interval;
             lastTime = currentTime;
             if(delta >= 1) {
-                gameState = isPausing ? GameState.PAUSE : GameState.PLAYING;
+                gameState = isPausing && gameState != GameState.OVER ? GameState.PAUSE : GameState.PLAYING;
                 update();
                 draw(render.getGameImageGraphics());
                 render.drawToScreen();

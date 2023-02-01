@@ -106,10 +106,10 @@ public abstract class Animal extends Entity {
                     int y = target.getY()-game.getSceneY();
                     if(target.isCursed()) {
                         // completely remove the entity from the game
-                        game.getEntityList().set(collidedEntity, null);
+                        game.getEntityList().set(0, null);
                     } else {
                         // make the ded entity become ghost
-                        game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), x, y, 2));
+                        game.getEntityList().set(0, new Ghost(target.getRender(), target.getGame(), x, y, 2));
                     }
                 }
                 direction = Direction.getOppositeDirection(direction);
