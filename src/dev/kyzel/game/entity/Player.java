@@ -151,7 +151,15 @@ public class Player extends Entity {
             if(hitTick >= maxHitTick) Sound.HURT.play();
             if(target.isDead()) {
                 scoreUp((Animal) target);
-                game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
+
+                if(target.isCursed()) {
+                    Sound.LOSE.play();
+                    // completely remove the entity from the game
+                    game.getEntityList().set(collidedEntity, null);
+                } else {
+                    // make the ded entity become ghost
+                    game.getEntityList().set(collidedEntity, new Ghost(target.getRender(), target.getGame(), target.getX(), target.getY(), 2));
+                }
             }
             hitTick = 0;
         } else {
