@@ -281,10 +281,10 @@ public class Player extends Entity {
      * @param playerDir the given {@link Direction}
      */
     public void setCurrentPlayerImage(Direction playerDir) {
+        boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
         if(state == EntityState.STANDING) {
             imageIndex = 0;
-        } else if(state == EntityState.WALKING || state == EntityState.ATTACKING) {
-            boolean isSideWay = playerDir == Direction.RIGHT || playerDir == Direction.LEFT;
+        } else if(state == EntityState.WALKING) {
             if(spriteCounter > (isSideWay ? 10 : 12)) {
                 isLeftLeg = !isLeftLeg;
                 if(isSideWay) {
@@ -295,6 +295,8 @@ public class Player extends Entity {
             if(!isSideWay) {
                 imageIndex = isLeftLeg ? 1 : 2;
             }
+        } else if(state == EntityState.ATTACKING) {
+            imageIndex = isSideWay ? 1 : 2;
         }
         
         if(state == EntityState.SWIMMING) {
