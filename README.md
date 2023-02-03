@@ -76,6 +76,20 @@ Application-related Keybinds:
 
 ## How To Run
 
+If you downloaded the `.jar` file:
+
+- There is a little [Releases](https://github.com/luut189/2DGame/releases) tab which includes the executable `.jar` file to play the game.
+
+- After downloading the `.jar` file, you can go ahead and run it:
+
+  - For some people, they can run the `.jar` file by simply **double-clicking** it.
+
+  - However, for the others, they need to execute a little command from the **Terminal**:
+
+  ```bash
+  java -jar 2DGame.jar
+  ```
+
 If you're using **Visual Studio Code**:
 
 - If you clone this project into your local machine, good luck running it without **Code Runner**.
